@@ -65,7 +65,14 @@ main
     box-sizing: border-box;
 }
 
-#follow
+canvas#canv
+{
+    position: absolute;
+    top: 0;
+    left: 0;
+}
+
+div#follow
 {
     position: absolute;
     width: 200px;
