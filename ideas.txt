@@ -5,13 +5,13 @@ AVOID DANGER
 V1: couleurs constantes
 V1: blocs qui tombent
 V1: page statistique (LocalStorage)
-V1: trainée verticle
+V1: chemin canvas
 V1: animation mort
 V1: message de mort + score
 
 V2: couleurs thématiques
+V2: styliser chemin canvas
 V2: blocs gauche-droite
-V2: trainée dynamique
 V2: animation nouveau score
 V2: message nouveau score
 V2: augmentation difficulté (+ animations qui vont bien, wesh)
