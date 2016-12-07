@@ -21,13 +21,11 @@ let pathcanvas = function() {
             path.shift();
         }
     }
-
     let scrollPath = function() {
         for(let i=0; i<path.length; i++) {
-            path[i].Y += 1;
+            path[i].Y += 5;
         }
     }
-
     let drawPath = function() {
         ctx.clearRect(0,0, canv.width,canv.height);
         ctx.beginPath();
@@ -43,7 +41,7 @@ let pathcanvas = function() {
         scrollPath();
         drawPath();
     }
-    setInterval(funcpath, 15);
+    setInterval(funcpath, 10);
 }
 
 document.addEventListener("DOMContentLoaded", pathcanvas);
