@@ -1,18 +1,10 @@
 let pathcanvas = function() {
-    let mouseX = window.innerWidth/2;
-    let mouseY = window.innerHeight/2;
     let path = [];
     let maxpathstops = 500;
     let canv = document.getElementById("canv");
     canv.width = window.innerWidth;
     canv.height = window.innerHeight;
     let ctx = canv.getContext("2d");
-
-    let updateMousePos = function() {
-        mouseX = event.clientX;
-        mouseY = event.clientY;
-    }
-    document.addEventListener("mousemove", updateMousePos);
 
     let updatePath = function() {
         path.push({X: mouseX, Y: mouseY});
