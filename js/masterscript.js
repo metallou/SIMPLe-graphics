@@ -52,7 +52,6 @@ let mastergamescript = function() {
             //to prevent player from hacking the game by getting through over and over to falsely increase score
             if(prevscore != score) {
                 path_blocks[0].removeEventListener("mouseout", newScore);
-                console.log(prevscore +" "+ score);
                 prevscore = score;
             }
 
