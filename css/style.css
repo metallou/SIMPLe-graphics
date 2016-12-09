@@ -62,7 +62,7 @@ main, aside
     box-sizing: border-box;
 }
 
-button
+button.menubutton, button#optionsbutton, button#statsbutton
 {
     position: absolute;
     bottom: 25%;
@@ -104,6 +104,23 @@ canvas#canv
     margin-left: auto;
     margin-right: auto;
     text-align: right;
+}
+
+#optionspage section
+{
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+}
+
+#optionspage section button
+{
+
+}
+
+#optionspage section button.selected
+{
+
 }
 
 div#follow, div#death
