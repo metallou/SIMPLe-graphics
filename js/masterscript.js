@@ -1,4 +1,13 @@
+let totalgamesplayed = 3;
+let totalgamesplayedkey = "totalgamesplayed";
+sessionStorage.setItem(totalgamesplayedkey, totalgamesplayed);
+for(let i=1; i<=totalgamesplayed; i++) {
+    sessionStorage.setItem("score"+i, Math.floor(Math.random()*1000*5)%5);
+}
+
 let funcready = function() {
+    let gamesplayed = parseInt(sessionStorage.getItem(totalgamesplayedkey));
+
     let falling_blocks = [];
     let path_blocks = [];
     let danger_blocks = [];
@@ -11,8 +20,11 @@ let funcready = function() {
         isDead = true;
     }
 
+    //Test blocks (to be removed)
     let tmp = document.getElementById("follow");
+    tmp.addEventListener("mouseout", newScore);
     let tmp2 = document.getElementById("death");
+    tmp2.addEventListener("mouseover", nowDead);
     path_blocks.push(tmp);
 
     let createNewLineBlocks = function() {
@@ -28,6 +40,7 @@ let funcready = function() {
         //Uncomment when fonction is implemented
         //path_elem.addEventListener("mouseout", newScore);
     }
+
     let deleteFinishedLineBlocks = function() {
         //Check if a falling block is out the screen (verify top positionning of first falling block in the array)
         //exit otherwise
@@ -40,14 +53,15 @@ let funcready = function() {
 
     let mastergamescript = function() {
         let intervalID;
-        let prevscore = score;
-
-        tmp.addEventListener("mouseout", newScore);
-        tmp2.addEventListener("mouseover", nowDead);
+        //Reset variables
+        let prevscore = 0;
+        score = 0;
+        isDead = false;
 
         //boucle de jeu
         let gamefunc = function() {
             if(!isDead) {
+                //Create new line if possible
                 createNewLineBlocks();
 
                 //to prevent player from hacking the game by getting through over and over to falsely increase score
@@ -56,17 +70,19 @@ let funcready = function() {
                     prevscore = score;
                 }
 
+                //Delete old line if necessary
                 deleteFinishedLineBlocks();
             } else {
                 clearInterval(intervalID);
-                isDead = false;
-                console.log("Mettre le score dans le Local Storage: " + score);
-                score = 0;
-                prevscore = 0;
-
-
+                //Ajout dans LocalStorage
+                let totalgamesplayed = sessionStorage.getItem(totalgamesplayedkey);
+                totalgamesplayed++;
+                sessionStorage.setItem(totalgamesplayedkey, totalgamesplayed);
+                sessionStorage.setItem("score"+totalgamesplayed, score);
+                //Ajoutee autres champs dans le LocalStorage (j'aime les stats)
             }
         }
+        //Repeat gamefunc
         intervalID = setInterval(gamefunc, 10);
     }
 
