@@ -26,7 +26,7 @@ let optionsfuncready = function() {
         }
 
         elem = document.getElementById("clearstorage").addEventListener("click", function() {
-
+            sessionStorage.clear();
             for(let i=0; i<keysonoff; i++) {
                 sessionStorage.setItem(keysonoff[i], "true");
             }
