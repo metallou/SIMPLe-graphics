@@ -85,12 +85,12 @@ button.menubutton
 
 #optionspage
 {
-    background-color: red;
+
 }
 
 #statspage
 {
-    background-color: blue;
+
 }
 
 canvas#canv
@@ -98,6 +98,12 @@ canvas#canv
     position: absolute;
     top: 0;
     left: 0;
+}
+#statspage table
+{
+    margin-left: auto;
+    margin-right: auto;
+    text-align: right;
 }
 
 div#follow, div#death
