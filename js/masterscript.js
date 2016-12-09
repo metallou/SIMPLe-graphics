@@ -1,13 +1,4 @@
-let totalgamesplayed = 3;
-let totalgamesplayedkey = "totalgamesplayed";
-sessionStorage.setItem(totalgamesplayedkey, totalgamesplayed);
-for(let i=1; i<=totalgamesplayed; i++) {
-    sessionStorage.setItem("score"+i, Math.floor(Math.random()*1000*5)%5);
-}
-
 let funcready = function() {
-    let gamesplayed = parseInt(sessionStorage.getItem(totalgamesplayedkey));
-
     let falling_blocks = [];
     let path_blocks = [];
     let danger_blocks = [];
@@ -76,12 +67,22 @@ let funcready = function() {
                 deleteFinishedLineBlocks();
             } else {
                 clearInterval(intervalID);
-                //Ajout dans LocalStorage
-                let totalgamesplayed = sessionStorage.getItem(totalgamesplayedkey);
-                totalgamesplayed++;
-                sessionStorage.setItem(totalgamesplayedkey, totalgamesplayed);
-                sessionStorage.setItem("score"+totalgamesplayed, score);
-                //Ajouter autres champs dans le LocalStorage (j'aime les stats)
+                //Total Games Played
+                let tgp = parseInt(localStorage.getItem("totalgamesplayed"));
+                tgp++;
+                localStorage.setItem("totalgamesplayed", tgp);
+                //Total Score
+                let ts = parseInt(localStorage.getItem("totalscore"));
+                ts += score;
+                localStorage.setItem("totalscore", ts);
+                //Highest Score
+                let hs = parseInt(localStorage.getItem("highestscore"));
+                if(hs < score) {
+                    localStorage.setItem("highestscore", score);
+                }
+                //Average Score
+                let as = ts/tgp;
+                localStorage.setItem("averagescore", as);
             }
         }
         //Repeat gamefunc

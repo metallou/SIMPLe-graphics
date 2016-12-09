@@ -12,7 +12,7 @@ let optionsfuncready = function() {
         let checkvalue = function(key) {
             let elemon = document.getElementById(key+"on");
             let elemoff = document.getElementById(key+"off");
-            if(sessionStorage.getItem(key) === "true") {
+            if(localStorage.getItem(key) === "true") {
                 if(!elemon.classList.contains("selected")) {
                     elemon.classList.add("selected");
                     elemoff.classList.remove("selected");
@@ -26,10 +26,19 @@ let optionsfuncready = function() {
         }
 
         elem = document.getElementById("clearstorage").addEventListener("click", function() {
-            sessionStorage.clear();
+            localStorage.clear();
             for(let i=0; i<keysonoff; i++) {
-                sessionStorage.setItem(keysonoff[i], "true");
+                localStorage.setItem(keysonoff[i], "true");
             }
+            localStorage.setItem("totalgamesplayed", "0");
+            localStorage.setItem("totalscore", "0");
+            localStorage.setItem("highestscore", "0");
+            localStorage.setItem("averagescore", "0");
+            localStorage.setItem("totalbonusestaken", "0");
+            localStorage.setItem("totalbosswavessurvived", "0");
+            localStorage.setItem("totalfallingbosswavessurvived", "0");
+            localStorage.setItem("totalrisingbosswavessurvived", "0");
+            localStorage.setItem("lastscore", "0");
         });
 
         for(let i=0; i<keysonoff.length; i++) {
@@ -38,11 +47,11 @@ let optionsfuncready = function() {
             checkvalue(keysonoff[i]);
 
             elem.addEventListener("click", function() {
-                sessionStorage.setItem(keysonoff[i], "true");
+                localStorage.setItem(keysonoff[i], "true");
                 checkvalue(keysonoff[i]);
             });
             elem2.addEventListener("click", function() {
-                sessionStorage.setItem(keysonoff[i], "false");
+                localStorage.setItem(keysonoff[i], "false");
                 checkvalue(keysonoff[i]);
             });
         }

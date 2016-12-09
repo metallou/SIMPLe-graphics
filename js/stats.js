@@ -10,7 +10,7 @@ let statsfuncready = function() {
             key = key.split("\n").join("");;
             key = key.split(":").join("");
             key = key.split(" ").join("");
-            value = sessionStorage.getItem(key);
+            value = localStorage.getItem(key);
             document.getElementById("v"+i).innerHTML = value;
         }
     }
