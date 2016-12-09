@@ -67,6 +67,8 @@ let funcready = function() {
                 //to prevent player from hacking the game by getting through over and over to falsely increase score
                 if(prevscore != score) {
                     path_blocks[0].removeEventListener("mouseout", newScore);
+                    //Uncomment when createNewLineBlocks is impleented
+                    //path_blocks.shift();
                     prevscore = score;
                 }
 
@@ -79,7 +81,7 @@ let funcready = function() {
                 totalgamesplayed++;
                 sessionStorage.setItem(totalgamesplayedkey, totalgamesplayed);
                 sessionStorage.setItem("score"+totalgamesplayed, score);
-                //Ajoutee autres champs dans le LocalStorage (j'aime les stats)
+                //Ajouter autres champs dans le LocalStorage (j'aime les stats)
             }
         }
         //Repeat gamefunc
