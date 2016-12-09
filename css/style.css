@@ -4,6 +4,7 @@ html, body
     padding: 0;
     width: 100%;
     height: 100%;
+    cursor: none;
 }
 
 h1,h2,h3,h4,h5,h6
@@ -98,6 +99,7 @@ canvas#canv
     position: absolute;
     top: 0;
     left: 0;
+    transform: translateY(80px);
 }
 #statspage table
 {
@@ -123,6 +125,11 @@ canvas#canv
 
 }
 
+button:hover
+{
+  cursor: pointer;
+}
+
 div#follow, div#death
 {
     position: absolute;
@@ -137,9 +144,18 @@ div#follow
     left: 75%;
     background-color: #FF0000;
 }
+
 div#death
 {
     top: 25%;
     left: 25%;
     background-color: #0000FF;
+}
+
+div#spaceship{
+    position:absolute;
+    top: 0;
+    left: 0;
+    z-index: 1;
+    transform: translateX(-50%) translateY(1%);
 }
