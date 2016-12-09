@@ -14,56 +14,84 @@ h1,h2,h3,h4,h5,h6
 
 div#wrapper
 {
-    min-height: 100%;
-    width: 100%;
+    height: 100vh;
+    overflow: hidden;
     position: relative;
 }
 
-header, footer
+div.blackscreen
 {
     position: absolute;
-    left: 0;
-    width: 100%;
-    border: 2px solid black;
-    box-sizing: border-box;
-}
-
-header
-{
+    z-index: 1;
     top: 0;
-    height: 100px;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    opacity: 0;
+    background-color: #000000;
+
+    animation-name: blackscreen;
+    animation-duration: 0.5s;
 }
 
-footer
+@keyframes blackscreen
 {
-    bottom: 0;
-    height: 50px;
+    0% {
+        opacity: 1;
+    }
+    50% {
+        opacity: 1;
+    }
+    100% {
+        opacity: 0;
+    }
 }
 
-h1, footer h2
+article
 {
     position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%,-50%);
-    white-space: nowrap;
+    display: flex;
+    top: 0;
+    left: -100vw;
 }
 
-div#main-container
+main, aside
 {
-    display: flex;
+    position: relative;
+    width: 100vw;
+    height: 100vh;
     box-sizing: border-box;
-    width: 100%;
-    margin: auto;
-    padding-top: 100px;
-    padding-bottom: 50px;
 }
- 80%
-main
+
+button.menubutton, button#optionsbutton, button#statsbutton
 {
-    flex-grow: 1;
-    min-height: 100px;
-    box-sizing: border-box;
+    position: absolute;
+    bottom: 25%;
+    transform: translate(-50%, -50%);
+}
+
+button#optionsbutton
+{
+    left: 25%;
+}
+button#statsbutton
+{
+    left: 75%;
+}
+
+button.menubutton
+{
+    left: 50%;
+}
+
+#optionspage
+{
+
+}
+
+#statspage
+{
+
 }
 
 canvas#canv
@@ -71,6 +99,35 @@ canvas#canv
     position: absolute;
     top: 0;
     left: 0;
+    transform: translateY(80px);
+}
+#statspage table
+{
+    margin-left: auto;
+    margin-right: auto;
+    text-align: right;
+}
+
+#optionspage section
+{
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+}
+
+#optionspage section button
+{
+
+}
+
+#optionspage section button.selected
+{
+
+}
+
+button:hover
+{
+  cursor: pointer;
 }
 
 div#follow, div#death
@@ -100,5 +157,5 @@ div#spaceship{
     top: 0;
     left: 0;
     z-index: 1;
-    transform: translateX(-50%) translateY(-75%);
+    transform: translateX(-50%) translateY(1%);
 }
