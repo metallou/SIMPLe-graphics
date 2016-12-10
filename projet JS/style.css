@@ -1,0 +1,52 @@
+body{
+  padding:0;
+  margin:0;
+}
+
+.block-line{
+  height:600px;
+  width:100%;
+  margin:0;
+  padding:0;
+  display: flex;
+}
+
+.gauche{
+  height:100%;
+  width:7%;
+  margin:0;
+  padding:0;
+  background-color: blue;
+}
+
+.centre{
+height:100%;
+width:86%;
+margin:0;
+padding:0;
+background-color: grey;
+position: relative;
+}
+
+.droite{
+  height:100%;
+  width:7%;
+  margin:0;
+  padding:0;
+  background-color: blue;
+}
+.ligne{
+  display:flex;
+}
+.bloc{
+  box-sizing: border-box;
+  margin:0;
+  padding:0;
+  background-color: red;
+  flex:1;
+}
+
+
+.passage{
+  background-color: green;
+}
