@@ -15,8 +15,8 @@ let pathcanvas = function() {
     }
     document.addEventListener("mousemove", updateMousePos);
 
-    let updatePath = function() {
-        path.push({X: mouseX, Y: mouseY});
+    let updatePath = function(offsetX, offsetY) {
+        path.push({X: mouseX+offsetX, Y: mouseY+offsetY});
         if(path.length > maxpathstops) {
             path.shift();
         }
@@ -37,7 +37,7 @@ let pathcanvas = function() {
     }
 
     let funcpath = function() {
-        updatePath();
+        updatePath(0, 20);
         scrollPath();
         drawPath();
     }
