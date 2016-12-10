@@ -10,11 +10,32 @@ let statsfuncready = function() {
             key = key.split("\n").join("");;
             key = key.split(":").join("");
             key = key.split(" ").join("");
-            value = sessionStorage.getItem(key);
+            value = localStorage.getItem(key);
             document.getElementById("v"+i).innerHTML = value;
         }
     }
     document.getElementById("statsbutton").addEventListener("click", statsfunc);
+
+    let keys =
+        [
+        "totalgamesplayed",
+        "totalscore",
+        "highestscore",
+        "averagescore",
+        "totalbonusestaken",
+        "totalbosswavessurvived",
+        "totalfallingbosswavessurvived",
+        "totalrisingbosswavessurvived",
+        "lastscore"
+        ];
+    let val;
+    for(let i=0; i<keys.length; i++) {
+        val = localStorage.getItem(keys[i]);
+        if(val === null || val === undefined) {
+            localStorage.setItem(keys[i], "0");
+        }
+    }
+
 
 }
 document.addEventListener("DOMContentLoaded", statsfuncready);
