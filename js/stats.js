@@ -16,5 +16,26 @@ let statsfuncready = function() {
     }
     document.getElementById("statsbutton").addEventListener("click", statsfunc);
 
+    let keys =
+        [
+        "totalgamesplayed",
+        "totalscore",
+        "highestscore",
+        "averagescore",
+        "totalbonusestaken",
+        "totalbosswavessurvived",
+        "totalfallingbosswavessurvived",
+        "totalrisingbosswavessurvived",
+        "lastscore"
+        ];
+    let val;
+    for(let i=0; i<keys.length; i++) {
+        val = localStorage.getItem(keys[i]);
+        if(val === null || val === undefined) {
+            localStorage.setItem(keys[i], "0");
+        }
+    }
+
+
 }
 document.addEventListener("DOMContentLoaded", statsfuncready);
