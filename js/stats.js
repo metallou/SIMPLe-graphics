@@ -1,6 +1,8 @@
-let statsfuncready = function() {
+let statsfuncready = function()
+{
 
-    let statsfunc = function() {
+    let statsfunc = function()
+    {
         let nbelems = document.getElementsByTagName("tr").length;
         let key;
         let value;
