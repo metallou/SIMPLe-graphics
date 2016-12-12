@@ -1,13 +1,16 @@
-let funcready = function() {
+let funcready = function()
+{
     let falling_blocks = [];
     let path_blocks = [];
     let danger_blocks = [];
     let score = 0;
-    let newScore = function() {
+    let newScore = function()
+    {
         score++;
     }
     let isDead = false;
-    let nowDead = function() {
+    let nowDead = function()
+    {
         isDead = true;
     }
 
@@ -18,7 +21,8 @@ let funcready = function() {
     tmp2.addEventListener("mouseover", nowDead);
     path_blocks.push(tmp);
 
-    let createNewLineBlocks = function() {
+    let createNewLineBlocks = function()
+    {
         //Check if there is room for a new falling block (verify top positionning of last falling block in the array)
         //exit otherwise
         let danger_elems = [];
@@ -32,7 +36,8 @@ let funcready = function() {
         //path_elem.addEventListener("mouseout", newScore);
     }
 
-    let deleteFinishedLineBlocks = function() {
+    let deleteFinishedLineBlocks = function()
+    {
         //Check if a falling block is out the screen (verify top positionning of first falling block in the array)
         //exit otherwise
         let danger_elems = [];
@@ -42,7 +47,8 @@ let funcready = function() {
         }
     }
 
-    let mastergamescript = function() {
+    let mastergamescript = function()
+    {
         let intervalID;
         //Reset variables
         let prevscore = 0;
@@ -50,7 +56,8 @@ let funcready = function() {
         isDead = false;
 
         //boucle de jeu
-        let gamefunc = function() {
+        let gamefunc = function()
+        {
             if(!isDead) {
                 //Create new line if possible
                 createNewLineBlocks();
