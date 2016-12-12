@@ -1,5 +1,3 @@
-let mouseX;
-let mouseY;;
 let path;
 let maxpathstops;
 let canv;
@@ -8,11 +6,6 @@ let offX;
 let offY;
 let spaceship;
 
-let updateMousePos = function()
-{
-    mouseX = event.clientX;
-    mouseY = event.clientY;
-}
 let updatePath = function(offsetX, offsetY)
 {
     path.push({X: mouseX+offsetX, Y: mouseY+offsetY});
@@ -45,8 +38,6 @@ let funcPath = function()
 
 let funcPathReady = function()
 {
-    mouseX = window.innerWidth/2;
-    mouseY = window.innerHeight/2;
     path = [];
     maxpathstops = 100;
     canv = document.getElementById("canv");
@@ -61,7 +52,6 @@ let funcPathReady = function()
         offY = spaceship.offsetHeight*3/4;
     }
 
-    document.addEventListener("mousemove", updateMousePos);
     setInterval(funcPath, 10);
 }
 document.addEventListener("DOMContentLoaded", funcPathReady);
