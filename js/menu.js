@@ -23,6 +23,7 @@ let buttonready = function()
                 blackScreen();
                 document.getElementsByTagName("article")[0].style["left"] = "-200vw";
             });
+    document.getElementById("playbutton").addEventListener("click", mastergamescript);
 
     let buttons = document.getElementsByClassName("menubutton");
     for(let i=0; i<buttons.length; i++) {

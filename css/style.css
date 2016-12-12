@@ -63,7 +63,7 @@ main, aside
     box-sizing: border-box;
 }
 
-button.menubutton, button#optionsbutton, button#statsbutton
+button.menubutton, button#optionsbutton, button#statsbutton, button#playbutton
 {
     position: absolute;
     bottom: 25%;
@@ -78,7 +78,10 @@ button#statsbutton
 {
     left: 75%;
 }
-
+button#playbutton
+{
+    left: 50%;
+}
 button.menubutton
 {
     left: 50%;
@@ -154,7 +157,7 @@ div#death
 
 #spaceship{
     position:absolute;
-    top: 0;
-    left: 0;
+    top: 50%;
+    left: 50%;
     z-index: 2;
 }

@@ -13,11 +13,12 @@ document.addEventListener("DOMContentLoaded", function(event)
                         ,1000);
             }
 
-            let lineBlocks = [];
+            let line_blocks = [];
+            let path_blocks = [];
 
             let createNewLineBlocks = function(score)
             {
-                let lastLineBlocksIndex = lineBlocks.length;
+                let lastLineBlocksIndex = line_blocks.length;
 
                 let createContainer = function()
                 {
@@ -37,7 +38,9 @@ document.addEventListener("DOMContentLoaded", function(event)
                     let randompass = function(nb)
                     {
                         let indCase = Math.round(Math.random() * 1000 * nb) % nb;
-                        lineBlocks[lastLineBlocksIndex].childNodes[1].childNodes[0].childNodes[indCase].classList.add("passage");
+                        let block = line_blocks[lastLineBlocksIndex].childNodes[1].childNodes[0].childNodes[indCase];
+                        block.classList.add("passage");
+                        path_blocks.push(block);
                     }
 
                     let center = document.createElement("div");
@@ -48,11 +51,11 @@ document.addEventListener("DOMContentLoaded", function(event)
                     center.appendChild(line);
                     for (let i = 0; i < nb; i++) {
                         let ncase = document.createElement("div");
-                        lineBlocks[lastLineBlocksIndex].childNodes[1].childNodes[0].appendChild(ncase);
+                        line_blocks[lastLineBlocksIndex].childNodes[1].childNodes[0].appendChild(ncase);
                         ncase.classList.add("bloc");
                     }
                     let hauteur = line.offsetWidth / nb;
-                    lineBlocks[lastLineBlocksIndex].childNodes[1].childNodes[0].style["height"] = hauteur + "px";
+                    line_blocks[lastLineBlocksIndex].childNodes[1].childNodes[0].style["height"] = hauteur + "px";
 
                     randompass(nb);
                 }
@@ -66,11 +69,10 @@ document.addEventListener("DOMContentLoaded", function(event)
 
                 //Create all the blocs
                 let container = createContainer();
-                lineBlocks.push(container);
+                line_blocks.push(container);
                 createLineV(container, "gauche");
                 createLineH(container, nbCases);
                 createLineV(container, "droite");
-                lineBlocks.push(container);
 
                 //Add all Event Listeners to children
                 container.childNodes[0].addEventListener("mouseover", backgroundColor);
@@ -94,7 +96,7 @@ document.addEventListener("DOMContentLoaded", function(event)
                                 this.childNodes[1].childNodes[0].childNodes[i].removeEventListener("mouseover", backgroundColor);
                             }
                             */
-                            lineBlocks.shift();
+                            line_blocks.shift();
                             this.parentNode.removeChild(this);
                         });
             }
