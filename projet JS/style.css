@@ -15,24 +15,24 @@ div
 {
     position: absolute;
     display: flex;
-    top: 0;
+    top: 100vh;
     left: 0;
     box-sizing: border-box;
     height:600px;
     width:100%;
-    animation-duration: 5s;
+
     animation-name: goinD;
-     animation-timing-function: linear;
+    animation-duration: 3s;
+    animation-timing-function: linear;
 }
 
 @keyframes goinD{
-  from{
-      margin-top:-100%;
-  }
-  to{
-    margin-top:100%;
-  }
-
+    0% {
+        top:-100%;
+    }
+    100% {
+        top:100vh;
+    }
 }
 
 .gauche, .droite

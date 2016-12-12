@@ -1,11 +1,24 @@
 "use strict"
+
 document.addEventListener("DOMContentLoaded", function(event)
         {
+            //Necessary for testing (to be removed)
+            let backgroundColor = function()
+            {
+                document.getElementsByTagName("body")[0].style["background-color"] = "#FF0000";
+                setTimeout(function()
+                        {
+                            document.getElementsByTagName("body")[0].style["background-color"] = "";
+                        }
+                        ,1000);
+            }
 
             let lineBlocks = [];
 
             let createNewLineBlocks = function(score)
             {
+                let lastLineBlocksIndex = lineBlocks.length;
+
                 let createContainer = function()
                 {
                     let contain = document.createElement("div");
@@ -44,16 +57,6 @@ document.addEventListener("DOMContentLoaded", function(event)
                     randompass(nb);
                 }
 
-                //Check if there is room for a new line of blocks
-                let lastLineBlocksIndex = lineBlocks.length;
-                if(lastLineBlocksIndex>0) {
-                    //Mettre les blocs.block-line en position absolute dans le css
-                    //Faire l'animation (@keyframes} de descente des blocs.block-line (from{top:-block.height} to {top:window.height})
-                    console.log(lineBlocks[lastLineBlocksIndex-1].style["top"]);
-                //if (top < 5) then create new line of blocks else break
-            }
-
-            if(true) {
                 //Increase number of blocks in the line at each step
                 let nbCases = 5 + score;
                 //Limitation to 100 cases
@@ -67,13 +70,34 @@ document.addEventListener("DOMContentLoaded", function(event)
                 createLineV(container, "gauche");
                 createLineH(container, nbCases);
                 createLineV(container, "droite");
-                //Il faut mettre les addEventListener pour la mort et le score (possiblement dans une fonction  à part)
-            }
-        }
-//Score will be set by masterscript
+                lineBlocks.push(container);
 
-createNewLineBlocks(7);
-createNewLineBlocks(7);
-createNewLineBlocks(7);
-createNewLineBlocks(7);
-});
+                //Add all Event Listeners to children
+                container.childNodes[0].addEventListener("mouseover", backgroundColor);
+                container.childNodes[2].addEventListener("mouseover", backgroundColor);
+                for(let i=0; i<container.childNodes[1].childNodes[0].childNodes.length; i++) {
+                    if(container.childNodes[1].childNodes[0].childNodes[i].classList.contains("passage")) {
+                        //container.childNodes[1].childNodes[0].childNodes[i].addEventListener("mouseover", backgroundColor);
+                    } else {
+                        container.childNodes[1].childNodes[0].childNodes[i].addEventListener("mouseover", backgroundColor);
+                    }
+                }
+
+                //When animation ends, remove all Event Listeners and deletes block-line
+                container.addEventListener("animationend", function()
+                        {
+                            //Not really necessary
+                            /*
+                            this.childNodes[0].removeEventListener("mouseover", backgroundColor);
+                            this.childNodes[2].removeEventListener("mouseover", backgroundColor);
+                            for(let i=0; i<this.childNodes[1].childNodes[0].childNodes.length; i++) {
+                                this.childNodes[1].childNodes[0].childNodes[i].removeEventListener("mouseover", backgroundColor);
+                            }
+                            */
+                            lineBlocks.shift();
+                            this.parentNode.removeChild(this);
+                        });
+            }
+
+            createNewLineBlocks(7);
+        });
