@@ -3,10 +3,10 @@ let updateSpaceshipready = function() {
     let spaceship = document.getElementById("spaceship");
 
     let updateSpaceship = function() {
-        spaceship.style["left"] = mouseX + 'px',
-        spaceship.style["top"] =  mouseY + 'px';
+        spaceship.style["left"] = mouseX - (spaceship.offsetWidth/2) + 'px',
+        spaceship.style["top"] =  mouseY + 5 + 'px';
     }
-    setInterval(updateSpaceship, 10);
+    document.addEventListener("mousemove", updateSpaceship);
 
 }
 
