@@ -1,7 +1,5 @@
-let falling_blocks = [];
 let line_blocks = [];
 let path_blocks = [];
-let danger_blocks = [];
 let score = 0;
 let newScore = function()
 {
@@ -23,7 +21,7 @@ let backgroundColor = function()
             ,1000);
 }
 
-let createNewLineBlocks = function(score)
+let createNewLineBlocks = function()
 {
     let lastLineBlocksIndex = line_blocks.length;
 
@@ -82,35 +80,21 @@ let createNewLineBlocks = function(score)
     createLineV(container, "droite");
 
     //Add all Event Listeners to children
-    container.childNodes[0].addEventListener("mouseover", backgroundColor);
-    container.childNodes[2].addEventListener("mouseover", backgroundColor);
+    container.childNodes[0].addEventListener("mouseover", nowDead);
+    container.childNodes[2].addEventListener("mouseover", nowDead);
     for(let i=0; i<container.childNodes[1].childNodes[0].childNodes.length; i++) {
         if(container.childNodes[1].childNodes[0].childNodes[i].classList.contains("passage")) {
-            //container.childNodes[1].childNodes[0].childNodes[i].addEventListener("mouseover", backgroundColor);
+            container.childNodes[1].childNodes[0].childNodes[i].addEventListener("mouseover", newScore);
         } else {
-            container.childNodes[1].childNodes[0].childNodes[i].addEventListener("mouseover", backgroundColor);
+            container.childNodes[1].childNodes[0].childNodes[i].addEventListener("mouseover", nowDead);
         }
     }
-
-    //When animation ends, remove all Event Listeners and deletes block-line
-    container.addEventListener("animationend", function()
-            {
-                //Not really necessary
-                /*
-                   this.childNodes[0].removeEventListener("mouseover", backgroundColor);
-                   this.childNodes[2].removeEventListener("mouseover", backgroundColor);
-                   for(let i=0; i<this.childNodes[1].childNodes[0].childNodes.length; i++) {
-                   this.childNodes[1].childNodes[0].childNodes[i].removeEventListener("mouseover", backgroundColor);
-                   }
-                   */
-                line_blocks.shift();
-                this.parentNode.removeChild(this);
-            });
 }
 
 let mastergamescript = function()
 {
-    let intervalID;
+    let intervalID1;
+    let intervalID2;
     //Reset variables
     let prevscore = 0;
     score = 0;
@@ -120,18 +104,16 @@ let mastergamescript = function()
     let gamefunc = function()
     {
         if(!isDead) {
-            //Create new line if possible
-            createNewLineBlocks(score);
-
             //to prevent player from hacking the game by getting through over and over to falsely increase score
             if(prevscore != score) {
                 path_blocks[0].removeEventListener("mouseout", newScore);
-                //Uncomment when createNewLineBlocks is impleented
                 path_blocks.shift();
                 prevscore = score;
             }
         } else {
-            clearInterval(intervalID);
+            blackScreen(1000);
+            clearInterval(intervalID1);
+            clearInterval(intervalID2);
             //Total Games Played
             let tgp = parseInt(localStorage.getItem("totalgamesplayed"));
             tgp++;
@@ -148,10 +130,16 @@ let mastergamescript = function()
             //Average Score
             let as = ts/tgp;
             localStorage.setItem("averagescore", as);
+            //detele all Blocks
+            for(let i=0; i<line_blocks.length; i++) {
+                line_blocks[i].parentNode.removeChild(line_blocks[i]);
+            }
         }
     }
-    //Repeat gamefunc
-    intervalID = setInterval(gamefunc, 10);
+
+    let time = (window.innerHeight + 2*600)/(3*600);
+    intervalID1 = setInterval(gamefunc, 10);
+    intervalID2 = setInterval(createNewLineBlocks, 1000*time);
 }
 
 let funcready = function()
