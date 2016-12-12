@@ -1,3 +1,4 @@
+"use strict"
 document.addEventListener("DOMContentLoaded", function(event)
         {
 
@@ -37,7 +38,7 @@ document.addEventListener("DOMContentLoaded", function(event)
                         lineBlocks[lastLineBlocksIndex].childNodes[1].childNodes[0].appendChild(ncase);
                         ncase.classList.add("bloc");
                     }
-                    hauteur = line.offsetWidth / nb;
+                    let hauteur = line.offsetWidth / nb;
                     lineBlocks[lastLineBlocksIndex].childNodes[1].childNodes[0].style["height"] = hauteur + "px";
 
                     randompass(nb);
@@ -70,9 +71,9 @@ document.addEventListener("DOMContentLoaded", function(event)
             }
         }
 //Score will be set by masterscript
-createNewLineBlocks(0);
-createNewLineBlocks(2);
+
 createNewLineBlocks(7);
-createNewLineBlocks(25);
-createNewLineBlocks(100);
+createNewLineBlocks(7);
+createNewLineBlocks(7);
+createNewLineBlocks(7);
 });
