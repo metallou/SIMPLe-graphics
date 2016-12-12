@@ -158,5 +158,5 @@ div#spaceship{
     top: 0;
     left: 0;
     z-index: 2;
-    transform: translateX(-50%) translateY(3%);
+    /*transform: translateX(-50%) translateY(3%);*/
 }
