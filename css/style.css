@@ -145,7 +145,6 @@ div#follow
     left: 75%;
     background-color: #FF0000;
 }
-
 div#death
 {
     top: 25%;
@@ -153,10 +152,9 @@ div#death
     background-color: #0000FF;
 }
 
-div#spaceship{
+#spaceship{
     position:absolute;
     top: 0;
     left: 0;
     z-index: 2;
-    /*transform: translateX(-50%) translateY(3%);*/
 }

@@ -45,12 +45,7 @@ let funcPathReady = function()
     canv.height = window.innerHeight;
     ctx = canv.getContext("2d");
     offX = 0;
-    offY = 0;
-    spaceship = document.getElementById("spaceship");
-    if(spaceship != null && spaceship != undefined) {
-        offX = spaceship.offsetWidth/2;
-        offY = spaceship.offsetHeight*3/4;
-    }
+    offY = 93*0.69;
 
     setInterval(funcPath, 10);
 }
