@@ -4,9 +4,9 @@ let path;
 let maxpathstops;
 let canv;
 let ctx;
-let spaceship;
 let offX;
 let offY;
+let spaceship;
 
 let updateMousePos = function()
 {
@@ -38,12 +38,6 @@ let drawPath = function()
 }
 let funcPath = function()
 {
-    let offX = 0;
-    let offY = 0;
-    if(spaceship != null && spaceship != undefined) {
-        offX = spaceship.offsetWidth/2;
-        offY = spaceship.offsetHeight*3/4;
-    }
     updatePath(offX, offY);
     scrollPath();
     drawPath();
