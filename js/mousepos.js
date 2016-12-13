@@ -4,9 +4,9 @@ const initMouseY = window.innerHeight/4;
 let mouseX = initMouseX;
 let mouseY = initMouseY;
 
-let updateMousePos = function()
+let updateMousePos = function(e)
 {
-    mouseX = event.clientX;
-    mouseY = event.clientY;
+    mouseX = e.clientX;
+    mouseY = e.clientY;
 }
 document.addEventListener("mousemove", updateMousePos);
