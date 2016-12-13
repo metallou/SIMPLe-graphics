@@ -146,28 +146,26 @@ canvas#canv
     left: 0;
 }
 
-.block-line
+#block-lines
 {
     position: absolute;
-    display: flex;
-    top: 100vh;
+    top: 0;
     left: 0;
+    z-index: 1;
+    /*
+    display: flex;
+    flex-direction: column-reverse;
+    */
+    width: 100%;
     box-sizing: border-box;
-    height:600px;
-    width:100%;
-
-    animation-name: goinD;
-    animation-duration: 3s;
-    animation-timing-function: linear;
 }
-@keyframes goinD
+
+.block-line
 {
-    0% {
-        top:-100%;
-    }
-    100% {
-        top:100vh;
-    }
+    display: flex;
+    box-sizing: border-box;
+    height:1000px;
+    width:100%;
 }
 
 .gauche, .droite
@@ -181,9 +179,8 @@ canvas#canv
 .centre
 {
     box-sizing: border-box;
-    height:100%;
-    width:90%;
-    background-color: #00032d;
+    height: 100%;
+    width: 90%;
 }
 
 .ligne
@@ -192,13 +189,15 @@ canvas#canv
     box-sizing: border-box;
 }
 
-.bloc
+.danger, .passage
 {
     flex-grow: 1;
     box-sizing: border-box;
+}
+.danger
+{
     background-color: red;
 }
-
 .passage
 {
     background-color: green;
@@ -234,28 +233,6 @@ canvas#canv
 button:hover
 {
     cursor: crosshair;
-}
-
-
-div#follow, div#death
-{
-    position: absolute;
-    width: 200px;
-    height: 200px;
-    transform: translate(-50%, -50%);
-    background-color: #FF0000;
-}
-div#follow
-{
-    top: 25%;
-    left: 75%;
-    background-color: #FF0000;
-}
-div#death
-{
-    top: 25%;
-    left: 25%;
-    background-color: #0000FF;
 }
 
 #spaceship{
