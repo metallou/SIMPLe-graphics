@@ -1,5 +1,5 @@
-let path;
-let maxpathstops;
+let path = [];
+let maxpathstops = 100;
 let canv;
 let ctx;
 let offX;
@@ -38,8 +38,6 @@ let funcPath = function()
 
 let funcPathReady = function()
 {
-    path = [];
-    maxpathstops = 100;
     canv = document.getElementById("canv");
     canv.width = window.innerWidth;
     canv.height = window.innerHeight;
