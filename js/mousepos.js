@@ -1,5 +1,8 @@
-let mouseX = window.innerWidth/2;
-let mouseY = window.innerHeight/2;
+const initMouseX = window.innerWidth/2;
+const initMouseY = window.innerHeight/4;
+
+let mouseX = initMouseX;
+let mouseY = initMouseY;
 
 let updateMousePos = function()
 {

@@ -1,9 +1,9 @@
 let path = [];
-let maxpathstops = 100;
-let canv;
-let ctx;
-let offX;
-let offY;
+let maxpathstops = 500;
+let offX = 0;
+let offY = 0;
+let canvas1;
+let ctx1;
 let spaceship;
 
 let updatePath = function(offsetX, offsetY)
@@ -21,13 +21,13 @@ let scrollPath = function()
 }
 let drawPath = function()
 {
-    ctx.clearRect(0,0, canv.width,canv.height);
-    ctx.beginPath();
-    ctx.moveTo(path[0].X, path[0].Y);
+    ctx1.clearRect(0,0, canvas1.width,canvas1.height);
+    ctx1.beginPath();
+    ctx1.moveTo(path[0].X, path[0].Y);
     for(let i=1; i<path.length; i++) {
-        ctx.lineTo(path[i].X, path[i].Y);
+        ctx1.lineTo(path[i].X, path[i].Y);
     }
-    ctx.stroke();
+    ctx1.stroke();
 }
 let funcPath = function()
 {
@@ -38,12 +38,13 @@ let funcPath = function()
 
 let funcPathReady = function()
 {
-    canv = document.getElementById("canv");
-    canv.width = window.innerWidth;
-    canv.height = window.innerHeight;
-    ctx = canv.getContext("2d");
+    canvas1 = document.getElementById("canvas1");
+    canvas1.width = window.innerWidth;
+    canvas1.height = window.innerHeight;
+    ctx1 = canvas1.getContext("2d");
+    ctx1.globalCompositeOperation="destination-over";
     offX = 0;
-    offY = 93*0.69;
+    offY = document.getElementById("spaceship").offsetHeight*0.69;
 
     setInterval(funcPath, 10);
 }
