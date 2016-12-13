@@ -1,11 +1,26 @@
+@font-face {
+  font-family: 'PressStart';
+  src: url("../fonts/PressStart2P.ttf") format("truetype");
+  font-style: normal;
+  font-weight: bold; }
+
 html, body
 {
     margin: 0;
     padding: 0;
+<<<<<<< HEAD
     overflow: hidden;
     width: 100vw;
     height: 100vh;
+=======
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+>>>>>>> elise-pagestatsdesign
     cursor: none;
+    font-family: 'PressStart', sans-serif;
+    color: #FFF;
+    background-color: #00032d;
 }
 
 div#wrapper
@@ -59,11 +74,46 @@ main, aside
     box-sizing: border-box;
 }
 
-button.menubutton, button#optionsbutton, button#statsbutton, button#playbutton
+
+button
+{
+  padding: 10px 20px;
+  margin: 20px;
+  font-family: 'PressStart', sans-serif;
+  background-color: #00032d;
+  border: 5px solid #FFF;
+  color: #FFF;
+  transition: color 0.1s, background-color 0.1s;
+}
+
+button:hover
+{
+  color: #00032d;
+  background-color: #FFF;
+  transition: color 0.1s, background-color 0.1s;
+}
+
+button.selected{
+  color: #F00;
+  background-color: #FFF;
+  border-color: #F00;
+}
+
+
+
+button.menubutton, button#optionsbutton, button#statsbutton
 {
     position: absolute;
-    bottom: 25%;
+    bottom: 15%;
     transform: translate(-50%, -50%);
+}
+
+button#playbutton
+{
+  position: absolute;
+  transform: translate(-50%, -50%);
+  bottom: 30%;
+  font-size: 2em;
 }
 
 button#optionsbutton
@@ -90,7 +140,9 @@ button.menubutton
 
 #statspage
 {
-
+display: flex;
+justify-content: center;
+align-items: center;
 }
 
 canvas#canv
@@ -162,7 +214,10 @@ canvas#canv
 {
     margin-left: auto;
     margin-right: auto;
-    text-align: right;
+    padding: 20px;
+    text-align: left;
+    background-color: #00032d;
+    border: 5px solid #FFF;
 }
 
 #optionspage section
