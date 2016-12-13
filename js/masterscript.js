@@ -113,6 +113,7 @@ let createNewLineBlock = function(wrapper, scr)
 let mastergamescript = function()
 {
     let intervalID;
+    let blockheight;
     //Reset variables
     let prevscore = 0;
     score = 0;
@@ -122,15 +123,65 @@ let mastergamescript = function()
     master_container.id = "block-lines";
     document.getElementById("wrapper").appendChild(master_container);
 
+    let updateLocalStorage = function(score, bonus, bossup, bossdown)
+    {
+        //Total Games Played
+        let tgp = parseInt(localStorage.getItem("totalgamesplayed"));
+        tgp++;
+        localStorage.setItem("totalgamesplayed", tgp);
+
+        //Total Score
+        let ts = parseInt(localStorage.getItem("totalscore"));
+        ts += score;
+        localStorage.setItem("totalscore", ts);
+
+        //Highest Score
+        let hs = parseInt(localStorage.getItem("highestscore"));
+        if(hs < score) {
+            localStorage.setItem("highestscore", score);
+        }
+
+        //Average Score
+        let as = Math.floor((ts/tgp)*1000)/1000;
+        localStorage.setItem("averagescore", as);
+
+        //Last Score
+        localStorage.setItem("lastscore", score);
+
+        //Total bonuses taken
+        let tbt = parseInt(localStorage.getItem("totalbonusestaken"));
+        tbt += bonus;
+        localStorage.setItem("totalbonusestaken", tbt);
+
+        //Total Boss Waves Survived
+        let tbws = parseInt(localStorage.getItem("totalbonusestaken"));
+        tbws += bossup + bossdown;
+        localStorage.setItem("totalbonusestaken", tbws);
+
+        //Total Falling Boss Waves Survived
+        let tfbws = parseInt(localStorage.getItem("totalbonusestaken"));
+        tfbws += bossdown;
+        localStorage.setItem("totalbonusestaken", tfbws);
+
+        //Total Rising Boos Waves Survived
+        let trbws = parseInt(localStorage.getItem("totalbonusestaken"));
+        trbws += bossdown;
+        localStorage.setItem("totalbonusestaken", trbws);
+    }
+
     //boucle de jeu
     let gamefunc = function()
     {
         if(!isDead) {
-            //Add a new block-line to master_container if possible
+            //Add a new block-line to master_container (and reset top position) if possible
             if(styletop>=-10) {
                 createNewLineBlock(master_container, score);
-                styletop -= 600;
+                blockheight = window.getComputedStyle(master_container.lastChild).getPropertyValue("height");
+                blockheight = blockheight.substr(0,blockheight.length-2);
+                blockheight = parseInt(blockheight);
+                styletop -= blockheight;
             }
+            //remove oldest block-line when out of screen
             if(master_container.offsetHeight > 2*600 + window.innerHeight) {
                 master_container.removeChild(master_container.lastChild);
                 line_blocks.shift();
@@ -147,37 +198,10 @@ let mastergamescript = function()
         } else {
             blackScreen(1000);
             clearInterval(intervalID);
-            //Total Games Played
-            let tgp = parseInt(localStorage.getItem("totalgamesplayed"));
-            tgp++;
-            localStorage.setItem("totalgamesplayed", tgp);
-            //Total Score
-            let ts = parseInt(localStorage.getItem("totalscore"));
-            ts += score;
-            localStorage.setItem("totalscore", ts);
-            //Highest Score
-            let hs = parseInt(localStorage.getItem("highestscore"));
-            if(hs < score) {
-                localStorage.setItem("highestscore", score);
-            }
-            //Average Score
-            let as = ts/tgp;
-            localStorage.setItem("averagescore", as);
+            updateLocalStorage(score, 0, 0, 0);
             //delete all Blocks
             master_container.parentNode.removeChild(master_container);
         }
     }
-
     intervalID = setInterval(gamefunc, 10);
 }
-
-let funcready = function()
-{
-    //Test blocks (to be removed)
-    let tmp = document.getElementById("follow");
-    tmp.addEventListener("mouseout", newScore);
-    let tmp2 = document.getElementById("death");
-    tmp2.addEventListener("mouseover", nowDead);
-    path_blocks.push(tmp);
-}
-document.addEventListener("DOMContentLoaded", funcready);

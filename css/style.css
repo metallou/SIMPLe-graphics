@@ -118,7 +118,7 @@ canvas#canv
 {
     display: flex;
     box-sizing: border-box;
-    height:600px;
+    height:1000px;
     width:100%;
 }
 
@@ -185,28 +185,6 @@ canvas#canv
 button:hover
 {
     cursor: crosshair;
-}
-
-
-div#follow, div#death
-{
-    position: absolute;
-    width: 200px;
-    height: 200px;
-    transform: translate(-50%, -50%);
-    background-color: #FF0000;
-}
-div#follow
-{
-    top: 25%;
-    left: 75%;
-    background-color: #FF0000;
-}
-div#death
-{
-    top: 25%;
-    left: 25%;
-    background-color: #0000FF;
 }
 
 #spaceship{
