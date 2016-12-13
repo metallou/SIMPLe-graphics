@@ -100,28 +100,26 @@ canvas#canv
     left: 0;
 }
 
-.block-line
+#block-lines
 {
     position: absolute;
-    display: flex;
-    top: 100vh;
+    top: 0;
     left: 0;
+    z-index: 1;
+    /*
+    display: flex;
+    flex-direction: column-reverse;
+    */
+    width: 100%;
+    box-sizing: border-box;
+}
+
+.block-line
+{
+    display: flex;
     box-sizing: border-box;
     height:600px;
     width:100%;
-
-    animation-name: goinD;
-    animation-duration: 3s;
-    animation-timing-function: linear;
-}
-@keyframes goinD
-{
-    0% {
-        top:-100%;
-    }
-    100% {
-        top:100vh;
-    }
 }
 
 .gauche, .droite
@@ -135,8 +133,8 @@ canvas#canv
 .centre
 {
     box-sizing: border-box;
-    height:100%;
-    width:90%;
+    height: 100%;
+    width: 90%;
     background-color: grey;
 }
 
@@ -146,13 +144,15 @@ canvas#canv
     box-sizing: border-box;
 }
 
-.bloc
+.danger, .passage
 {
     flex-grow: 1;
     box-sizing: border-box;
+}
+.danger
+{
     background-color: red;
 }
-
 .passage
 {
     background-color: green;
