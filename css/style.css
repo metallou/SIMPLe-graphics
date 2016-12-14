@@ -198,6 +198,10 @@ canvas#canv
 {
     background-color: red;
 }
+.danger img
+{
+    max-width: 100%;
+}
 .passage
 {
     background-color: green;

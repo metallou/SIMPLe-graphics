@@ -52,13 +52,19 @@ const createNewLineBlock = function(wrapper, scr)
                 const block = ligne.childNodes[indCase];
                 block.classList.remove("danger");
                 block.classList.add("passage");
+                block.textContent = "";
                 path_blocks.push(block);
             }
 
             let block;
+            let img;
             for (let i = 0; i < nb; i++) {
                 block = document.createElement("div");
                 block.classList.add("danger");
+                img = document.createElement("img");
+                img.src = "img/tintin_spaceship.gif";
+                img.alt = "asteroid";
+                block.appendChild(img);
                 ligne.appendChild(block);
             }
 
