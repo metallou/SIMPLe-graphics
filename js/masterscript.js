@@ -46,8 +46,7 @@ const createNewLineBlock = function(wrapper, scr)
             centre.appendChild(line);
             return line;
         }
-        const createDangerBlocks = function(ligne, nb)
-        {
+        const createDangerBlocks = function(ligne, nb){
             const randompass = function(ligne, nb)
             {
                 const indCase = Math.round(Math.random() * 1000 * nb) % nb;
@@ -56,6 +55,7 @@ const createNewLineBlock = function(wrapper, scr)
                 block.classList.add("passage");
                 block.textContent = "";
                 path_blocks.push(block);
+                console.log("bonjour, je suis randomapss")
             }
 
             let block;

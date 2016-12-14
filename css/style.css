@@ -191,10 +191,9 @@ canvas#canv
 
 .danger, .passage
 {
-    flex-grow: 1;
+    flex: 1;
     box-sizing: border-box;
 }
-.danger
 {
     background-color: red;
 }
@@ -202,10 +201,7 @@ canvas#canv
 {
     max-width: 100%;
 }
-.passage
-{
-    background-color: green;
-}
+
 
 #statspage table
 {
