@@ -1,6 +1,6 @@
-let updateSpaceshipready = function() {
+const updateSpaceshipReady = function() {
 
-    let spaceship = document.getElementById("spaceship");
+    const spaceship = document.getElementById("spaceship");
     spaceship.style["left"] = (initMouseX - spaceship.offsetWidth/2) + "px";
     spaceship.style["top"] = initMouseY + "px";
 
@@ -10,4 +10,4 @@ let updateSpaceshipready = function() {
     }
     document.addEventListener("mousemove", updateSpaceship);
 }
-document.addEventListener("DOMContentLoaded", updateSpaceshipready);
+document.addEventListener("DOMContentLoaded", updateSpaceshipReady);

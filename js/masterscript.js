@@ -1,62 +1,55 @@
-let line_blocks = [];
-let path_blocks = [];
+"use strict"
+
+const line_blocks = [];
+const path_blocks = [];
 let master_container;
 let score = 0;
-let newScore = function()
+const newScore = function()
 {
     score++;
 }
 let isDead = false;
-let nowDead = function()
+const nowDead = function()
 {
     isDead = true;
 }
 
-let scrollMasterContainer = function(wrapper, offset)
+const createNewLineBlock = function(wrapper, scr)
 {
-    let valtop = 5 + offset;
-    wrapper.style["top"] = valtop + "px";
-    return valtop;
-}
-
-let createNewLineBlock = function(wrapper, scr)
-{
-    let lastLineBlocksIndex = line_blocks.length;
-
-    let createContainer = function()
+    const createContainer = function()
     {
-        let contain = document.createElement("div");
+        const contain = document.createElement("div");
         contain.classList.add("block-line");
         return contain;
     }
-    let createLineV = function(contain, position)
+    const createLineV = function(contain, position)
     {
-        let vert = document.createElement("div");
+        const vert = document.createElement("div");
         vert.classList.add(position);
         contain.appendChild(vert);
     }
-    let createLineH = function(contain, nb)
+    const createLineH = function(contain, nb)
     {
-        let createCentralContainer = function(conteneur)
+        const createCentralContainer = function(conteneur)
         {
-            let center = document.createElement("div");
+            const center = document.createElement("div");
             center.classList.add("centre");
             conteneur.appendChild(center);
             return center;
         }
-        let createCentralLine = function(centre)
+        const createCentralLine = function(centre)
         {
-            let line = document.createElement("div");
+            const line = document.createElement("div");
             line.classList.add("ligne");
             centre.appendChild(line);
             return line;
         }
-        let createDangerBlocks = function(ligne, nb)
+        const createDangerBlocks = function(ligne, nb)
         {
-            let randompass = function(ligne, nb)
+            const randompass = function(ligne, nb)
             {
-                let indCase = Math.round(Math.random() * 1000 * nb) % nb;
-                let block = ligne.childNodes[indCase];
+                const indCase = Math.round(Math.random() * 1000 * nb) % nb;
+                const block = ligne.childNodes[indCase];
                 block.classList.remove("danger");
                 block.classList.add("passage");
                 path_blocks.push(block);
@@ -72,8 +65,8 @@ let createNewLineBlock = function(wrapper, scr)
             randompass(ligne, nb);
         }
 
-        let center = createCentralContainer(contain);
-        let line = createCentralLine(center);
+        const center = createCentralContainer(contain);
+        const line = createCentralLine(center);
         createDangerBlocks(line, nb);
     }
 
@@ -85,17 +78,19 @@ let createNewLineBlock = function(wrapper, scr)
     }
 
     //Create all the blocs
-    let container = createContainer();
+    const container = createContainer();
     createLineV(container, "gauche");
     createLineH(container, nbCases);
     createLineV(container, "droite");
+    container.id = "C" + Math.floor(Math.random()*1000);
 
     if(wrapper.childNodes.length>0) {
         wrapper.insertBefore(container, wrapper.firstChild);
+        console.log(wrapper.childNodes.length);
     } else {
         wrapper.appendChild(container);
     }
-    let line = wrapper.firstChild.childNodes[1].firstChild;
+    const line = wrapper.firstChild.childNodes[1].firstChild;
     line.style["height"] = line.firstChild.offsetWidth + "px";
 
     //Add all Event Listeners to children
@@ -110,7 +105,7 @@ let createNewLineBlock = function(wrapper, scr)
     }
 }
 
-let mastergamescript = function()
+const mastergamescript = function()
 {
     let intervalID;
     let blockheight;
@@ -121,9 +116,17 @@ let mastergamescript = function()
     isDead = false;
     master_container = document.createElement("div");
     master_container.id = "block-lines";
+    master_container.style["top"] = styletop + "px";
     document.getElementById("wrapper").appendChild(master_container);
 
-    let updateLocalStorage = function(score, bonus, bossup, bossdown)
+    const scrollMasterContainer = function(wrapper, offset)
+    {
+        let valtop = 5 + offset;
+        wrapper.style["top"] = valtop + "px";
+        return valtop;
+    }
+
+    const updateLocalStorage = function(score, bonus, bossup, bossdown)
     {
         //Total Games Played
         let tgp = parseInt(localStorage.getItem("totalgamesplayed"));
@@ -170,11 +173,12 @@ let mastergamescript = function()
     }
 
     //boucle de jeu
-    let gamefunc = function()
+    const gamefunc = function()
     {
+        styletop = document.getElementById("block-lines").style["top"];
+        styletop = styletop.substr(0,styletop.length-2);
+        styletop = parseInt(styletop);
         if(!isDead) {
-            //Make master_container go down
-            styletop = scrollMasterContainer(master_container, styletop);
             //Add a new block-line to master_container (and reset top position) if possible
             if(styletop>=-10) {
                 createNewLineBlock(master_container, score);
@@ -184,10 +188,12 @@ let mastergamescript = function()
                 styletop -= blockheight;
             }
             //remove oldest block-line when out of screen
-            if(master_container.offsetHeight > 2*600 + window.innerHeight) {
+            if(master_container.offsetHeight > 2*blockheight + window.innerHeight) {
                 master_container.removeChild(master_container.lastChild);
                 line_blocks.shift();
             }
+            //Make master_container go down
+            styletop = scrollMasterContainer(master_container, styletop);
 
             //to prevent player from hacking the game by getting through over and over to falsely increase score
             if(prevscore != score) {

@@ -1,10 +1,10 @@
-let statsfunc = function()
+const statsFunc = function()
 {
-    let nbelems = document.getElementsByTagName("tr").length;
+    const nb_elems = document.getElementsByTagName("tr").length;
     let key;
     let value;
-    for(let i=1; i<=nbelems; i++) {
-        key = document.getElementById("t"+i).innerHTML;
+    for(let i=1; i<=nb_elems; i++) {
+        key = document.getElementById("k"+i).innerHTML;
         key = key.toLowerCase();
         key = key.split("\n").join("");;
         key = key.split(":").join("");
@@ -14,8 +14,8 @@ let statsfunc = function()
     }
 }
 
-let statsfuncready = function()
+const statsFuncReady = function()
 {
-    document.getElementById("statsbutton").addEventListener("click", statsfunc);
+    document.getElementById("statsbutton").addEventListener("click", statsFunc);
 }
-document.addEventListener("DOMContentLoaded", statsfuncready);
+document.addEventListener("DOMContentLoaded", statsFuncReady);

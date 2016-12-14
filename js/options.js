@@ -1,4 +1,4 @@
-let optionsfunc = function()
+let optionsFunc = function()
 {
     const keysonoff =
         [
@@ -18,10 +18,10 @@ let optionsfunc = function()
         "totalrisingbosswavessurvived"
         ];
 
-    let checkValue = function(key)
+    const checkValue = function(key)
     {
-        let elemon = document.getElementById(key+"on");
-        let elemoff = document.getElementById(key+"off");
+        const elemon = document.getElementById(key+"on");
+        const elemoff = document.getElementById(key+"off");
         if(localStorage.getItem(key) === "true") {
             if(!elemon.classList.contains("selected")) {
                 elemon.classList.add("selected");
@@ -67,8 +67,8 @@ let optionsfunc = function()
     }
 }
 
-let optionsfuncready = function()
+const optionsFuncReady = function()
 {
-    document.getElementById("optionsbutton").addEventListener("click", optionsfunc);
+    document.getElementById("optionsbutton").addEventListener("click", optionsFunc);
 }
-document.addEventListener("DOMContentLoaded", optionsfuncready);
+document.addEventListener("DOMContentLoaded", optionsFuncReady);

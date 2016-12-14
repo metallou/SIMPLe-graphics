@@ -1,17 +1,17 @@
-let blackScreen = function(time)
+const blackScreen = function(time)
 {
-    let elem = document.createElement("div");
-    let blackScreenOff = function()
+    const elem = document.createElement("div");
+    const blackscreenOff = function()
     {
         document.getElementById("wrapper").removeChild(elem);
     }
 
     elem.classList.add("blackscreen");
     document.getElementById("wrapper").appendChild(elem);
-    setTimeout(blackScreenOff, time);
+    setTimeout(blackscreenOff, time);
 }
 
-let buttonready = function()
+const buttonReady = function()
 {
     document.getElementById("optionsbutton").addEventListener("click", function()
             {
@@ -25,7 +25,7 @@ let buttonready = function()
             });
     document.getElementById("playbutton").addEventListener("click", mastergamescript);
 
-    let buttons = document.getElementsByClassName("menubutton");
+    const buttons = document.getElementsByClassName("menubutton");
     for(let i=0; i<buttons.length; i++) {
         buttons[i].addEventListener("click", function()
                 {
@@ -34,4 +34,4 @@ let buttonready = function()
                 });
     }
 }
-document.addEventListener("DOMContentLoaded", buttonready);
+document.addEventListener("DOMContentLoaded", buttonReady);
