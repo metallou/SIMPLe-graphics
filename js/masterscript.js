@@ -86,7 +86,6 @@ const createNewLineBlock = function(wrapper, scr)
 
     if(wrapper.childNodes.length>0) {
         wrapper.insertBefore(container, wrapper.firstChild);
-        console.log(wrapper.childNodes.length);
     } else {
         wrapper.appendChild(container);
     }
