@@ -1,12 +1,5 @@
 "use strict"
 
-let isDead = false;
-const nowDead = function(event)
-{
-    isDead = true;
-    document.getElementById("pages").style["display"] = "";
-}
-
 const mastergamescript = function()
 {
     let danger_blocks;
@@ -14,8 +7,7 @@ const mastergamescript = function()
     let blockheight;
     let score = 0;
     let styletop = 0;
-    //Reset variables
-    isDead = false;
+    let isDead = false;
     const master_container = document.createElement("div");
     master_container.id = "block-lines";
     master_container.style["top"] = styletop + "px";
@@ -28,41 +20,46 @@ const mastergamescript = function()
         return valtop;
     }
 
+    const newScore = function(scr)
+    {
+        return scr+1;
+    }
+
     const updateDangerBlocks = function(wrapper, d_b)
     {
         d_b = [];
         const st = parseInt(wrapper.style["top"].substr(0,wrapper.style["top"].length-2));
-        let elem = wrapper.firstChild;
-        const wV = elem.firstChild.offsetWidth;
-        const hV = elem.firstChild.offsetHeight;
-        const wH = elem.childNodes[1].firstChild.offsetWidth;
-        const hH = elem.childNodes[1].firstChild.offsetHeight;
-        const wb = elem.childNodes[1].firstChild.firstChild.offsetWidth;
+        const wV = wrapper.firstChild.firstChild.offsetWidth;
+        const hV = wrapper.firstChild.firstChild.offsetHeight;
+        const wH = wrapper.firstChild.childNodes[1].firstChild.offsetWidth;
+        const hH = wrapper.firstChild.childNodes[1].firstChild.offsetHeight;
+
+        let wb;
+        let elem;
         for(let i=0; i<wrapper.childNodes.length; i++) {
-            elem = wrapper.childNodes[i].firstChild;
             d_b.push(
                     {
                         X1: 0,
                         X2: wV,
-                        Y1: st+ (i*hV),
+                        Y1: st + (i*hV),
                         Y2: st + (i*hV) + hV
                     });
-            elem = wrapper.childNodes[i].lastChild;
             d_b.push(
                     {
                         X1: wV + wH,
                         X2: wV + wH + wV,
-                        Y1: st+ (i*hV),
+                        Y1: st + (i*hV),
                         Y2: st + (i*hV) + hV
                     });
             elem = wrapper.childNodes[i].childNodes[1].firstChild;
+            wb = elem.firstChild.offsetWidth;
             for(let j=0; j<elem.childNodes.length; j++) {
-                if(!elem.childNodes[i].classList.contains("passage")) {
+                if(elem.childNodes[j].classList.contains("danger")) {
                     d_b.push(
                             {
                                 X1: wV + (j*wb),
                                 X2: wV + (j*wb) + wb,
-                                Y1: st+ (i*hV),
+                                Y1: st + (i*hV),
                                 Y2: st + (i*hV) + wb
                             });
                 }
@@ -71,10 +68,9 @@ const mastergamescript = function()
         return d_b;
     }
     const checkDead = function(d_b) {
-        console.log(d_b.length);
         for(let i=0; i<d_b.length; i++) {
-            if(d_b[i].X1 <= mouseX && d_b.X2 >= mouseX) {
-                if(d_b[i].Y1 <= mouseY && d_b.Y2 >= mouseY) {
+            if(d_b[i].X1 < mouseX && mouseX <= d_b[i].X2) {
+                if(d_b[i].Y1 < mouseY && mouseY <= d_b[i].Y2) {
                     return true;
                 }
             }
@@ -209,16 +205,6 @@ const mastergamescript = function()
         }
         const line = wrapper.firstChild.childNodes[1].firstChild;
         line.style["height"] = line.firstChild.offsetWidth + "px";
-
-        //Add all Event Listeners to children
-        container.childNodes[0].addEventListener("mouseover", nowDead);
-        container.childNodes[2].addEventListener("mouseover", nowDead);
-        let blocks = container.childNodes[1].childNodes[0].childNodes;
-        for(let i=0; i<blocks.length; i++) {
-            if(!blocks[i].classList.contains("passage")) {
-                blocks[i].addEventListener("mouseover", nowDead);
-            }
-        }
     }
 
     //boucle de jeu
@@ -239,10 +225,13 @@ const mastergamescript = function()
             //remove oldest block-line when out of screen
             if(master_container.offsetHeight > 2*blockheight + window.innerHeight) {
                 master_container.removeChild(master_container.lastChild);
+                score = newScore(score);
             }
             //Make master_container go down
             styletop = scrollMasterContainer(master_container, offsetDown, styletop);
+            //Update list of danger blocks
             danger_blocks = updateDangerBlocks(master_container, danger_blocks);
+            //Check if current position crosses a danger block
             isDead = checkDead(danger_blocks);
         } else {
             blackScreen(1000);
@@ -250,6 +239,7 @@ const mastergamescript = function()
             updateLocalStorage(score, 0, 0, 0);
             //delete all Blocks
             master_container.parentNode.removeChild(master_container);
+            document.getElementById("pages").style["display"] = "";
         }
     }
     intervalID = setInterval(gamefunc, 10);
