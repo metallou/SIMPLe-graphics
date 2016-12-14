@@ -69,21 +69,21 @@ const createNewLineBlock = function(wrapper, scr)
                 switch(randd){
                   case 0:
                     img.src = "img/asteroids/ast_blue.png";
-
+                    img.classList.add("rotating");
                     break;
 
                   case 1:
                       img.src = "img/asteroids/ast_grey.png";
-
+                      img.classList.add("rotating");
                       break;
 
                   case 2:
                       img.src = "img/asteroids/ast_darkgrey.png";
-
+                      img.classList.add("rotating");
                       break;
                   case 3:
                       img.src = "img/asteroids/ast_simplon.png";
-
+                      img.classList.add("rotating");
                         break;
                 }
                 img.alt = "asteroid";
