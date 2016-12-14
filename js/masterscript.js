@@ -58,16 +58,37 @@ const createNewLineBlock = function(wrapper, scr)
 
             let block;
             let img;
+
             for (let i = 0; i < nb; i++) {
                 block = document.createElement("div");
                 block.classList.add("danger");
                 img = document.createElement("img");
-                img.src = "img/tintin_spaceship.gif";
+                let randd=Math.round(Math.random() * 1000 * 4)%4;
+                switch(randd){
+                  case 0:
+                    img.src = "img/asteroids/ast_blue.png";
+
+                    break;
+
+                  case 1:
+                      img.src = "img/asteroids/ast_grey.png";
+
+                      break;
+
+                  case 2:
+                      img.src = "img/asteroids/ast_darkgrey.png";
+
+                      break;
+                  case 3:
+                      img.src = "img/asteroids/ast_simplon.png";
+
+                        break;
+                }
                 img.alt = "asteroid";
+
                 block.appendChild(img);
                 ligne.appendChild(block);
             }
-
             randompass(ligne, nb);
         }
 
