@@ -4,14 +4,16 @@ const line_blocks = [];
 const path_blocks = [];
 let master_container;
 let score = 0;
-const newScore = function()
+const newScore = function(event)
 {
     score++;
+    event.target.removeEventListener("mouseout", newScore);
 }
 let isDead = false;
-const nowDead = function()
+const nowDead = function(event)
 {
     isDead = true;
+    document.getElementById("pages").style["display"] = "";
 }
 
 const createNewLineBlock = function(wrapper, scr)
@@ -88,7 +90,6 @@ const createNewLineBlock = function(wrapper, scr)
     createLineV(container, "gauche");
     createLineH(container, nbCases);
     createLineV(container, "droite");
-    container.id = "C" + Math.floor(Math.random()*1000);
 
     if(wrapper.childNodes.length>0) {
         wrapper.insertBefore(container, wrapper.firstChild);
@@ -101,11 +102,12 @@ const createNewLineBlock = function(wrapper, scr)
     //Add all Event Listeners to children
     container.childNodes[0].addEventListener("mouseover", nowDead);
     container.childNodes[2].addEventListener("mouseover", nowDead);
-    for(let i=0; i<container.childNodes[1].childNodes[0].childNodes.length; i++) {
-        if(container.childNodes[1].childNodes[0].childNodes[i].classList.contains("passage")) {
-            container.childNodes[1].childNodes[0].childNodes[i].addEventListener("mouseout", newScore);
+    let blocks = container.childNodes[1].childNodes[0].childNodes;
+    for(let i=0; i<blocks.length; i++) {
+        if(blocks[i].classList.contains("passage")) {
+            blocks[i].addEventListener("mouseout", newScore);
         } else {
-            container.childNodes[1].childNodes[0].childNodes[i].addEventListener("mouseover", nowDead);
+            blocks[i].addEventListener("mouseover", nowDead);
         }
     }
 }
@@ -124,9 +126,9 @@ const mastergamescript = function()
     master_container.style["top"] = styletop + "px";
     document.getElementById("wrapper").appendChild(master_container);
 
-    const scrollMasterContainer = function(wrapper, offset)
+    const scrollMasterContainer = function(wrapper, offset, previous)
     {
-        let valtop = 5 + offset;
+        let valtop = offset + previous;
         wrapper.style["top"] = valtop + "px";
         return valtop;
     }
@@ -186,7 +188,7 @@ const mastergamescript = function()
         if(!isDead) {
             //Add a new block-line to master_container (and reset top position) if possible
             if(styletop>=-10) {
-                createNewLineBlock(master_container, score);
+                createNewLineBlock(master_container, prevscore);
                 blockheight = window.getComputedStyle(master_container.lastChild).getPropertyValue("height");
                 blockheight = blockheight.substr(0,blockheight.length-2);
                 blockheight = parseInt(blockheight);
@@ -198,11 +200,10 @@ const mastergamescript = function()
                 line_blocks.shift();
             }
             //Make master_container go down
-            styletop = scrollMasterContainer(master_container, styletop);
+            styletop = scrollMasterContainer(master_container, offsetDown, styletop);
 
             //to prevent player from hacking the game by getting through over and over to falsely increase score
             if(prevscore != score) {
-                path_blocks[0].removeEventListener("mouseout", newScore);
                 path_blocks.shift();
                 prevscore = score;
             }

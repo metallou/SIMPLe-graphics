@@ -1,5 +1,6 @@
 //Global variable
 const path = [];
+const offsetDown = Math.floor(0.5*window.innerHeight/100);
 
 const funcPath = function()
 {
@@ -23,7 +24,7 @@ const funcPath = function()
     const scrollPath = function()
     {
         for(let i=0; i<path.length; i++) {
-            path[i].Y += 5;
+            path[i].Y += offsetDown;
         }
     }
     const drawPath = function()
