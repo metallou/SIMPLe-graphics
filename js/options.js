@@ -1,23 +1,23 @@
-let keysonoff =
-[
-    "music",
-    "sound"
-];
-let keys =
-[
-    "totalgamesplayed",
-    "totalscore",
-    "highestscore",
-    "averagescore",
-    "lastscore",
-    "totalbonusestaken",
-    "totalbosswavessurvived",
-    "totalfallingbosswavessurvived",
-    "totalrisingbosswavessurvived"
-];
-
 let optionsfunc = function()
 {
+    const keysonoff =
+        [
+        "music",
+        "sound"
+        ];
+    const keys =
+        [
+        "totalgamesplayed",
+        "totalscore",
+        "highestscore",
+        "averagescore",
+        "lastscore",
+        "totalbonusestaken",
+        "totalbosswavessurvived",
+        "totalfallingbosswavessurvived",
+        "totalrisingbosswavessurvived"
+        ];
+
     let checkValue = function(key)
     {
         let elemon = document.getElementById(key+"on");

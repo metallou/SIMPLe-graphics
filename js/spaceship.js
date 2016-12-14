@@ -9,7 +9,5 @@ let updateSpaceshipready = function() {
         spaceship.style["top"] =  (mouseY + 5) + 'px';
     }
     document.addEventListener("mousemove", updateSpaceship);
-
 }
-
 document.addEventListener("DOMContentLoaded", updateSpaceshipready);

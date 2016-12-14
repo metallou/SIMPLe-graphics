@@ -103,7 +103,7 @@ let createNewLineBlock = function(wrapper, scr)
     container.childNodes[2].addEventListener("mouseover", nowDead);
     for(let i=0; i<container.childNodes[1].childNodes[0].childNodes.length; i++) {
         if(container.childNodes[1].childNodes[0].childNodes[i].classList.contains("passage")) {
-            container.childNodes[1].childNodes[0].childNodes[i].addEventListener("mouseover", newScore);
+            container.childNodes[1].childNodes[0].childNodes[i].addEventListener("mouseout", newScore);
         } else {
             container.childNodes[1].childNodes[0].childNodes[i].addEventListener("mouseover", nowDead);
         }
@@ -114,10 +114,10 @@ let mastergamescript = function()
 {
     let intervalID;
     let blockheight;
-    //Reset variables
     let prevscore = 0;
+    let styletop = 0;
+    //Reset variables
     score = 0;
-    styletop = 0;
     isDead = false;
     master_container = document.createElement("div");
     master_container.id = "block-lines";
@@ -173,6 +173,8 @@ let mastergamescript = function()
     let gamefunc = function()
     {
         if(!isDead) {
+            //Make master_container go down
+            styletop = scrollMasterContainer(master_container, styletop);
             //Add a new block-line to master_container (and reset top position) if possible
             if(styletop>=-10) {
                 createNewLineBlock(master_container, score);
@@ -186,8 +188,6 @@ let mastergamescript = function()
                 master_container.removeChild(master_container.lastChild);
                 line_blocks.shift();
             }
-            //Make master_container go down
-            styletop = scrollMasterContainer(master_container, styletop);
 
             //to prevent player from hacking the game by getting through over and over to falsely increase score
             if(prevscore != score) {
