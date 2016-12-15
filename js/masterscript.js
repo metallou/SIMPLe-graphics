@@ -13,8 +13,10 @@ const mastergamescript = function()
     master_container.style["top"] = styletop + "px";
     document.getElementById("wrapper").appendChild(master_container);
     const levelChoice = (Math.floor(Math.random()*1000*100)%100);
-    const isBoss = levelChoice >= 80;
-    const isBossUp= isBoss && (levelChoice%2 == 0);
+    const isBoss = levelChoice >= 0;
+    const isBossUp = isBoss && (levelChoice%2 == 0);
+    const scoreBossUp = 10;
+    const scoreBossDown = 20;
 
     const checkScore = function(wrapper, scr)
     {
@@ -241,38 +243,118 @@ const mastergamescript = function()
         line.style["height"] = line.firstChild.offsetWidth + "px";
     }
 
+    const checkBossUp = function(b, iD) {
+        if(!iD) {
+            const style = window.getComputedStyle(b).getPropertyValue("top");
+            if(mouseY >= parseInt(style.substr(0,style.length-2))) {
+                return true;
+            }
+            return false;
+        }
+        return iD;
+    }
+
+    const bossUpFunc = function()
+    {
+        const b = document.createElement("div");
+        b.id = "bossup";
+        document.getElementById("wrapper").appendChild(b);
+        return b;
+    }
+    const bossDownFunc = function()
+    {
+        const b = document.createElement("div");
+        b.id = "bossdown";
+        document.getElementById("wrapper").appendChild(b);
+        return b;
+    }
+    let boss;
+    if(isBoss) {
+        if(isBossUp) {
+            boss = bossUpFunc();
+        } else {
+            boss = bossDownFunc();
+        }
+    }
+
     //boucle de jeu
     const gamefunc = function()
     {
-        styletop = document.getElementById("block-lines").style["top"];
-        styletop = styletop.substr(0,styletop.length-2);
-        styletop = parseInt(styletop);
-        if(!isDead) {
-            //Add a new block-line to master_container (and reset top position) if possible
-            if(styletop>=-10) {
-                createNewLineBlock(master_container, score);
-                blockheight = window.getComputedStyle(master_container.lastChild).getPropertyValue("height");
-                blockheight = blockheight.substr(0,blockheight.length-2);
-                blockheight = parseInt(blockheight);
-                styletop -= blockheight;
+        if(!isBoss) {
+            styletop = document.getElementById("block-lines").style["top"];
+            styletop = styletop.substr(0,styletop.length-2);
+            styletop = parseInt(styletop);
+            if(!isDead) {
+                //Add a new block-line to master_container (and reset top position) if possible
+                if(styletop>=-10) {
+                    createNewLineBlock(master_container, score);
+                    blockheight = window.getComputedStyle(master_container.lastChild).getPropertyValue("height");
+                    blockheight = blockheight.substr(0,blockheight.length-2);
+                    blockheight = parseInt(blockheight);
+                    styletop -= blockheight;
+                }
+                //remove oldest block-line when out of screen
+                if(master_container.offsetHeight > 2*blockheight + window.innerHeight) {
+                    master_container.removeChild(master_container.lastChild);
+                }
+                //Make master_container go down
+                styletop = scrollMasterContainer(master_container, offsetDown, styletop);
+                //Check if current position crosses a danger block
+                isDead = checkDead(master_container);
+                //Check for score update
+                score = checkScore(master_container, score);
+            } else {
+                blackScreen(1000);
+                clearInterval(intervalID);
+                updateLocalStorage(score, 0, 0, 0);
+                //delete all Blocks
+                master_container.parentNode.removeChild(master_container);
+                document.getElementById("pages").style["display"] = "";
             }
-            //remove oldest block-line when out of screen
-            if(master_container.offsetHeight > 2*blockheight + window.innerHeight) {
-                master_container.removeChild(master_container.lastChild);
-            }
-            //Make master_container go down
-            styletop = scrollMasterContainer(master_container, offsetDown, styletop);
-            //Check if current position crosses a danger block
-            //Check for score update
-            isDead = checkDead(master_container);
-            score = checkScore(master_container, score);
         } else {
-            blackScreen(1000);
-            clearInterval(intervalID);
-            updateLocalStorage(score, 0, 0, 0);
-            //delete all Blocks
-            master_container.parentNode.removeChild(master_container);
-            document.getElementById("pages").style["display"] = "";
+            if(isBossUp) {
+                styletop = document.getElementById("block-lines").style["top"];
+                styletop = styletop.substr(0,styletop.length-2);
+                styletop = parseInt(styletop);
+                if(!isDead) {
+                    //Add a new block-line to master_container (and reset top position) if possible
+                    if(styletop>=-10) {
+                        createNewLineBlock(master_container, score);
+                        blockheight = window.getComputedStyle(master_container.lastChild).getPropertyValue("height");
+                        blockheight = blockheight.substr(0,blockheight.length-2);
+                        blockheight = parseInt(blockheight);
+                        styletop -= blockheight;
+                    }
+                    //remove oldest block-line when out of screen
+                    if(master_container.offsetHeight > 2*blockheight + window.innerHeight) {
+                        master_container.removeChild(master_container.childNodes[master_container.childNodes.length-2]);
+                    }
+                    //Make master_container go down
+                    styletop = scrollMasterContainer(master_container, offsetDown, styletop);
+                    //Check if current position crosses a danger block
+                    isDead = checkDead(master_container);
+                    //Check if current position crosses the boss
+                    isDead = checkBossUp(boss, isDead);
+                    //Check for score update
+                    score = checkScore(master_container, score);
+                } else {
+                    blackScreen(1000);
+                    clearInterval(intervalID);
+                    updateLocalStorage(score+scoreBossUp, 0, 0, 0);
+                    //delete all Blocks
+                    master_container.parentNode.removeChild(master_container);
+                    boss.parentNode.removeChild(boss);
+                    document.getElementById("pages").style["display"] = "";
+                }
+            } else {
+                blackScreen(1000);
+                clearInterval(intervalID);
+                updateLocalStorage(score+scoreBossDown, 0, 0, 0);
+                //delete all Blocks
+                master_container.parentNode.removeChild(master_container);
+                boss.parentNode.removeChild(boss);
+                document.getElementById("pages").style["display"] = "";
+            }
         }
     }
     intervalID = setInterval(gamefunc, 10);
