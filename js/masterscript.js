@@ -13,8 +13,8 @@ const mastergamescript = function()
     master_container.style["top"] = styletop + "px";
     document.getElementById("wrapper").appendChild(master_container);
     const levelChoice = (Math.floor(Math.random()*1000*100)%100);
-    const isBoss = true;//levelChoice >= 80;
-    const isBossUp = false;//isBoss && (levelChoice%2 == 0);
+    const isBoss = levelChoice >= 80;
+    const isBossUp = isBoss && (levelChoice%2 == 0);
     const scoreBossUp = 10;
     const scoreBossDown = 20;
 
@@ -375,6 +375,23 @@ const mastergamescript = function()
         return iD;
     }
 
+    const animateBossDown = function(b, scr) {
+        const rnd = Math.floor(Math.random()*1000*20)%20;
+        const rndevent = Math.random();
+        if(rndevent >= 0.95) {
+            const rnd = Math.floor(Math.random()*1000*20)%20;
+            if(!b.childNodes[rnd].firstChild.classList.contains("falling")) {
+                b.childNodes[rnd].firstChild.classList.add("falling");
+                setTimeout(function()
+                        {
+                            b.childNodes[rnd].firstChild.classList.remove("falling");
+                        }, 5000);
+                    scr = scr+0.1;
+            }
+        }
+        return scr;
+    }
+
     const bossUpFunc = function()
     {
         const b = document.createElement("div");
@@ -470,44 +487,25 @@ const mastergamescript = function()
                 } else {
                     blackScreen(1000);
                     clearInterval(intervalID);
-                    updateLocalStorage(score+scoreBossUp, 0, 0, 0);
+                    updateLocalStorage(score+scoreBossUp, 0, 0, 1);
                     //delete all Blocks
                     master_container.parentNode.removeChild(master_container);
                     boss.parentNode.removeChild(boss);
                     document.getElementById("pages").style["display"] = "";
                 }
             } else {
-                styletop = document.getElementById("block-lines").style["top"];
-                styletop = styletop.substr(0,styletop.length-2);
-                styletop = parseInt(styletop);
                 if(!isDead) {
-                    //Add a new block-line to master_container (and reset top position) if possible
-                    if(styletop>=-10) {
-                        createNewLineBlock(master_container, score);
-                        blockheight = window.getComputedStyle(master_container.lastChild).getPropertyValue("height");
-                        blockheight = blockheight.substr(0,blockheight.length-2);
-                        blockheight = parseInt(blockheight);
-                        styletop -= blockheight;
-                    }
-                    //remove oldest block-line when out of screen
-                    if(master_container.offsetHeight > 2*blockheight + window.innerHeight) {
-                        master_container.removeChild(master_container.childNodes[master_container.childNodes.length-2]);
-                    }
-                    //Make master_container go down
-                    styletop = scrollMasterContainer(master_container, offsetDown, styletop);
-                    //Check if current position crosses a danger block
-                    //isDead = checkDead(master_container);
+                    //Update score, launches an attack at random
+                    score = animateBossDown(boss, score)
                     //Check if current position crosses the boss
                     isDead = checkBossDown(boss, isDead);
-                    //Check for score update
-                    score = checkScore(master_container, score);
                 } else {
                     blackScreen(1000);
                     clearInterval(intervalID);
-                    updateLocalStorage(score+scoreBossDown, 0, 0, 0);
+                    updateLocalStorage(Math.floor(score)+scoreBossDown, 0, 1, 0);
                     //delete all Blocks
                     master_container.parentNode.removeChild(master_container);
-                    //boss.parentNode.removeChild(boss);
+                    boss.parentNode.removeChild(boss);
                     document.getElementById("pages").style["display"] = "";
                 }
             }
