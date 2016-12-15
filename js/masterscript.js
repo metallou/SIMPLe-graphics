@@ -66,24 +66,116 @@ const createNewLineBlock = function(wrapper, scr)
                 block.classList.add("danger");
                 img = document.createElement("img");
                 let randd=Math.round(Math.random() * 1000 * 4)%4;
+                let randrot=Math.round(Math.random() * 1000 * 6)%6;
+
                 switch(randd){
                   case 0:
                     img.src = "img/asteroids/ast_blue.png";
-                    img.classList.add("rotating");
+                    switch(randrot){
+                      case 0:
+                        img.classList.add("rotating1");
+console.log("jesuis randrot et je suis a "+randrot);
+                        break;
+                      case 1:
+                        img.classList.add("rotating2");
+                        console.log("jesuis randrot et je suis a "+randrot);
+                        break;
+                      case 2:
+                        img.classList.add("rotating3");
+                        console.log("jesuis randrot et je suis a "+randrot);
+                        break;
+                      case 3:
+                        img.classList.add("rotating4");
+                        console.log("jesuis randrot et je suis a "+randrot);
+                        break;
+                      case 4:
+                        img.classList.add("rotating5");
+                        console.log("jesuis randrot et je suis a "+randrot);
+                        break;
+                      case 5:
+                        img.classList.add("rotating6");
+                        console.log("jesuis randrot et je suis a "+randrot);
+                        break;
+                      default:
+                        break;
+                    }
                     break;
 
                   case 1:
                       img.src = "img/asteroids/ast_grey.png";
-                      img.classList.add("rotating");
+                      switch(randrot){
+                        case 0:
+                          img.classList.add("rotating1");
+                          break;
+                        case 1:
+                          img.classList.add("rotating2");
+                          break;
+                        case 2:
+                          img.classList.add("rotating3");
+                          break;
+                        case 3:
+                          img.classList.add("rotating4");
+                          break;
+                        case 4:
+                          img.classList.add("rotating6");
+                          break;
+                        case 5:
+                          img.classList.add("rotating7");
+                          break;
+                        default:
+                          break;
+                      }
                       break;
 
                   case 2:
                       img.src = "img/asteroids/ast_darkgrey.png";
-                      img.classList.add("rotating");
+                      switch(randrot){
+                        case 0:
+                          img.classList.add("rotating1");
+                          break;
+                        case 1:
+                          img.classList.add("rotating2");
+                          break;
+                        case 2:
+                          img.classList.add("rotating3");
+                          break;
+                        case 3:
+                          img.classList.add("rotating4");
+                          break;
+                        case 4:
+                          img.classList.add("rotating6");
+                          break;
+                        case 5:
+                          img.classList.add("rotating7");
+                          break;
+                        default:
+                          break;
+                      }
                       break;
                   case 3:
                       img.src = "img/asteroids/ast_simplon.png";
-                      img.classList.add("rotating");
+                      switch(randrot){
+                        case 0:
+                          img.classList.add("rotating1");
+                          break;
+                        case 1:
+                          img.classList.add("rotating2");
+                          break;
+                        case 2:
+                          img.classList.add("rotating3");
+                          break;
+                        case 3:
+                          img.classList.add("rotating4");
+                          break;
+                        case 4:
+                          img.classList.add("rotating6");
+                          break;
+                        case 5:
+                          img.classList.add("rotating7");
+                          break;
+                        default:
+                          break;
+                      }
                         break;
                 }
                 img.alt = "asteroid";
