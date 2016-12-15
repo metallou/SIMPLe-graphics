@@ -25,52 +25,54 @@ const mastergamescript = function()
         return scr+1;
     }
 
-    const updateDangerBlocks = function(wrapper, d_b)
-    {
-        d_b = [];
-        const st = parseInt(wrapper.style["top"].substr(0,wrapper.style["top"].length-2));
-        const wV = wrapper.firstChild.firstChild.offsetWidth;
-        const hV = wrapper.firstChild.firstChild.offsetHeight;
-        const wH = wrapper.firstChild.childNodes[1].firstChild.offsetWidth;
-        const hH = wrapper.firstChild.childNodes[1].firstChild.offsetHeight;
+    const checkDead = function(wrapper) {
+        const updateDangerBlocks = function(wrapper)
+        {
+            const d_b = [];
+            const st = parseInt(wrapper.style["top"].substr(0,wrapper.style["top"].length-2));
+            const wV = wrapper.firstChild.firstChild.offsetWidth;
+            const hV = wrapper.firstChild.firstChild.offsetHeight;
+            const wH = wrapper.firstChild.childNodes[1].firstChild.offsetWidth;
+            const hH = wrapper.firstChild.childNodes[1].firstChild.offsetHeight;
 
-        let wb;
-        let elem;
-        for(let i=0; i<wrapper.childNodes.length; i++) {
-            d_b.push(
-                    {
-                        X1: 0,
-                        X2: wV,
-                        Y1: st + (i*hV),
-                        Y2: st + (i*hV) + hV
-                    });
-            d_b.push(
-                    {
-                        X1: wV + wH,
-                        X2: wV + wH + wV,
-                        Y1: st + (i*hV),
-                        Y2: st + (i*hV) + hV
-                    });
-            elem = wrapper.childNodes[i].childNodes[1].firstChild;
-            wb = elem.firstChild.offsetWidth;
-            for(let j=0; j<elem.childNodes.length; j++) {
-                if(elem.childNodes[j].classList.contains("danger")) {
-                    d_b.push(
-                            {
-                                X1: wV + (j*wb),
-                                X2: wV + (j*wb) + wb,
-                                Y1: st + (i*hV),
-                                Y2: st + (i*hV) + wb
-                            });
+            let wb;
+            let elem;
+            for(let i=0; i<wrapper.childNodes.length; i++) {
+                d_b.push(
+                        {
+                            X1: 0,
+                            X2: wV,
+                            Y1: st + (i*hV),
+                            Y2: st + (i*hV) + hV
+                        });
+                d_b.push(
+                        {
+                            X1: wV + wH,
+                            X2: wV + wH + wV,
+                            Y1: st + (i*hV),
+                            Y2: st + (i*hV) + hV
+                        });
+                elem = wrapper.childNodes[i].childNodes[1].firstChild;
+                wb = elem.firstChild.offsetWidth;
+                for(let j=0; j<elem.childNodes.length; j++) {
+                    if(elem.childNodes[j].classList.contains("danger")) {
+                        d_b.push(
+                                {
+                                    X1: wV + (j*wb),
+                                    X2: wV + (j*wb) + wb,
+                                    Y1: st + (i*hV),
+                                    Y2: st + (i*hV) + wb
+                                });
+                    }
                 }
             }
+            return d_b;
         }
-        return d_b;
-    }
-    const checkDead = function(d_b) {
-        for(let i=0; i<d_b.length; i++) {
-            if(d_b[i].X1 < mouseX && mouseX <= d_b[i].X2) {
-                if(d_b[i].Y1 < mouseY && mouseY <= d_b[i].Y2) {
+
+        const danger_blocks = updateDangerBlocks(wrapper);
+        for(let i=0; i<danger_blocks.length; i++) {
+            if(danger_blocks[i].X1 < mouseX && mouseX <= danger_blocks[i].X2) {
+                if(danger_blocks[i].Y1 < mouseY && mouseY <= danger_blocks[i].Y2) {
                     return true;
                 }
             }
@@ -242,10 +244,8 @@ const mastergamescript = function()
             }
             //Make master_container go down
             styletop = scrollMasterContainer(master_container, offsetDown, styletop);
-            //Update list of danger blocks
-            danger_blocks = updateDangerBlocks(master_container, danger_blocks);
             //Check if current position crosses a danger block
-            isDead = checkDead(danger_blocks);
+            isDead = checkDead(master_container);
         } else {
             blackScreen(1000);
             clearInterval(intervalID);
