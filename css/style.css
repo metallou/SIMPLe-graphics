@@ -524,11 +524,16 @@ button:hover
 #bossdown
 {
     position: absolute;
-    top: -90%;
+    top: -100%;
     display: flex;
     width: 100%;
     height: 100%;
     background-color: red;
+
+    animation-name: bossdown;
+    animation-duration: 5s;
+    animation-timing-function: linear;
+    animation-iteration-count: infinite;
 }
 #bossdown>div
 {
@@ -536,6 +541,7 @@ button:hover
     flex: 1;
     height: 100%;
 }
+
 
 .falling-block
 {
@@ -545,11 +551,9 @@ button:hover
     height: 100%;
     background-color: red;
 }
-
-
 .falling
 {
-    animation-name: bossdown;
+    animation-name: bossdownfall;
     animation-duration: 5s;
     animation-timing-function: linear;
 }
@@ -557,9 +561,24 @@ button:hover
 @keyframes bossdown
 {
     0% {
-        top: 0;
+        top: -100M;
     }
-    10% {
+    50% {
+        top: -50%;
+    }
+    100% {
+        top: -100%;
+    }
+}
+@keyframes bossdownfall
+{
+    0% {
+        top: 5%;
+    }
+    79% {
+        top: 5%;
+    }
+    80% {
         top: 10%;
     }
     90% {
