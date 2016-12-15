@@ -192,7 +192,6 @@ const mastergamescript = function()
                     img = document.createElement("img");
                     let randd=Math.round(Math.random() * 1000 * 4)%4;
                     let randrot=Math.round(Math.random() * 1000 * 6)%6;
-
                     switch(randd){
                       case 0:
                         img.src = "img/asteroids/ast_blue.png";
@@ -218,9 +217,6 @@ const mastergamescript = function()
                             break;
                           case 5:
                             img.classList.add("rotating6");
-
-                            break;
-                          default:
                             break;
                         }
                         break;
