@@ -239,8 +239,7 @@ button:hover
     position:absolute;
     top: 50%;
     left: 50%;
-    width: 33px;
-    height: 93px;
+    transform: translateX(-50%);
     z-index: 2;
 }
 
