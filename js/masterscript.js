@@ -13,16 +13,24 @@ const mastergamescript = function()
     master_container.style["top"] = styletop + "px";
     document.getElementById("wrapper").appendChild(master_container);
 
-    const scrollMasterContainer = function(wrapper, offset, previous)
+    const checkScore = function(wrapper, scr)
     {
-        let valtop = offset + previous;
-        wrapper.style["top"] = valtop + "px";
-        return valtop;
-    }
+        const updateScoreBlock = function(wrapper, score_blocks)
+        {
+            const st = parseInt(wrapper.style["top"].substr(0,wrapper.style["top"].length-2));
+            const hV = wrapper.firstChild.firstChild.offsetHeight;
 
-    const newScore = function(scr)
-    {
-        return scr+1;
+            let elems = document.getElementsByClassName("score");
+            return st + hV*(elems.length-1);
+        }
+
+        const score_blocks = document.getElementsByClassName("score");
+        const score_block = updateScoreBlock(wrapper, score_blocks);
+        if(mouseY < score_block) {
+            score_blocks[score_blocks.length-1].classList.remove("score");
+            return scr+1;
+        }
+        return scr;
     }
 
     const checkDead = function(wrapper) {
@@ -126,6 +134,13 @@ const mastergamescript = function()
         localStorage.setItem("totalbonusestaken", trbws);
     }
 
+    const scrollMasterContainer = function(wrapper, offset, previous)
+    {
+        let valtop = offset + previous;
+        wrapper.style["top"] = valtop + "px";
+        return valtop;
+    }
+
     const createNewLineBlock = function(wrapper, scr)
     {
         const createContainer = function()
@@ -164,6 +179,7 @@ const mastergamescript = function()
                     const block = ligne.childNodes[indCase];
                     block.classList.remove("danger");
                     block.classList.add("passage");
+                    block.classList.add("score");
                     block.textContent = "";
                 }
 
@@ -240,12 +256,13 @@ const mastergamescript = function()
             //remove oldest block-line when out of screen
             if(master_container.offsetHeight > 2*blockheight + window.innerHeight) {
                 master_container.removeChild(master_container.lastChild);
-                score = newScore(score);
             }
             //Make master_container go down
             styletop = scrollMasterContainer(master_container, offsetDown, styletop);
             //Check if current position crosses a danger block
+            //Check for score update
             isDead = checkDead(master_container);
+            score = checkScore(master_container, score);
         } else {
             blackScreen(1000);
             clearInterval(intervalID);
