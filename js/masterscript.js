@@ -12,6 +12,9 @@ const mastergamescript = function()
     master_container.id = "block-lines";
     master_container.style["top"] = styletop + "px";
     document.getElementById("wrapper").appendChild(master_container);
+    const levelChoice = (Math.floor(Math.random()*1000*100)%100);
+    const isBoss = levelChoice >= 80;
+    const isBossUp= isBoss && (levelChoice%2 == 0);
 
     const checkScore = function(wrapper, scr)
     {
