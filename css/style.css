@@ -14,7 +14,8 @@ html, body
     cursor: none;
     font-family: 'PressStart', sans-serif;
     color: #FFF;
-    background-color: #00032d;
+    background-image: url(../img/sky.gif);
+    background-repeat: repeat;
 }
 
 div#wrapper
@@ -98,7 +99,7 @@ button.selected{
 button.menubutton, button#optionsbutton, button#statsbutton
 {
     position: absolute;
-    bottom: 15%;
+    bottom: 5%;
     transform: translate(-50%, -50%);
 }
 
@@ -106,7 +107,7 @@ button#playbutton
 {
   position: absolute;
   transform: translate(-50%, -50%);
-  bottom: 30%;
+  bottom: 15%;
   font-size: 2em;
 }
 
@@ -233,11 +234,23 @@ button:hover
     cursor: crosshair;
 }
 
-#spaceship{
+#spaceship
+{
     position:absolute;
     top: 50%;
     left: 50%;
     width: 33px;
     height: 93px;
     z-index: 2;
+}
+
+#mainpage
+{
+  display: flex;
+  justify-content: center;
+}
+
+#titleimg
+{
+  height: 80%;
 }
