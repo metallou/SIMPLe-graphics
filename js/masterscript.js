@@ -357,10 +357,8 @@ const mastergamescript = function()
             for(let i=0; i<b.childNodes.length; i++) {
                 style = window.getComputedStyle(b.childNodes[i].firstChild).getPropertyValue("top");
                 st = parseInt(style.substr(0,style.length-2));
-                console.log(st);
                 if((i*w) <= mouseX && mouseX < (i*w)+w) {
                     if(mouseY <= stm+st+h) {
-                        console.log("a");
                         return true;
                     }
                 }

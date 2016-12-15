@@ -53,7 +53,7 @@ div.blackscreen
     }
 }
 
-article
+#pages
 {
     position: absolute;
     display: flex;
@@ -69,6 +69,13 @@ main, aside
     box-sizing: border-box;
 }
 
+#S
+{
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+}
 
 button
 {
