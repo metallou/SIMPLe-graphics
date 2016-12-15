@@ -8,6 +8,17 @@ const mastergamescript = function()
     let score = 0;
     let styletop = 0;
     let isDead = false;
+
+    const scoreboard = document.createElement("div");
+    scoreboard.id = "scoreboard";
+    scoreboard.style["top"] = "0";
+    let scoreboard2 = document.createElement("span");
+    scoreboard2.textContent = "SCORE";
+    scoreboard.appendChild(scoreboard2);
+    scoreboard2 = document.createElement("span");
+    scoreboard2.textContent = "0";
+    scoreboard.appendChild(scoreboard2);
+    document.getElementById("wrapper").appendChild(scoreboard);
     const master_container = document.createElement("div");
     master_container.id = "block-lines";
     master_container.style["top"] = styletop + "px";
@@ -34,7 +45,8 @@ const mastergamescript = function()
         const score_block = updateScoreBlock(wrapper, score_blocks);
         if(mouseY < score_block) {
             score_blocks[score_blocks.length-1].classList.remove("score");
-            return scr+1;
+            scr += 1;
+            scoreboard2.textContent = scr;
         }
         return scr;
     }
@@ -380,6 +392,7 @@ const mastergamescript = function()
                             b.childNodes[rnd].firstChild.classList.remove("falling");
                         }, 5000);
                     scr = scr+0.1;
+                    scoreboard2.textContent = Math.floor(scr);
             }
         }
         return scr;
@@ -413,8 +426,12 @@ const mastergamescript = function()
     if(isBoss) {
         if(isBossUp) {
             boss = bossUpFunc();
+            score += scoreBossUp;
         } else {
             boss = bossDownFunc();
+            score += scoreBossDown;
+            scoreboard.style["bottom"] = "0";
+            scoreboard.style["top"] = "";
         }
     }
     //boucle de jeu -----------------------------------------------------------
@@ -449,6 +466,7 @@ const mastergamescript = function()
                 updateLocalStorage(score, 0, 0);
                 //delete all Blocks
                 master_container.parentNode.removeChild(master_container);
+                scoreboard.parentNode.removeChild(scoreboard);
                 document.getElementById("pages").style["display"] = "";
             }
         } else {
@@ -480,10 +498,11 @@ const mastergamescript = function()
                 } else {
                     blackScreen(1000);
                     clearInterval(intervalID);
-                    updateLocalStorage(score+scoreBossUp, 1, 0);
+                    updateLocalStorage(score, 1, 0);
                     //delete all Blocks
                     master_container.parentNode.removeChild(master_container);
                     boss.parentNode.removeChild(boss);
+                    scoreboard.parentNode.removeChild(scoreboard);
                     document.getElementById("pages").style["display"] = "";
                 }
             } else {
@@ -495,10 +514,11 @@ const mastergamescript = function()
                 } else {
                     blackScreen(1000);
                     clearInterval(intervalID);
-                    updateLocalStorage(Math.floor(score)+scoreBossDown, 0, 1);
+                    updateLocalStorage(Math.floor(score), 0, 1);
                     //delete all Blocks
                     master_container.parentNode.removeChild(master_container);
                     boss.parentNode.removeChild(boss);
+                    scoreboard.parentNode.removeChild(scoreboard);
                     document.getElementById("pages").style["display"] = "";
                 }
             }
