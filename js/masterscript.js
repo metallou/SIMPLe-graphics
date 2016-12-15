@@ -1,249 +1,92 @@
 "use strict"
 
-const line_blocks = [];
-const path_blocks = [];
-let master_container;
-let score = 0;
-const newScore = function(event)
-{
-    score++;
-    event.target.removeEventListener("mouseout", newScore);
-}
-let isDead = false;
-const nowDead = function(event)
-{
-    isDead = true;
-    document.getElementById("pages").style["display"] = "";
-}
-
-const createNewLineBlock = function(wrapper, scr)
-{
-    const createContainer = function()
-    {
-        const contain = document.createElement("div");
-        contain.classList.add("block-line");
-        return contain;
-    }
-    const createLineV = function(contain, position)
-    {
-        const vert = document.createElement("div");
-        vert.classList.add(position);
-        contain.appendChild(vert);
-    }
-    const createLineH = function(contain, nb)
-    {
-        const createCentralContainer = function(conteneur)
-        {
-            const center = document.createElement("div");
-            center.classList.add("centre");
-            conteneur.appendChild(center);
-            return center;
-        }
-        const createCentralLine = function(centre)
-        {
-            const line = document.createElement("div");
-            line.classList.add("ligne");
-            centre.appendChild(line);
-            return line;
-        }
-        const createDangerBlocks = function(ligne, nb){
-            const randompass = function(ligne, nb)
-            {
-                const indCase = Math.round(Math.random() * 1000 * nb) % nb;
-                const block = ligne.childNodes[indCase];
-                block.classList.remove("danger");
-                block.classList.add("passage");
-                block.textContent = "";
-                path_blocks.push(block);
-                console.log("bonjour, je suis randomapss")
-            }
-
-            let block;
-            let img;
-
-            for (let i = 0; i < nb; i++) {
-                block = document.createElement("div");
-                block.classList.add("danger");
-                img = document.createElement("img");
-                let randd=Math.round(Math.random() * 1000 * 4)%4;
-                let randrot=Math.round(Math.random() * 1000 * 6)%6;
-
-                switch(randd){
-                  case 0:
-                    img.src = "img/asteroids/ast_blue.png";
-                    switch(randrot){
-                      case 0:
-                        img.classList.add("rotating1");
-console.log("jesuis randrot et je suis a "+randrot);
-                        break;
-                      case 1:
-                        img.classList.add("rotating2");
-                        console.log("jesuis randrot et je suis a "+randrot);
-                        break;
-                      case 2:
-                        img.classList.add("rotating3");
-                        console.log("jesuis randrot et je suis a "+randrot);
-                        break;
-                      case 3:
-                        img.classList.add("rotating4");
-                        console.log("jesuis randrot et je suis a "+randrot);
-                        break;
-                      case 4:
-                        img.classList.add("rotating5");
-                        console.log("jesuis randrot et je suis a "+randrot);
-                        break;
-                      case 5:
-                        img.classList.add("rotating6");
-                        console.log("jesuis randrot et je suis a "+randrot);
-                        break;
-                      default:
-                        break;
-                    }
-                    break;
-
-                  case 1:
-                      img.src = "img/asteroids/ast_grey.png";
-                      switch(randrot){
-                        case 0:
-                          img.classList.add("rotating1");
-                          break;
-                        case 1:
-                          img.classList.add("rotating2");
-                          break;
-                        case 2:
-                          img.classList.add("rotating3");
-                          break;
-                        case 3:
-                          img.classList.add("rotating4");
-                          break;
-                        case 4:
-                          img.classList.add("rotating6");
-                          break;
-                        case 5:
-                          img.classList.add("rotating7");
-                          break;
-                        default:
-                          break;
-                      }
-                      break;
-
-                  case 2:
-                      img.src = "img/asteroids/ast_darkgrey.png";
-                      switch(randrot){
-                        case 0:
-                          img.classList.add("rotating1");
-                          break;
-                        case 1:
-                          img.classList.add("rotating2");
-                          break;
-                        case 2:
-                          img.classList.add("rotating3");
-                          break;
-                        case 3:
-                          img.classList.add("rotating4");
-                          break;
-                        case 4:
-                          img.classList.add("rotating6");
-                          break;
-                        case 5:
-                          img.classList.add("rotating7");
-                          break;
-                        default:
-                          break;
-                      }
-                      break;
-                  case 3:
-                      img.src = "img/asteroids/ast_simplon.png";
-                      switch(randrot){
-                        case 0:
-                          img.classList.add("rotating1");
-                          break;
-                        case 1:
-                          img.classList.add("rotating2");
-                          break;
-                        case 2:
-                          img.classList.add("rotating3");
-                          break;
-                        case 3:
-                          img.classList.add("rotating4");
-                          break;
-                        case 4:
-                          img.classList.add("rotating6");
-                          break;
-                        case 5:
-                          img.classList.add("rotating7");
-                          break;
-                        default:
-                          break;
-                      }
-                        break;
-                }
-                img.alt = "asteroid";
-
-                block.appendChild(img);
-                ligne.appendChild(block);
-            }
-            randompass(ligne, nb);
-        }
-
-        const center = createCentralContainer(contain);
-        const line = createCentralLine(center);
-        createDangerBlocks(line, nb);
-    }
-
-    //Increase number of blocks in the line at each step
-    let nbCases = 5 + scr;
-    //Limitation to 100 cases
-    if(nbCases > 100) {
-        nbCases = 100;
-    }
-
-    //Create all the blocs
-    const container = createContainer();
-    createLineV(container, "gauche");
-    createLineH(container, nbCases);
-    createLineV(container, "droite");
-
-    if(wrapper.childNodes.length>0) {
-        wrapper.insertBefore(container, wrapper.firstChild);
-    } else {
-        wrapper.appendChild(container);
-    }
-    const line = wrapper.firstChild.childNodes[1].firstChild;
-    line.style["height"] = line.firstChild.offsetWidth + "px";
-
-    //Add all Event Listeners to children
-    container.childNodes[0].addEventListener("mouseover", nowDead);
-    container.childNodes[2].addEventListener("mouseover", nowDead);
-    let blocks = container.childNodes[1].childNodes[0].childNodes;
-    for(let i=0; i<blocks.length; i++) {
-        if(blocks[i].classList.contains("passage")) {
-            blocks[i].addEventListener("mouseout", newScore);
-        } else {
-            blocks[i].addEventListener("mouseover", nowDead);
-        }
-    }
-}
-
 const mastergamescript = function()
 {
+    let danger_blocks;
     let intervalID;
     let blockheight;
-    let prevscore = 0;
+    let score = 0;
     let styletop = 0;
-    //Reset variables
-    score = 0;
-    isDead = false;
-    master_container = document.createElement("div");
+    let isDead = false;
+    const master_container = document.createElement("div");
     master_container.id = "block-lines";
     master_container.style["top"] = styletop + "px";
     document.getElementById("wrapper").appendChild(master_container);
 
-    const scrollMasterContainer = function(wrapper, offset, previous)
+    const checkScore = function(wrapper, scr)
     {
-        let valtop = offset + previous;
-        wrapper.style["top"] = valtop + "px";
-        return valtop;
+        const updateScoreBlock = function(wrapper, score_blocks)
+        {
+
+            const st = parseInt(wrapper.style["top"].substr(0,wrapper.style["top"].length-2));
+            const hV = wrapper.firstChild.firstChild.offsetHeight;
+
+            let elems = document.getElementsByClassName("score");
+            return st + hV*(elems.length-1);
+        }
+
+        const score_blocks = document.getElementsByClassName("score");
+        const score_block = updateScoreBlock(wrapper, score_blocks);
+        if(mouseY < score_block) {
+            score_blocks[score_blocks.length-1].classList.remove("score");
+            return scr+1;
+        }
+        return scr;
+    }
+
+    const checkDead = function(wrapper) {
+        const updateDangerBlocks = function(wrapper)
+        {
+            const d_b = [];
+            const st = parseInt(wrapper.style["top"].substr(0,wrapper.style["top"].length-2));
+            const wV = wrapper.firstChild.firstChild.offsetWidth;
+            const hV = wrapper.firstChild.firstChild.offsetHeight;
+            const wH = wrapper.firstChild.childNodes[1].firstChild.offsetWidth;
+            const hH = wrapper.firstChild.childNodes[1].firstChild.offsetHeight;
+
+            let wb;
+            let elem;
+            for(let i=0; i<wrapper.childNodes.length; i++) {
+                d_b.push(
+                        {
+                            X1: 0,
+                            X2: wV,
+                            Y1: st + (i*hV),
+                            Y2: st + (i*hV) + hV
+                        });
+                d_b.push(
+                        {
+                            X1: wV + wH,
+                            X2: wV + wH + wV,
+                            Y1: st + (i*hV),
+                            Y2: st + (i*hV) + hV
+                        });
+                elem = wrapper.childNodes[i].childNodes[1].firstChild;
+                wb = elem.firstChild.offsetWidth;
+                for(let j=0; j<elem.childNodes.length; j++) {
+                    if(elem.childNodes[j].classList.contains("danger")) {
+                        d_b.push(
+                                {
+                                    X1: wV + (j*wb),
+                                    X2: wV + (j*wb) + wb,
+                                    Y1: st + (i*hV),
+                                    Y2: st + (i*hV) + wb
+                                });
+                    }
+                }
+            }
+            return d_b;
+        }
+
+        const danger_blocks = updateDangerBlocks(wrapper);
+        for(let i=0; i<danger_blocks.length; i++) {
+            if(danger_blocks[i].X1 < mouseX && mouseX <= danger_blocks[i].X2) {
+                if(danger_blocks[i].Y1 < mouseY && mouseY <= danger_blocks[i].Y2) {
+                    return true;
+                }
+            }
+        }
+        return false;
     }
 
     const updateLocalStorage = function(score, bonus, bossup, bossdown)
@@ -292,6 +135,207 @@ const mastergamescript = function()
         localStorage.setItem("totalbonusestaken", trbws);
     }
 
+    const scrollMasterContainer = function(wrapper, offset, previous)
+    {
+        let valtop = offset + previous;
+        wrapper.style["top"] = valtop + "px";
+        return valtop;
+    }
+
+    const createNewLineBlock = function(wrapper, scr)
+    {
+        const createContainer = function()
+        {
+            const contain = document.createElement("div");
+            contain.classList.add("block-line");
+            return contain;
+        }
+        const createLineV = function(contain, position)
+        {
+            const vert = document.createElement("div");
+            vert.classList.add(position);
+            contain.appendChild(vert);
+        }
+        const createLineH = function(contain, nb)
+        {
+            const createCentralContainer = function(conteneur)
+            {
+                const center = document.createElement("div");
+                center.classList.add("centre");
+                conteneur.appendChild(center);
+                return center;
+            }
+            const createCentralLine = function(centre)
+            {
+                const line = document.createElement("div");
+                line.classList.add("ligne");
+                centre.appendChild(line);
+                return line;
+            }
+            const createDangerBlocks = function(ligne, nb)
+            {
+                const randompass = function(ligne, nb)
+                {
+                    const indCase = Math.round(Math.random() * 1000 * nb) % nb;
+                    const block = ligne.childNodes[indCase];
+                    block.classList.remove("danger");
+                    block.classList.add("passage");
+                    block.classList.add("score");
+                    block.textContent = "";
+                }
+
+                let block;
+                let img;
+                for (let i = 0; i < nb; i++) {
+                    block = document.createElement("div");
+                    block.classList.add("danger");
+                    img = document.createElement("img");
+                    let randd=Math.round(Math.random() * 1000 * 4)%4;
+                    let randrot=Math.round(Math.random() * 1000 * 6)%6;
+
+                    switch(randd){
+                      case 0:
+                        img.src = "img/asteroids/ast_blue.png";
+                        switch(randrot){
+                          case 0:
+                            img.classList.add("rotating1");
+                            break;
+                          case 1:
+                            img.classList.add("rotating2");
+
+                            break;
+                          case 2:
+                            img.classList.add("rotating3");
+
+                            break;
+                          case 3:
+                            img.classList.add("rotating4");
+
+                            break;
+                          case 4:
+                            img.classList.add("rotating5");
+
+                            break;
+                          case 5:
+                            img.classList.add("rotating6");
+
+                            break;
+                          default:
+                            break;
+                        }
+                        break;
+
+                      case 1:
+                          img.src = "img/asteroids/ast_grey.png";
+                          switch(randrot){
+                            case 0:
+                              img.classList.add("rotating1");
+                              break;
+                            case 1:
+                              img.classList.add("rotating2");
+                              break;
+                            case 2:
+                              img.classList.add("rotating3");
+                              break;
+                            case 3:
+                              img.classList.add("rotating4");
+                              break;
+                            case 4:
+                              img.classList.add("rotating6");
+                              break;
+                            case 5:
+                              img.classList.add("rotating7");
+                              break;
+                            default:
+                              break;
+                          }
+                          break;
+
+                      case 2:
+                          img.src = "img/asteroids/ast_darkgrey.png";
+                          switch(randrot){
+                            case 0:
+                              img.classList.add("rotating1");
+                              break;
+                            case 1:
+                              img.classList.add("rotating2");
+                              break;
+                            case 2:
+                              img.classList.add("rotating3");
+                              break;
+                            case 3:
+                              img.classList.add("rotating4");
+                              break;
+                            case 4:
+                              img.classList.add("rotating6");
+                              break;
+                            case 5:
+                              img.classList.add("rotating7");
+                              break;
+                            default:
+                              break;
+                          }
+                          break;
+                      case 3:
+                          img.src = "img/asteroids/ast_simplon.png";
+                          switch(randrot){
+                            case 0:
+                              img.classList.add("rotating1");
+                              break;
+                            case 1:
+                              img.classList.add("rotating2");
+                              break;
+                            case 2:
+                              img.classList.add("rotating3");
+                              break;
+                            case 3:
+                              img.classList.add("rotating4");
+                              break;
+                            case 4:
+                              img.classList.add("rotating6");
+                              break;
+                            case 5:
+                              img.classList.add("rotating7");
+                              break;
+                            default:
+                              break;
+                          }
+                            break;
+                          }
+                    img.alt = "asteroid";
+                    block.appendChild(img);
+                    ligne.appendChild(block);
+                }
+                randompass(ligne, nb);
+            }
+
+            const center = createCentralContainer(contain);
+            const line = createCentralLine(center);
+            createDangerBlocks(line, nb);
+        }
+
+        //Increase number of blocks in the line at each step
+        let nbCases = 5 + scr;
+        //Limitation to 100 cases
+        if(nbCases > 100) {
+            nbCases = 100;
+        }
+
+        //Create all the blocs
+        const container = createContainer();
+        createLineV(container, "gauche");
+        createLineH(container, nbCases);
+        createLineV(container, "droite");
+
+        if(wrapper.childNodes.length>0) {
+            wrapper.insertBefore(container, wrapper.firstChild);
+        } else {
+            wrapper.appendChild(container);
+        }
+        const line = wrapper.firstChild.childNodes[1].firstChild;
+        line.style["height"] = line.firstChild.offsetWidth + "px";
+    }
+
     //boucle de jeu
     const gamefunc = function()
     {
@@ -301,7 +345,7 @@ const mastergamescript = function()
         if(!isDead) {
             //Add a new block-line to master_container (and reset top position) if possible
             if(styletop>=-10) {
-                createNewLineBlock(master_container, prevscore);
+                createNewLineBlock(master_container, score);
                 blockheight = window.getComputedStyle(master_container.lastChild).getPropertyValue("height");
                 blockheight = blockheight.substr(0,blockheight.length-2);
                 blockheight = parseInt(blockheight);
@@ -310,22 +354,20 @@ const mastergamescript = function()
             //remove oldest block-line when out of screen
             if(master_container.offsetHeight > 2*blockheight + window.innerHeight) {
                 master_container.removeChild(master_container.lastChild);
-                line_blocks.shift();
             }
             //Make master_container go down
             styletop = scrollMasterContainer(master_container, offsetDown, styletop);
-
-            //to prevent player from hacking the game by getting through over and over to falsely increase score
-            if(prevscore != score) {
-                path_blocks.shift();
-                prevscore = score;
-            }
+            //Check if current position crosses a danger block
+            //Check for score update
+            isDead = checkDead(master_container);
+            score = checkScore(master_container, score);
         } else {
             blackScreen(1000);
             clearInterval(intervalID);
             updateLocalStorage(score, 0, 0, 0);
             //delete all Blocks
             master_container.parentNode.removeChild(master_container);
+            document.getElementById("pages").style["display"] = "";
         }
     }
     intervalID = setInterval(gamefunc, 10);

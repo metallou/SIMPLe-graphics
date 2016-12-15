@@ -1,23 +1,37 @@
-let optionsFunc = function()
-{
-    const keysonoff =
-        [
-        "music",
-        "sound"
-        ];
-    const keys =
-        [
-        "totalgamesplayed",
-        "totalscore",
-        "highestscore",
-        "averagescore",
-        "lastscore",
-        "totalbonusestaken",
-        "totalbosswavessurvived",
-        "totalfallingbosswavessurvived",
-        "totalrisingbosswavessurvived"
-        ];
+const keysonoff =
+[
+    "music",
+    "sound"
+];
+const keys =
+[
+    "totalgamesplayed",
+    "totalscore",
+    "highestscore",
+    "averagescore",
+    "lastscore",
+    "totalbonusestaken",
+    "totalbosswavessurvived",
+    "totalfallingbosswavessurvived",
+    "totalrisingbosswavessurvived"
+];
 
+const initLocalStorage = function(koo, k)
+{
+    for(let i=0; i<koo.length; i++) {
+        if(localStorage.getItem(koo[i]) == null || localStorage.getItem(koo[i]) == undefined) {
+            localStorage.setItem(koo[i], "true");
+        }
+    }
+    for(let i=0; i<k.length; i++) {
+        if(localStorage.getItem(k[i]) == null || localStorage.getItem(k[i]) == undefined) {
+            localStorage.setItem(k[i], "0");
+        }
+    }
+}
+
+const optionsFunc = function()
+{
     const checkValue = function(key)
     {
         const elemon = document.getElementById(key+"on");
@@ -69,6 +83,7 @@ let optionsFunc = function()
 
 const optionsFuncReady = function()
 {
+    initLocalStorage(keysonoff, keys);
     document.getElementById("optionsbutton").addEventListener("click", optionsFunc);
 }
 document.addEventListener("DOMContentLoaded", optionsFuncReady);
