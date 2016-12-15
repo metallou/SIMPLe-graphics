@@ -378,7 +378,7 @@ const mastergamescript = function()
     const animateBossDown = function(b, scr) {
         const rnd = Math.floor(Math.random()*1000*20)%20;
         const rndevent = Math.random();
-        if(rndevent >= 0.95) {
+        if(rndevent >= 0.90) {
             const rnd = Math.floor(Math.random()*1000*20)%20;
             if(!b.childNodes[rnd].firstChild.classList.contains("falling")) {
                 b.childNodes[rnd].firstChild.classList.add("falling");
