@@ -13,8 +13,8 @@ const mastergamescript = function()
     master_container.style["top"] = styletop + "px";
     document.getElementById("wrapper").appendChild(master_container);
     const levelChoice = (Math.floor(Math.random()*1000*100)%100);
-    const isBoss = levelChoice >= 80;
-    const isBossUp = isBoss && (levelChoice%2 == 0);
+    const isBoss = true;//levelChoice >= 80;
+    const isBossUp = true;//isBoss && (levelChoice%2 == 0);
     const scoreBossUp = 10;
     const scoreBossDown = 20;
 
@@ -94,7 +94,7 @@ const mastergamescript = function()
         return false;
     }
 
-    const updateLocalStorage = function(score, bonus, bossup, bossdown)
+    const updateLocalStorage = function(score, bossup, bossdown)
     {
         //Total Games Played
         let tgp = parseInt(localStorage.getItem("totalgamesplayed"));
@@ -119,25 +119,20 @@ const mastergamescript = function()
         //Last Score
         localStorage.setItem("lastscore", score);
 
-        //Total bonuses taken
-        let tbt = parseInt(localStorage.getItem("totalbonusestaken"));
-        tbt += bonus;
-        localStorage.setItem("totalbonusestaken", tbt);
+        //Total Boss Waves
+        let tbw = parseInt(localStorage.getItem("totalbosswaves"));
+        tbw += bossup + bossdown;
+        localStorage.setItem("totalbosswaves", tbw);
 
-        //Total Boss Waves Survived
-        let tbws = parseInt(localStorage.getItem("totalbonusestaken"));
-        tbws += bossup + bossdown;
-        localStorage.setItem("totalbonusestaken", tbws);
+        //Total Rising Boss Waves
+        let trbw = parseInt(localStorage.getItem("totalrisingbosswaves"));
+        trbw += bossup;
+        localStorage.setItem("totalrisingbosswaves", trbw);
 
-        //Total Falling Boss Waves Survived
-        let tfbws = parseInt(localStorage.getItem("totalbonusestaken"));
-        tfbws += bossdown;
-        localStorage.setItem("totalbonusestaken", tfbws);
-
-        //Total Rising Boos Waves Survived
-        let trbws = parseInt(localStorage.getItem("totalbonusestaken"));
-        trbws += bossdown;
-        localStorage.setItem("totalbonusestaken", trbws);
+        //Total Falling Boos Waves
+        let tfbw = parseInt(localStorage.getItem("totalfallingbosswaves"));
+        tfbw += bossdown;
+        localStorage.setItem("totalfallingbosswaves", tfbw);
     }
 
     const scrollMasterContainer = function(wrapper, offset, previous)
@@ -453,7 +448,7 @@ const mastergamescript = function()
             } else {
                 blackScreen(1000);
                 clearInterval(intervalID);
-                updateLocalStorage(score, 0, 0, 0);
+                updateLocalStorage(score, 0, 0);
                 //delete all Blocks
                 master_container.parentNode.removeChild(master_container);
                 document.getElementById("pages").style["display"] = "";
@@ -487,7 +482,7 @@ const mastergamescript = function()
                 } else {
                     blackScreen(1000);
                     clearInterval(intervalID);
-                    updateLocalStorage(score+scoreBossUp, 0, 0, 1);
+                    updateLocalStorage(score+scoreBossUp, 1, 0);
                     //delete all Blocks
                     master_container.parentNode.removeChild(master_container);
                     boss.parentNode.removeChild(boss);
@@ -502,7 +497,7 @@ const mastergamescript = function()
                 } else {
                     blackScreen(1000);
                     clearInterval(intervalID);
-                    updateLocalStorage(Math.floor(score)+scoreBossDown, 0, 1, 0);
+                    updateLocalStorage(Math.floor(score)+scoreBossDown, 0, 1);
                     //delete all Blocks
                     master_container.parentNode.removeChild(master_container);
                     boss.parentNode.removeChild(boss);

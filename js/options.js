@@ -10,10 +10,9 @@ const keys =
     "highestscore",
     "averagescore",
     "lastscore",
-    "totalbonusestaken",
-    "totalbosswavessurvived",
-    "totalfallingbosswavessurvived",
-    "totalrisingbosswavessurvived"
+    "totalbosswaves",
+    "totalrisingbosswaves",
+    "totalfallingbosswaves"
 ];
 
 const initLocalStorage = function(koo, k)
