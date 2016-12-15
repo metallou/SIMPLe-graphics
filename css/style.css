@@ -145,6 +145,7 @@ canvas#canv
     position: absolute;
     top: 0;
     left: 0;
+    z-index: 1;
 }
 
 #block-lines
@@ -492,6 +493,7 @@ button:hover
 #titleimg
 {
   height: 80%;
+  z-index: 0;
 }
 
 #bossup
