@@ -520,3 +520,55 @@ button:hover
         top: 100%;
     }
 }
+
+#bossdown
+{
+    position: absolute;
+    top: -90%;
+    display: flex;
+    width: 100%;
+    height: 100%;
+    background-color: red;
+}
+#bossdown>div
+{
+    position: relative;
+    flex: 1;
+    height: 100%;
+}
+
+.falling-block
+{
+    position: absolute;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: red;
+}
+
+
+.falling
+{
+    animation-name: bossdown;
+    animation-duration: 5s;
+    animation-timing-function: linear;
+}
+
+@keyframes bossdown
+{
+    0% {
+        top: 0;
+    }
+    10% {
+        top: 10%;
+    }
+    90% {
+        top: 10%;
+    }
+    95% {
+        top: 100%;
+    }
+    100% {
+        top: 0;
+    }
+}

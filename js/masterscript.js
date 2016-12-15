@@ -13,8 +13,8 @@ const mastergamescript = function()
     master_container.style["top"] = styletop + "px";
     document.getElementById("wrapper").appendChild(master_container);
     const levelChoice = (Math.floor(Math.random()*1000*100)%100);
-    const isBoss = levelChoice >= 80;
-    const isBossUp = isBoss && (levelChoice%2 == 0);
+    const isBoss = true;//levelChoice >= 80;
+    const isBossUp = false;//isBoss && (levelChoice%2 == 0);
     const scoreBossUp = 10;
     const scoreBossDown = 20;
 
@@ -337,11 +337,38 @@ const mastergamescript = function()
         line.style["height"] = line.firstChild.offsetWidth + "px";
     }
 
-    const checkBossUp = function(b, iD) {
+    const checkBossUp = function(b, iD)
+    {
         if(!iD) {
             const style = window.getComputedStyle(b).getPropertyValue("top");
             if(mouseY >= parseInt(style.substr(0,style.length-2))) {
                 return true;
+            }
+            return false;
+        }
+        return iD;
+    }
+    const checkBossDown = function(b, iD)
+    {
+        if(!iD) {
+            const w = b.firstChild.offsetWidth;
+            const h = b.firstChild.offsetHeight;
+            let style = window.getComputedStyle(b).getPropertyValue("top");
+            const stm = parseInt(style.substr(0,style.length-2));
+            if(mouseY <=  stm+b.offsetHeight) {
+                return true;
+            }
+            let st;
+            for(let i=0; i<b.childNodes.length; i++) {
+                style = window.getComputedStyle(b.childNodes[i].firstChild).getPropertyValue("top");
+                st = parseInt(style.substr(0,style.length-2));
+                console.log(st);
+                if((i*w) <= mouseX && mouseX < (i*w)+w) {
+                    if(mouseY <= stm+st+h) {
+                        console.log("a");
+                        return true;
+                    }
+                }
             }
             return false;
         }
@@ -359,9 +386,19 @@ const mastergamescript = function()
     {
         const b = document.createElement("div");
         b.id = "bossdown";
+        let elem;
+        let elem2;
+        for(let i=0; i<20; i++) {
+            elem = document.createElement("div");
+            elem2 = document.createElement("div");
+            elem2.classList.add("falling-block");
+            elem.appendChild(elem2);
+            b.appendChild(elem);
+        }
         document.getElementById("wrapper").appendChild(b);
         return b;
     }
+
     let boss;
     if(isBoss) {
         if(isBossUp) {
@@ -370,8 +407,7 @@ const mastergamescript = function()
             boss = bossDownFunc();
         }
     }
-
-    //boucle de jeu
+    //boucle de jeu -----------------------------------------------------------
     const gamefunc = function()
     {
         if(!isBoss) {
@@ -441,13 +477,39 @@ const mastergamescript = function()
                     document.getElementById("pages").style["display"] = "";
                 }
             } else {
-                blackScreen(1000);
-                clearInterval(intervalID);
-                updateLocalStorage(score+scoreBossDown, 0, 0, 0);
-                //delete all Blocks
-                master_container.parentNode.removeChild(master_container);
-                boss.parentNode.removeChild(boss);
-                document.getElementById("pages").style["display"] = "";
+                styletop = document.getElementById("block-lines").style["top"];
+                styletop = styletop.substr(0,styletop.length-2);
+                styletop = parseInt(styletop);
+                if(!isDead) {
+                    //Add a new block-line to master_container (and reset top position) if possible
+                    if(styletop>=-10) {
+                        createNewLineBlock(master_container, score);
+                        blockheight = window.getComputedStyle(master_container.lastChild).getPropertyValue("height");
+                        blockheight = blockheight.substr(0,blockheight.length-2);
+                        blockheight = parseInt(blockheight);
+                        styletop -= blockheight;
+                    }
+                    //remove oldest block-line when out of screen
+                    if(master_container.offsetHeight > 2*blockheight + window.innerHeight) {
+                        master_container.removeChild(master_container.childNodes[master_container.childNodes.length-2]);
+                    }
+                    //Make master_container go down
+                    styletop = scrollMasterContainer(master_container, offsetDown, styletop);
+                    //Check if current position crosses a danger block
+                    //isDead = checkDead(master_container);
+                    //Check if current position crosses the boss
+                    isDead = checkBossDown(boss, isDead);
+                    //Check for score update
+                    score = checkScore(master_container, score);
+                } else {
+                    blackScreen(1000);
+                    clearInterval(intervalID);
+                    updateLocalStorage(score+scoreBossDown, 0, 0, 0);
+                    //delete all Blocks
+                    master_container.parentNode.removeChild(master_container);
+                    //boss.parentNode.removeChild(boss);
+                    document.getElementById("pages").style["display"] = "";
+                }
             }
         }
     }
