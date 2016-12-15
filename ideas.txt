@@ -2,21 +2,11 @@ jeu
 eviter les blocs
 AVOID DANGER
 
-V1: animation mort
-V1: message de mort + score
-
+V2: animation mort
+V2: message de mort
+V2: affichage score
+V2: affiche high score
+V2: affiche last score
 V2: styliser chemin canvas
-V2: blocs gauche-droite
-V2: animation nouveau score
-V2: message nouveau score
-V2: augmentation difficulté (+ animations qui vont bien, wesh)
 
-V3: mini-boss stalactites
-V3: mini-boss vague lave
-
-V4: bouclier Super-Mario
-V4: ajout fonctionnalités clic
-
-V5: Plusieurs chemins connectés
-V5: chemin taille variable
-V5: ajout messages random
+V5: ajout messages mort random
