@@ -420,7 +420,7 @@ const mastergamescript = function()
                 //Display score
                 scoreboard2.textContent = score
             } else {
-                blackScreen(1000);
+                blackScreen2(1000);
                 clearInterval(intervalID);
                 updateLocalStorage(score, 0, 0);
                 //delete all Blocks
@@ -457,7 +457,7 @@ const mastergamescript = function()
                     //Display score
                     scoreboard2.textContent = score + scoreBossUp;
                 } else {
-                    blackScreen(1000);
+                    blackscreen2(1000);
                     clearInterval(intervalID);
                     updateLocalStorage(score, 1, 0);
                     //delete all Blocks
@@ -475,7 +475,7 @@ const mastergamescript = function()
                     //Display score
                     scoreboard2.textContent = Math.floor(score + scoreBossDown);
                 } else {
-                    blackScreen(1000);
+                    blackscreen2(1000);
                     clearInterval(intervalID);
                     updateLocalStorage(Math.floor(score), 0, 1);
                     //delete all Blocks
