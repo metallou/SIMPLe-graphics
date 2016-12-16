@@ -496,8 +496,20 @@ const mastergamescript = function()
     let isDead = false;
 
     const levelChoice = (Math.floor(Math.random()*1000*100)%100);
-    const isBoss = levelChoice >= 80;
-    const isBossUp = isBoss && (levelChoice%2 == 0);
+    let isBoss = levelChoice >= 80;
+    if(localStorage.getItem("bossgameonly") === "true") {
+        isBoss = true;
+    }
+    if(localStorage.getItem("normalgameonly") === "true") {
+        isBoss = false;
+    }
+    let isBossUp = isBoss && (levelChoice%2 == 0);
+    if(localStorage.getItem("risingbossonly") === "true") {
+        isBossUp = true;
+    }
+    if(localStorage.getItem("fallingbossonly") === "true") {
+        isBossUp = false;
+    }
     const scoreBossUp = 20;
     const scoreBossDown = 20;
 
@@ -521,11 +533,11 @@ const mastergamescript = function()
             boss = bossDownFunc();
             scoreboard2.textContent = score + scoreBossDown
         }
+        document.getElementById("wrapper").appendChild(boss);
     } else {
         scoreboard2.textContent = score;
     }
     document.getElementById("wrapper").appendChild(master_container);
-    document.getElementById("wrapper").appendChild(boss);
     document.getElementById("wrapper").appendChild(scoreboard);
 
     intervalID = setInterval(gamefunc, 10);
