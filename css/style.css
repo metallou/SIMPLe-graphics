@@ -111,7 +111,7 @@ button.selected{
   border-color: #F00;
 }
 
-button.menubutton, button#optionsbutton, button#statsbutton
+button#optionsbutton, button#statsbutton
 {
     position: absolute;
     bottom: 5%;
@@ -143,16 +143,12 @@ button.menubutton
     left: 50%;
 }
 
-#optionspage
-{
-
-}
-
-#statspage
+#optionspage, #statspage
 {
 display: flex;
 justify-content: center;
 align-items: center;
+flex-direction: column;
 }
 
 canvas#canv
