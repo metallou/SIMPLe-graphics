@@ -1,3 +1,5 @@
+"use strict"
+
 //Global variable
 const path = [];
 const offsetDown = Math.floor(0.5*window.innerHeight/100);

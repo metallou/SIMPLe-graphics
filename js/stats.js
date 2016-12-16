@@ -1,3 +1,5 @@
+"use strict"
+
 const statsFunc = function()
 {
     const nb_elems = document.getElementById("statspage").children[0].children[0].children.length;

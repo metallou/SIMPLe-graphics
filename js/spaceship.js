@@ -1,3 +1,5 @@
+"use strict"
+
 const updateSpaceshipReady = function() {
 
     const spaceship = document.getElementById("spaceship");

@@ -1,3 +1,5 @@
+"use strict"
+
 const initMouseX = 0.5*window.innerWidth;
 const initMouseY = 0.55*window.innerHeight;
 
