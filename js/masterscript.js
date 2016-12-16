@@ -268,7 +268,7 @@ const mastergamescript = function()
                         {
                             b.childNodes[rnd].firstChild.classList.remove("falling");
                         }, 5000);
-                scr = scr+0.1;
+                scr = scr+0.2;
             }
         }
         return scr;
@@ -360,11 +360,11 @@ const mastergamescript = function()
                     //Check for score update
                     score = checkScore(master_container, score);
                     //Display score
-                    scoreboard2.textContent = score + scoreBossUp;
+                    scoreboard2.textContent = 2*score + scoreBossUp;
                 } else {
                     blackScreen(1000);
                     clearInterval(intervalID);
-                    updateLocalStorage(score + scoreBossUp, 1, 0);
+                    updateLocalStorage(2*score + scoreBossUp, 1, 0);
                     //delete all Blocks
                     master_container.parentNode.removeChild(master_container);
                     boss.parentNode.removeChild(boss);
@@ -374,9 +374,9 @@ const mastergamescript = function()
             } else {
                 if(!isDead) {
                     //Update score, launches an attack at random
-                    score = animateBossDown(boss, score)
-                        //Check if current position crosses the boss
-                        isDead = checkBossDown(boss, isDead);
+                    score = animateBossDown(boss, score);
+                    //Check if current position crosses the boss
+                    isDead = checkBossDown(boss, isDead);
                     //Display score
                     scoreboard2.textContent = Math.floor(score + scoreBossDown);
                 } else {
