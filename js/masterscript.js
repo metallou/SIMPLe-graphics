@@ -521,11 +521,11 @@ const mastergamescript = function()
             boss = bossDownFunc();
             scoreboard2.textContent = score + scoreBossDown
         }
+    document.getElementById("wrapper").appendChild(boss);
     } else {
         scoreboard2.textContent = score;
     }
     document.getElementById("wrapper").appendChild(master_container);
-    document.getElementById("wrapper").appendChild(boss);
     document.getElementById("wrapper").appendChild(scoreboard);
 
     intervalID = setInterval(gamefunc, 10);
