@@ -1,10 +1,12 @@
+"use strict"
+
 const statsFunc = function()
 {
-    const nb_elems = document.getElementsByTagName("tr").length;
+    const nb_elems = document.getElementById("statspage").children[0].children[0].children.length;
     let key;
     let value;
     for(let i=1; i<=nb_elems; i++) {
-        key = document.getElementById("k"+i).innerHTML;
+        key = document.getElementById("k"+i).textContent;
         key = key.toLowerCase();
         key = key.split("\n").join("");;
         key = key.split(":").join("");

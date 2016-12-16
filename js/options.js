@@ -1,7 +1,13 @@
+"use strict"
+
 const keysonoff =
 [
     "music",
-    "sound"
+    "sound",
+    "normalgameonly",
+    "bossgameonly",
+    "risingbossonly",
+    "fallingbossonly"
 ];
 const keys =
 [
@@ -10,17 +16,16 @@ const keys =
     "highestscore",
     "averagescore",
     "lastscore",
-    "totalbonusestaken",
-    "totalbosswavessurvived",
-    "totalfallingbosswavessurvived",
-    "totalrisingbosswavessurvived"
+    "totalbosswaves",
+    "totalrisingbosswaves",
+    "totalfallingbosswaves"
 ];
 
 const initLocalStorage = function(koo, k)
 {
     for(let i=0; i<koo.length; i++) {
         if(localStorage.getItem(koo[i]) == null || localStorage.getItem(koo[i]) == undefined) {
-            localStorage.setItem(koo[i], "true");
+            localStorage.setItem(koo[i], "false");
         }
     }
     for(let i=0; i<k.length; i++) {
@@ -28,6 +33,8 @@ const initLocalStorage = function(koo, k)
             localStorage.setItem(k[i], "0");
         }
     }
+    localStorage.setItem("music", "true");
+    localStorage.setItem("sound", "true");
 }
 
 const optionsFunc = function()
@@ -53,12 +60,16 @@ const optionsFunc = function()
             {
                 localStorage.clear();
                 for(let i=0; i<keysonoff.length; i++) {
-                    localStorage.setItem(keysonoff[i], "true");
+                    localStorage.setItem(keysonoff[i], "false");
                     checkValue(keysonoff[i]);
                 }
                 for(let i=0; i<keys.length; i++) {
                     localStorage.setItem(keys[i], 0);
                 }
+                localStorage.setItem("music", "true");
+                localStorage.setItem("sound", "true");
+                checkValue("music");
+                checkValue("sound");
             });
 
     let elem;
@@ -71,6 +82,22 @@ const optionsFunc = function()
         elem.addEventListener("click", function()
                 {
                     localStorage.setItem(keysonoff[i], "true");
+                    if(keysonoff[i] === "risingbossonly") {
+                        localStorage.setItem("fallingbossonly", "false");
+                        checkValue("fallingbossonly");
+                    }
+                    if(keysonoff[i] === "fallingbossonly") {
+                        localStorage.setItem("risingbossonly", "false");
+                        checkValue("risingbossonly");
+                    }
+                    if(keysonoff[i] === "bossgameonly") {
+                        localStorage.setItem("normalgameonly", "false");
+                        checkValue("normalgameonly");
+                    }
+                    if(keysonoff[i] === "normalgameonly") {
+                        localStorage.setItem("bossgameonly", "false");
+                        checkValue("bossgameonly");
+                    }
                     checkValue(keysonoff[i]);
                 });
         elem2.addEventListener("click", function()

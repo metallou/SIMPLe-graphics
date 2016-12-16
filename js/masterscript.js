@@ -2,21 +2,11 @@
 
 const mastergamescript = function()
 {
-    let danger_blocks;
-    let intervalID;
-    let blockheight;
-    let score = 0;
-    let styletop = 0;
-    let isDead = false;
-    const master_container = document.createElement("div");
-    master_container.id = "block-lines";
-    master_container.style["top"] = styletop + "px";
-    document.getElementById("wrapper").appendChild(master_container);
-
     const checkScore = function(wrapper, scr)
     {
         const updateScoreBlock = function(wrapper, score_blocks)
         {
+
             const st = parseInt(wrapper.style["top"].substr(0,wrapper.style["top"].length-2));
             const hV = wrapper.firstChild.firstChild.offsetHeight;
 
@@ -28,7 +18,7 @@ const mastergamescript = function()
         const score_block = updateScoreBlock(wrapper, score_blocks);
         if(mouseY < score_block) {
             score_blocks[score_blocks.length-1].classList.remove("score");
-            return scr+1;
+            scr += 1;
         }
         return scr;
     }
@@ -88,7 +78,7 @@ const mastergamescript = function()
         return false;
     }
 
-    const updateLocalStorage = function(score, bonus, bossup, bossdown)
+    const updateLocalStorage = function(score, bossup, bossdown)
     {
         //Total Games Played
         let tgp = parseInt(localStorage.getItem("totalgamesplayed"));
@@ -113,25 +103,20 @@ const mastergamescript = function()
         //Last Score
         localStorage.setItem("lastscore", score);
 
-        //Total bonuses taken
-        let tbt = parseInt(localStorage.getItem("totalbonusestaken"));
-        tbt += bonus;
-        localStorage.setItem("totalbonusestaken", tbt);
+        //Total Boss Waves
+        let tbw = parseInt(localStorage.getItem("totalbosswaves"));
+        tbw += bossup + bossdown;
+        localStorage.setItem("totalbosswaves", tbw);
 
-        //Total Boss Waves Survived
-        let tbws = parseInt(localStorage.getItem("totalbonusestaken"));
-        tbws += bossup + bossdown;
-        localStorage.setItem("totalbonusestaken", tbws);
+        //Total Rising Boss Waves
+        let trbw = parseInt(localStorage.getItem("totalrisingbosswaves"));
+        trbw += bossup;
+        localStorage.setItem("totalrisingbosswaves", trbw);
 
-        //Total Falling Boss Waves Survived
-        let tfbws = parseInt(localStorage.getItem("totalbonusestaken"));
-        tfbws += bossdown;
-        localStorage.setItem("totalbonusestaken", tfbws);
-
-        //Total Rising Boos Waves Survived
-        let trbws = parseInt(localStorage.getItem("totalbonusestaken"));
-        trbws += bossdown;
-        localStorage.setItem("totalbonusestaken", trbws);
+        //Total Falling Boos Waves
+        let tfbw = parseInt(localStorage.getItem("totalfallingbosswaves"));
+        tfbw += bossdown;
+        localStorage.setItem("totalfallingbosswaves", tfbw);
     }
 
     const scrollMasterContainer = function(wrapper, offset, previous)
@@ -190,20 +175,113 @@ const mastergamescript = function()
                     block.classList.add("danger");
                     img = document.createElement("img");
                     let randd=Math.round(Math.random() * 1000 * 4)%4;
+                    let randrot=Math.round(Math.random() * 1000 * 6)%6;
                     switch(randd){
-                        case 0:
-                            img.src = "img/asteroids/ast_blue.png";
+                      case 0:
+                        img.src = "img/asteroids/ast_blue.png";
+                        switch(randrot){
+                          case 0:
+                            img.classList.add("rotating1");
                             break;
-                        case 1:
-                            img.src = "img/asteroids/ast_grey.png";
+                          case 1:
+                            img.classList.add("rotating2");
+
                             break;
-                        case 2:
-                            img.src = "img/asteroids/ast_darkgrey.png";
+                          case 2:
+                            img.classList.add("rotating3");
+
                             break;
-                        case 3:
-                            img.src = "img/asteroids/ast_simplon.png";
+                          case 3:
+                            img.classList.add("rotating4");
+
                             break;
-                    }
+                          case 4:
+                            img.classList.add("rotating5");
+
+                            break;
+                          case 5:
+                            img.classList.add("rotating6");
+                            break;
+                        }
+                        break;
+
+                      case 1:
+                          img.src = "img/asteroids/ast_grey.png";
+                          switch(randrot){
+                            case 0:
+                              img.classList.add("rotating1");
+                              break;
+                            case 1:
+                              img.classList.add("rotating2");
+                              break;
+                            case 2:
+                              img.classList.add("rotating3");
+                              break;
+                            case 3:
+                              img.classList.add("rotating4");
+                              break;
+                            case 4:
+                              img.classList.add("rotating6");
+                              break;
+                            case 5:
+                              img.classList.add("rotating7");
+                              break;
+                            default:
+                              break;
+                          }
+                          break;
+
+                      case 2:
+                          img.src = "img/asteroids/ast_darkgrey.png";
+                          switch(randrot){
+                            case 0:
+                              img.classList.add("rotating1");
+                              break;
+                            case 1:
+                              img.classList.add("rotating2");
+                              break;
+                            case 2:
+                              img.classList.add("rotating3");
+                              break;
+                            case 3:
+                              img.classList.add("rotating4");
+                              break;
+                            case 4:
+                              img.classList.add("rotating6");
+                              break;
+                            case 5:
+                              img.classList.add("rotating7");
+                              break;
+                            default:
+                              break;
+                          }
+                          break;
+                      case 3:
+                          img.src = "img/asteroids/ast_simplon.png";
+                          switch(randrot){
+                            case 0:
+                              img.classList.add("rotating1");
+                              break;
+                            case 1:
+                              img.classList.add("rotating2");
+                              break;
+                            case 2:
+                              img.classList.add("rotating3");
+                              break;
+                            case 3:
+                              img.classList.add("rotating4");
+                              break;
+                            case 4:
+                              img.classList.add("rotating6");
+                              break;
+                            case 5:
+                              img.classList.add("rotating7");
+                              break;
+                            default:
+                              break;
+                          }
+                            break;
+                          }
                     img.alt = "asteroid";
                     block.appendChild(img);
                     ligne.appendChild(block);
@@ -238,39 +316,229 @@ const mastergamescript = function()
         line.style["height"] = line.firstChild.offsetWidth + "px";
     }
 
-    //boucle de jeu
+    const checkBossUp = function(b, iD)
+    {
+        if(!iD) {
+            const style = window.getComputedStyle(b).getPropertyValue("top");
+            if(mouseY >= parseInt(style.substr(0,style.length-2))) {
+                return true;
+            }
+            return false;
+        }
+        return iD;
+    }
+    const checkBossDown = function(b, iD)
+    {
+        if(!iD) {
+            const w = b.firstChild.offsetWidth;
+            const h = b.firstChild.offsetHeight;
+            let style = window.getComputedStyle(b).getPropertyValue("top");
+            const stm = parseInt(style.substr(0,style.length-2));
+            if(mouseY <=  stm+b.offsetHeight) {
+                return true;
+            }
+            let st;
+            for(let i=0; i<b.childNodes.length; i++) {
+                style = window.getComputedStyle(b.childNodes[i].firstChild).getPropertyValue("top");
+                st = parseInt(style.substr(0,style.length-2));
+                if((i*w) <= mouseX && mouseX < (i*w)+w) {
+                    if(mouseY <= stm+st+h) {
+                        return true;
+                    }
+                }
+            }
+            return false;
+        }
+        return iD;
+    }
+
+    const animateBossDown = function(b, scr) {
+        const rnd = Math.floor(Math.random()*1000*20)%20;
+        const rndevent = Math.random();
+        if(rndevent >= 0.90) {
+            const rnd = Math.floor(Math.random()*1000*20)%20;
+            if(!b.childNodes[rnd].firstChild.classList.contains("falling")) {
+                b.childNodes[rnd].firstChild.classList.add("falling");
+                setTimeout(function()
+                        {
+                            b.childNodes[rnd].firstChild.classList.remove("falling");
+                        }, 5000);
+                    scr = scr+0.1;
+            }
+        }
+        return scr;
+    }
+
+    const bossUpFunc = function()
+    {
+        const b = document.createElement("div");
+        b.id = "bossup";
+        return b;
+    }
+    const bossDownFunc = function()
+    {
+        const b = document.createElement("div");
+        b.id = "bossdown";
+        let elem;
+        let elem2;
+        for(let i=0; i<20; i++) {
+            elem = document.createElement("div");
+            elem2 = document.createElement("div");
+            elem2.classList.add("falling-block");
+            elem.appendChild(elem2);
+            b.appendChild(elem);
+        }
+        return b;
+    }
+
+    //boucle de jeu -----------------------------------------------------------
     const gamefunc = function()
     {
-        styletop = document.getElementById("block-lines").style["top"];
-        styletop = styletop.substr(0,styletop.length-2);
-        styletop = parseInt(styletop);
-        if(!isDead) {
-            //Add a new block-line to master_container (and reset top position) if possible
-            if(styletop>=-10) {
-                createNewLineBlock(master_container, score);
-                blockheight = window.getComputedStyle(master_container.lastChild).getPropertyValue("height");
-                blockheight = blockheight.substr(0,blockheight.length-2);
-                blockheight = parseInt(blockheight);
-                styletop -= blockheight;
+        if(!isBoss) {
+            styletop = document.getElementById("block-lines").style["top"];
+            styletop = styletop.substr(0,styletop.length-2);
+            styletop = parseInt(styletop);
+            if(!isDead) {
+                //Add a new block-line to master_container (and reset top position) if possible
+                if(styletop>=-10) {
+                    createNewLineBlock(master_container, score);
+                    blockheight = window.getComputedStyle(master_container.lastChild).getPropertyValue("height");
+                    blockheight = blockheight.substr(0,blockheight.length-2);
+                    blockheight = parseInt(blockheight);
+                    styletop -= blockheight;
+                }
+                //remove oldest block-line when out of screen
+                if(master_container.offsetHeight > 2*blockheight + window.innerHeight) {
+                    master_container.removeChild(master_container.lastChild);
+                }
+                //Make master_container go down
+                styletop = scrollMasterContainer(master_container, offsetDown, styletop);
+                //Check if current position crosses a danger block
+                isDead = checkDead(master_container);
+                //Check for score update
+                score = checkScore(master_container, score);
+                //Display score
+                scoreboard2.textContent = score
+            } else {
+                blackScreen(1000);
+                clearInterval(intervalID);
+                updateLocalStorage(score, 0, 0);
+                //delete all Blocks
+                master_container.parentNode.removeChild(master_container);
+                scoreboard.parentNode.removeChild(scoreboard);
+                document.getElementById("pages").style["display"] = "";
             }
-            //remove oldest block-line when out of screen
-            if(master_container.offsetHeight > 2*blockheight + window.innerHeight) {
-                master_container.removeChild(master_container.lastChild);
-            }
-            //Make master_container go down
-            styletop = scrollMasterContainer(master_container, offsetDown, styletop);
-            //Check if current position crosses a danger block
-            //Check for score update
-            isDead = checkDead(master_container);
-            score = checkScore(master_container, score);
         } else {
-            blackScreen(1000);
-            clearInterval(intervalID);
-            updateLocalStorage(score, 0, 0, 0);
-            //delete all Blocks
-            master_container.parentNode.removeChild(master_container);
-            document.getElementById("pages").style["display"] = "";
+            if(isBossUp) {
+                styletop = document.getElementById("block-lines").style["top"];
+                styletop = styletop.substr(0,styletop.length-2);
+                styletop = parseInt(styletop);
+                if(!isDead) {
+                    //Add a new block-line to master_container (and reset top position) if possible
+                    if(styletop>=-10) {
+                        createNewLineBlock(master_container, score);
+                        blockheight = window.getComputedStyle(master_container.lastChild).getPropertyValue("height");
+                        blockheight = blockheight.substr(0,blockheight.length-2);
+                        blockheight = parseInt(blockheight);
+                        styletop -= blockheight;
+                    }
+                    //remove oldest block-line when out of screen
+                    if(master_container.offsetHeight > 2*blockheight + window.innerHeight) {
+                        master_container.removeChild(master_container.childNodes[master_container.childNodes.length-2]);
+                    }
+                    //Make master_container go down
+                    styletop = scrollMasterContainer(master_container, offsetDown, styletop);
+                    //Check if current position crosses a danger block
+                    isDead = checkDead(master_container);
+                    //Check if current position crosses the boss
+                    isDead = checkBossUp(boss, isDead);
+                    //Check for score update
+                    score = checkScore(master_container, score);
+                    //Display score
+                    scoreboard2.textContent = score + scoreBossUp;
+                } else {
+                    blackScreen(1000);
+                    clearInterval(intervalID);
+                    updateLocalStorage(score + scoreBossUp, 1, 0);
+                    //delete all Blocks
+                    master_container.parentNode.removeChild(master_container);
+                    boss.parentNode.removeChild(boss);
+                    scoreboard.parentNode.removeChild(scoreboard);
+                    document.getElementById("pages").style["display"] = "";
+                }
+            } else {
+                if(!isDead) {
+                    //Update score, launches an attack at random
+                    score = animateBossDown(boss, score)
+                    //Check if current position crosses the boss
+                    isDead = checkBossDown(boss, isDead);
+                    //Display score
+                    scoreboard2.textContent = Math.floor(score + scoreBossDown);
+                } else {
+                    blackScreen(1000);
+                    clearInterval(intervalID);
+                    updateLocalStorage(Math.floor(score + scoreBossDown), 0, 1);
+                    //delete all Blocks
+                    master_container.parentNode.removeChild(master_container);
+                    boss.parentNode.removeChild(boss);
+                    scoreboard.parentNode.removeChild(scoreboard);
+                    document.getElementById("pages").style["display"] = "";
+                }
+            }
         }
     }
+
+    let danger_blocks;
+    let intervalID;
+    let blockheight;
+    let score = 0;
+    let styletop = 0;
+    let isDead = false;
+
+    const levelChoice = (Math.floor(Math.random()*1000*100)%100);
+    let isBoss = levelChoice >= 80;
+    if(localStorage.getItem("bossgameonly") === "true") {
+        isBoss = true;
+    }
+    if(localStorage.getItem("normalgameonly") === "true") {
+        isBoss = false;
+    }
+    let isBossUp = isBoss && (levelChoice%2 == 0);
+    if(localStorage.getItem("risingbossonly") === "true") {
+        isBossUp = true;
+    }
+    if(localStorage.getItem("fallingbossonly") === "true") {
+        isBossUp = false;
+    }
+    const scoreBossUp = 20;
+    const scoreBossDown = 20;
+
+    const scoreboard = document.createElement("div");
+    scoreboard.id = "scoreboard";
+    let scoreboard2 = document.createElement("span");
+    scoreboard2.textContent = "SCORE";
+    scoreboard.appendChild(scoreboard2);
+    scoreboard2 = document.createElement("span");
+    scoreboard.appendChild(scoreboard2);
+    const master_container = document.createElement("div");
+    master_container.id = "block-lines";
+    master_container.style["top"] = styletop + "px";
+
+    let boss;
+    if(isBoss) {
+        if(isBossUp) {
+            boss = bossUpFunc();
+            scoreboard2.textContent = score + scoreBossUp;
+        } else {
+            boss = bossDownFunc();
+            scoreboard2.textContent = score + scoreBossDown
+        }
+        document.getElementById("wrapper").appendChild(boss);
+    } else {
+        scoreboard2.textContent = score;
+    }
+    document.getElementById("wrapper").appendChild(master_container);
+    document.getElementById("wrapper").appendChild(scoreboard);
+
     intervalID = setInterval(gamefunc, 10);
 }

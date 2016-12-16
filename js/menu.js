@@ -1,3 +1,5 @@
+"use strict"
+
 const blackScreen = function(time)
 {
     const elem = document.createElement("div");
@@ -11,17 +13,23 @@ const blackScreen = function(time)
     setTimeout(blackscreenOff, time);
 }
 
+const scoreMenu = function()
+{
+    document.getElementById("HS").textContent = localStorage.getItem("highestscore");
+    document.getElementById("LS").textContent = localStorage.getItem("lastscore");
+}
+
 const buttonReady = function()
 {
     document.getElementById("optionsbutton").addEventListener("click", function()
             {
                 blackScreen(500);
-                document.getElementsByTagName("article")[0].style["left"] = "0px";
+                document.getElementById("pages").style["left"] = "0px";
             });
     document.getElementById("statsbutton").addEventListener("click", function()
             {
                 blackScreen(500);
-                document.getElementsByTagName("article")[0].style["left"] = "-200vw";
+                document.getElementById("pages").style["left"] = "-200vw";
             });
     document.getElementById("playbutton").addEventListener("click", function()
             {
@@ -34,8 +42,13 @@ const buttonReady = function()
         buttons[i].addEventListener("click", function()
                 {
                     blackScreen(500);
-                    document.getElementsByTagName("article")[0].style["left"] = "-100vw";
+                    document.getElementById("pages").style["left"] = "-100vw";
                 });
     }
+
+    scoreMenu();
+    setInterval(scoreMenu,1000);
+    //Does not seem to work (ask Ben)
+    //window.addEventListener("storage", scoreMenu);
 }
 document.addEventListener("DOMContentLoaded", buttonReady);
