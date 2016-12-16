@@ -12,6 +12,22 @@ const blackScreen = function(time)
     document.getElementById("wrapper").appendChild(elem);
     setTimeout(blackscreenOff, time);
 }
+const blackscreen2 = function(time){
+  const expl = document.getElementById('spaceship');
+  expl.src="img/mort.gif";
+  const elem = document.createElement("div");
+  const blackscreen2Off = function()
+  {
+      const expl = document.getElementById('spaceship');
+      expl.src="img/tintin_spaceship.gif";
+      document.getElementById("wrapper").removeChild(elem);
+  }
+
+  elem.classList.add("blackscreen");
+  document.getElementById("wrapper").appendChild(elem);
+  setTimeout(blackscreen2Off, time);
+
+}
 
 const scoreMenu = function()
 {
