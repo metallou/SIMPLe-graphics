@@ -81,6 +81,7 @@ main, aside
 #scoreboard
 {
     position: absolute;
+    top: 0;
     left: 50%;
     height: auto;
     transform: translateX(-50%);

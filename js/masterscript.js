@@ -2,33 +2,6 @@
 
 const mastergamescript = function()
 {
-    let danger_blocks;
-    let intervalID;
-    let blockheight;
-    let score = 0;
-    let styletop = 0;
-    let isDead = false;
-
-    const scoreboard = document.createElement("div");
-    scoreboard.id = "scoreboard";
-    scoreboard.style["top"] = "0";
-    let scoreboard2 = document.createElement("span");
-    scoreboard2.textContent = "SCORE";
-    scoreboard.appendChild(scoreboard2);
-    scoreboard2 = document.createElement("span");
-    scoreboard2.textContent = "0";
-    scoreboard.appendChild(scoreboard2);
-    document.getElementById("wrapper").appendChild(scoreboard);
-    const master_container = document.createElement("div");
-    master_container.id = "block-lines";
-    master_container.style["top"] = styletop + "px";
-    document.getElementById("wrapper").appendChild(master_container);
-    const levelChoice = (Math.floor(Math.random()*1000*100)%100);
-    const isBoss = levelChoice >= 80;
-    const isBossUp = isBoss && (levelChoice%2 == 0);
-    const scoreBossUp = 20;
-    const scoreBossDown = 20;
-
     const checkScore = function(wrapper, scr)
     {
         const updateScoreBlock = function(wrapper, score_blocks)
@@ -46,7 +19,6 @@ const mastergamescript = function()
         if(mouseY < score_block) {
             score_blocks[score_blocks.length-1].classList.remove("score");
             scr += 1;
-            scoreboard2.textContent = scr;
         }
         return scr;
     }
@@ -392,7 +364,6 @@ const mastergamescript = function()
                             b.childNodes[rnd].firstChild.classList.remove("falling");
                         }, 5000);
                     scr = scr+0.1;
-                    scoreboard2.textContent = Math.floor(scr);
             }
         }
         return scr;
@@ -402,7 +373,6 @@ const mastergamescript = function()
     {
         const b = document.createElement("div");
         b.id = "bossup";
-        document.getElementById("wrapper").appendChild(b);
         return b;
     }
     const bossDownFunc = function()
@@ -418,22 +388,9 @@ const mastergamescript = function()
             elem.appendChild(elem2);
             b.appendChild(elem);
         }
-        document.getElementById("wrapper").appendChild(b);
         return b;
     }
 
-    let boss;
-    if(isBoss) {
-        if(isBossUp) {
-            boss = bossUpFunc();
-            score += scoreBossUp;
-        } else {
-            boss = bossDownFunc();
-            score += scoreBossDown;
-            scoreboard.style["bottom"] = "0";
-            scoreboard.style["top"] = "";
-        }
-    }
     //boucle de jeu -----------------------------------------------------------
     const gamefunc = function()
     {
@@ -460,6 +417,8 @@ const mastergamescript = function()
                 isDead = checkDead(master_container);
                 //Check for score update
                 score = checkScore(master_container, score);
+                //Display score
+                scoreboard2.textContent = score
             } else {
                 blackScreen(1000);
                 clearInterval(intervalID);
@@ -495,6 +454,8 @@ const mastergamescript = function()
                     isDead = checkBossUp(boss, isDead);
                     //Check for score update
                     score = checkScore(master_container, score);
+                    //Display score
+                    scoreboard2.textContent = score + scoreBossUp;
                 } else {
                     blackScreen(1000);
                     clearInterval(intervalID);
@@ -511,6 +472,8 @@ const mastergamescript = function()
                     score = animateBossDown(boss, score)
                     //Check if current position crosses the boss
                     isDead = checkBossDown(boss, isDead);
+                    //Display score
+                    scoreboard2.textContent = Math.floor(score + scoreBossDown);
                 } else {
                     blackScreen(1000);
                     clearInterval(intervalID);
@@ -524,5 +487,46 @@ const mastergamescript = function()
             }
         }
     }
+
+    let danger_blocks;
+    let intervalID;
+    let blockheight;
+    let score = 0;
+    let styletop = 0;
+    let isDead = false;
+
+    const levelChoice = (Math.floor(Math.random()*1000*100)%100);
+    const isBoss = true;//levelChoice >= 80;
+    const isBossUp = true;//isBoss && (levelChoice%2 == 0);
+    const scoreBossUp = 20;
+    const scoreBossDown = 20;
+
+    const scoreboard = document.createElement("div");
+    scoreboard.id = "scoreboard";
+    let scoreboard2 = document.createElement("span");
+    scoreboard2.textContent = "SCORE";
+    scoreboard.appendChild(scoreboard2);
+    scoreboard2 = document.createElement("span");
+    scoreboard.appendChild(scoreboard2);
+    const master_container = document.createElement("div");
+    master_container.id = "block-lines";
+    master_container.style["top"] = styletop + "px";
+
+    let boss;
+    if(isBoss) {
+        if(isBossUp) {
+            boss = bossUpFunc();
+            scoreboard2.textContent = score + scoreBossUp;
+        } else {
+            boss = bossDownFunc();
+            scoreboard2.textContent = score + scoreBossDown
+        }
+    } else {
+        scoreboard2.textContent = score;
+    }
+    document.getElementById("wrapper").appendChild(master_container);
+    document.getElementById("wrapper").appendChild(boss);
+    document.getElementById("wrapper").appendChild(scoreboard);
+
     intervalID = setInterval(gamefunc, 10);
 }
