@@ -221,10 +221,10 @@ const mastergamescript = function()
                               img.classList.add("rotating4");
                               break;
                             case 4:
-                              img.classList.add("rotating6");
+                              img.classList.add("rotating5");
                               break;
                             case 5:
-                              img.classList.add("rotating7");
+                              img.classList.add("rotating6");
                               break;
                             default:
                               break;
@@ -247,10 +247,10 @@ const mastergamescript = function()
                               img.classList.add("rotating4");
                               break;
                             case 4:
-                              img.classList.add("rotating6");
+                              img.classList.add("rotating5");
                               break;
                             case 5:
-                              img.classList.add("rotating7");
+                              img.classList.add("rotating6");
                               break;
                             default:
                               break;
@@ -272,10 +272,10 @@ const mastergamescript = function()
                               img.classList.add("rotating4");
                               break;
                             case 4:
-                              img.classList.add("rotating6");
+                              img.classList.add("rotating5");
                               break;
                             case 5:
-                              img.classList.add("rotating7");
+                              img.classList.add("rotating6");
                               break;
                             default:
                               break;

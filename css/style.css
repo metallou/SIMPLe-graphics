@@ -331,11 +331,11 @@ canvas#canv
   }
 }
 .rotating3 {
-  -webkit-animation: rotating3 11s linear infinite;
-  -moz-animation: rotating3 11s linear infinite;
-  -ms-animation: rotating3 11s linear infinite;
-  -o-animation: rotating3 11s linear infinite;
-  animation: rotating3 11s linear infinite;
+  -webkit-animation: rotating3 8s linear infinite;
+  -moz-animation: rotating3 8s linear infinite;
+  -ms-animation: rotating3 8s linear infinite;
+  -o-animation: rotating3 8s linear infinite;
+  animation: rotating3 8s linear infinite;
 }
 @-webkit-keyframes rotating4 /* Safari and Chrome */ {
   from {
@@ -370,11 +370,11 @@ canvas#canv
   }
 }
 .rotating4 {
-  -webkit-animation: rotating4 15s linear infinite;
-  -moz-animation: rotating4 15s linear infinite;
-  -ms-animation: rotating4 15s linear infinite;
-  -o-animation: rotating4 15s linear infinite;
-  animation: rotating4 15s linear infinite;
+  -webkit-animation: rotating4 10s linear infinite;
+  -moz-animation: rotating4 10s linear infinite;
+  -ms-animation: rotating4 10s linear infinite;
+  -o-animation: rotating4 10s linear infinite;
+  animation: rotating4 10s linear infinite;
 }
 @-webkit-keyframes rotating5 /* Safari and Chrome */ {
   from {
