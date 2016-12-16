@@ -28,36 +28,21 @@ const mastergamescript = function()
         {
             const d_b = [];
             const st = parseInt(wrapper.style["top"].substr(0,wrapper.style["top"].length-2));
-            const wV = wrapper.firstChild.firstChild.offsetWidth;
-            const hV = wrapper.firstChild.firstChild.offsetHeight;
-            const wH = wrapper.firstChild.childNodes[1].firstChild.offsetWidth;
-            const hH = wrapper.firstChild.childNodes[1].firstChild.offsetHeight;
+            const hV = wrapper.firstChild.offsetHeight;
+            const wH = wrapper.firstChild.firstChild.firstChild.offsetWidth;
+            const hH = wrapper.firstChild.firstChild.firstChild.offsetHeight;
 
             let wb;
             let elem;
             for(let i=0; i<wrapper.childNodes.length; i++) {
-                d_b.push(
-                        {
-                            X1: 0,
-                            X2: wV,
-                            Y1: st + (i*hV),
-                            Y2: st + (i*hV) + hV
-                        });
-                d_b.push(
-                        {
-                            X1: wV + wH,
-                            X2: wV + wH + wV,
-                            Y1: st + (i*hV),
-                            Y2: st + (i*hV) + hV
-                        });
-                elem = wrapper.childNodes[i].childNodes[1].firstChild;
+                elem = wrapper.childNodes[i].firstChild.firstChild;
                 wb = elem.firstChild.offsetWidth;
                 for(let j=0; j<elem.childNodes.length; j++) {
                     if(elem.childNodes[j].classList.contains("danger")) {
                         d_b.push(
                                 {
-                                    X1: wV + (j*wb),
-                                    X2: wV + (j*wb) + wb,
+                                    X1: (j*wb),
+                                    X2: (j*wb) + wb,
                                     Y1: st + (i*hV),
                                     Y2: st + (i*hV) + wb
                                 });
@@ -134,12 +119,6 @@ const mastergamescript = function()
             contain.classList.add("block-line");
             return contain;
         }
-        const createLineV = function(contain, position)
-        {
-            const vert = document.createElement("div");
-            vert.classList.add(position);
-            contain.appendChild(vert);
-        }
         const createLineH = function(contain, nb)
         {
             const createCentralContainer = function(conteneur)
@@ -174,114 +153,42 @@ const mastergamescript = function()
                     block = document.createElement("div");
                     block.classList.add("danger");
                     img = document.createElement("img");
-                    let randd=Math.round(Math.random() * 1000 * 4)%4;
-                    let randrot=Math.round(Math.random() * 1000 * 6)%6;
+                    const randd=Math.round(Math.random() * 1000 * 4)%4;
+                    const randrot=Math.round(Math.random() * 1000 * 6)%6;
                     switch(randd){
-                      case 0:
-                        img.src = "img/asteroids/ast_blue.png";
-                        switch(randrot){
-                          case 0:
+                        case 0:
+                            img.src = "img/asteroids/ast_blue.png";
+                            break;
+                        case 1:
+                            img.src = "img/asteroids/ast_grey.png";
+                            break;
+                        case 2:
+                            img.src = "img/asteroids/ast_darkgrey.png";
+                            break;
+                        case 3:
+                            img.src = "img/asteroids/ast_simplon.png";
+                            break;
+                    }
+                    switch(randrot){
+                        case 0:
                             img.classList.add("rotating1");
                             break;
-                          case 1:
+                        case 1:
                             img.classList.add("rotating2");
-
                             break;
-                          case 2:
+                        case 2:
                             img.classList.add("rotating3");
-
                             break;
-                          case 3:
+                        case 3:
                             img.classList.add("rotating4");
-
                             break;
-                          case 4:
+                        case 4:
                             img.classList.add("rotating5");
-
                             break;
-                          case 5:
+                        case 5:
                             img.classList.add("rotating6");
                             break;
-                        }
-                        break;
-
-                      case 1:
-                          img.src = "img/asteroids/ast_grey.png";
-                          switch(randrot){
-                            case 0:
-                              img.classList.add("rotating1");
-                              break;
-                            case 1:
-                              img.classList.add("rotating2");
-                              break;
-                            case 2:
-                              img.classList.add("rotating3");
-                              break;
-                            case 3:
-                              img.classList.add("rotating4");
-                              break;
-                            case 4:
-                              img.classList.add("rotating6");
-                              break;
-                            case 5:
-                              img.classList.add("rotating7");
-                              break;
-                            default:
-                              break;
-                          }
-                          break;
-
-                      case 2:
-                          img.src = "img/asteroids/ast_darkgrey.png";
-                          switch(randrot){
-                            case 0:
-                              img.classList.add("rotating1");
-                              break;
-                            case 1:
-                              img.classList.add("rotating2");
-                              break;
-                            case 2:
-                              img.classList.add("rotating3");
-                              break;
-                            case 3:
-                              img.classList.add("rotating4");
-                              break;
-                            case 4:
-                              img.classList.add("rotating6");
-                              break;
-                            case 5:
-                              img.classList.add("rotating7");
-                              break;
-                            default:
-                              break;
-                          }
-                          break;
-                      case 3:
-                          img.src = "img/asteroids/ast_simplon.png";
-                          switch(randrot){
-                            case 0:
-                              img.classList.add("rotating1");
-                              break;
-                            case 1:
-                              img.classList.add("rotating2");
-                              break;
-                            case 2:
-                              img.classList.add("rotating3");
-                              break;
-                            case 3:
-                              img.classList.add("rotating4");
-                              break;
-                            case 4:
-                              img.classList.add("rotating6");
-                              break;
-                            case 5:
-                              img.classList.add("rotating7");
-                              break;
-                            default:
-                              break;
-                          }
-                            break;
-                          }
+                    }
                     img.alt = "asteroid";
                     block.appendChild(img);
                     ligne.appendChild(block);
@@ -303,16 +210,14 @@ const mastergamescript = function()
 
         //Create all the blocs
         const container = createContainer();
-        createLineV(container, "gauche");
         createLineH(container, nbCases);
-        createLineV(container, "droite");
 
         if(wrapper.childNodes.length>0) {
             wrapper.insertBefore(container, wrapper.firstChild);
         } else {
             wrapper.appendChild(container);
         }
-        const line = wrapper.firstChild.childNodes[1].firstChild;
+        const line = wrapper.firstChild.firstChild.firstChild;
         line.style["height"] = line.firstChild.offsetWidth + "px";
     }
 
@@ -363,7 +268,7 @@ const mastergamescript = function()
                         {
                             b.childNodes[rnd].firstChild.classList.remove("falling");
                         }, 5000);
-                    scr = scr+0.1;
+                scr = scr+0.1;
             }
         }
         return scr;
@@ -470,8 +375,8 @@ const mastergamescript = function()
                 if(!isDead) {
                     //Update score, launches an attack at random
                     score = animateBossDown(boss, score)
-                    //Check if current position crosses the boss
-                    isDead = checkBossDown(boss, isDead);
+                        //Check if current position crosses the boss
+                        isDead = checkBossDown(boss, isDead);
                     //Display score
                     scoreboard2.textContent = Math.floor(score + scoreBossDown);
                 } else {
