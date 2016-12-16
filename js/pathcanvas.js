@@ -44,7 +44,7 @@ const funcPath = function() {
         ctx1.clearRect(0, 0, canvas1.width, canvas1.height);
         for (let i = 0; i < path.length; i++) {
             if(path[i].prout) {
-                ctx1.drawImage(proutprout, (path[i].X - 16*i/path.length), (path[i].Y-5), 30*i/path.length, 30*i/path.length);
+                ctx1.drawImage(proutprout, (path[i].X - 14*i/path.length), path[i].Y, 30*i/path.length, 30*i/path.length);
             }
         }
 
