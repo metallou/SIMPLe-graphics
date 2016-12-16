@@ -13,6 +13,7 @@ html, body
     height: 100vh;
     cursor: none;
     font-family: 'PressStart', sans-serif;
+    font-size: 1.5vw;
     color: #FFF;
     background-image: url(../img/sky.gif);
     background-repeat: repeat;
@@ -76,6 +77,7 @@ main, aside
     left: 50%;
     transform: translateX(-50%);
     text-align: right;
+    margin: 2vw;
 }
 
 #scoreboard
@@ -92,7 +94,7 @@ button
   padding: 0.75vw 2vw;
   margin: 10px;
   font-family: 'PressStart', sans-serif;
-  font-size: 1.25vw;
+  font-size: 1.5vw;
   background-color: #00032d;
   border: 5px solid #FFF;
   color: #FFF;
@@ -112,7 +114,7 @@ button.selected{
   border-color: #F00;
 }
 
-button.menubutton, button#optionsbutton, button#statsbutton
+button#optionsbutton, button#statsbutton
 {
     position: absolute;
     bottom: 5%;
@@ -135,25 +137,18 @@ button#statsbutton
 {
     left: 75%;
 }
-button#playbutton
+
+button.menubutton, button#playbutton
 {
     left: 50%;
 }
-button.menubutton
-{
-    left: 50%;
-}
 
-#optionspage
-{
-
-}
-
-#statspage
+#optionspage, #statspage
 {
 display: flex;
 justify-content: center;
 align-items: center;
+flex-direction: column;
 }
 
 #canvas1
@@ -488,7 +483,7 @@ button:hover
     top: 50%;
     left: 50%;
     transform: translateX(-50%);
-    z-index: 2;
+    z-index: 5 ;
 }
 
 #mainpage
