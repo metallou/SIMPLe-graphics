@@ -18,7 +18,7 @@
     <body>
         <div id="wrapper">
             <img id="spaceship" src="img/tintin_spaceship.gif" alt="spaceship" />
-            <canvas id="canvas1"></canvas>
+
 
             <!-- Elements de tests -->
             <article id="pages">
@@ -39,12 +39,6 @@
                     </tbody>
                 </table>
                 <aside id="optionspage">
-                    <!--
-                        Clear LocalStorage
-                        Disable music
-                        Disable sound
-                    -->
-
                     <section>
                         <div>
                             <button id="clearstorage">
@@ -65,6 +59,38 @@
                             </button>
                             <button id="musicon">
                                 Enable Music
+                            </button>
+                        </div>
+                        <div>
+                            <button id="normalgameonlyoff">
+                                Disable Normal Game Only
+                            </button>
+                            <button id="normalgameonlyon">
+                                Enable Normal Game Only
+                            </button>
+                        </div>
+                        <div>
+                            <button id="bossgameonlyoff">
+                                Disable Boss Game Only
+                            </button>
+                            <button id="bossgameonlyon">
+                                Enable Boss Game Only
+                            </button>
+                        </div>
+                        <div>
+                            <button id="risingbossonlyoff">
+                                Disable Rising Boss Only
+                            </button>
+                            <button id="risingbossonlyon">
+                                Enable Rising Boss Only
+                            </button>
+                        </div>
+                        <div>
+                            <button id="fallingbossonlyoff">
+                                Diasble Falling Boss Only
+                            </button>
+                            <button id="fallingbossonlyon">
+                                Enable Falling Boss Only
                             </button>
                         </div>
                     </section>
@@ -142,6 +168,7 @@
                     </button>
                 </aside>
             </article>
+            <canvas id="canvas1"></canvas>
         </div>
 
     </body>

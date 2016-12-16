@@ -221,10 +221,10 @@ const mastergamescript = function()
                               img.classList.add("rotating4");
                               break;
                             case 4:
-                              img.classList.add("rotating5");
+                              img.classList.add("rotating6");
                               break;
                             case 5:
-                              img.classList.add("rotating6");
+                              img.classList.add("rotating7");
                               break;
                             default:
                               break;
@@ -247,10 +247,10 @@ const mastergamescript = function()
                               img.classList.add("rotating4");
                               break;
                             case 4:
-                              img.classList.add("rotating5");
+                              img.classList.add("rotating6");
                               break;
                             case 5:
-                              img.classList.add("rotating6");
+                              img.classList.add("rotating7");
                               break;
                             default:
                               break;
@@ -272,10 +272,10 @@ const mastergamescript = function()
                               img.classList.add("rotating4");
                               break;
                             case 4:
-                              img.classList.add("rotating5");
+                              img.classList.add("rotating6");
                               break;
                             case 5:
-                              img.classList.add("rotating6");
+                              img.classList.add("rotating7");
                               break;
                             default:
                               break;
@@ -420,7 +420,7 @@ const mastergamescript = function()
                 //Display score
                 scoreboard2.textContent = score
             } else {
-                blackScreen2(1000);
+                blackScreen(1000);
                 clearInterval(intervalID);
                 updateLocalStorage(score, 0, 0);
                 //delete all Blocks
@@ -457,9 +457,9 @@ const mastergamescript = function()
                     //Display score
                     scoreboard2.textContent = score + scoreBossUp;
                 } else {
-                    blackscreen2(1000);
+                    blackScreen(1000);
                     clearInterval(intervalID);
-                    updateLocalStorage(score, 1, 0);
+                    updateLocalStorage(score + scoreBossUp, 1, 0);
                     //delete all Blocks
                     master_container.parentNode.removeChild(master_container);
                     boss.parentNode.removeChild(boss);
@@ -475,9 +475,9 @@ const mastergamescript = function()
                     //Display score
                     scoreboard2.textContent = Math.floor(score + scoreBossDown);
                 } else {
-                    blackscreen2(1000);
+                    blackScreen(1000);
                     clearInterval(intervalID);
-                    updateLocalStorage(Math.floor(score), 0, 1);
+                    updateLocalStorage(Math.floor(score + scoreBossDown), 0, 1);
                     //delete all Blocks
                     master_container.parentNode.removeChild(master_container);
                     boss.parentNode.removeChild(boss);
@@ -496,8 +496,20 @@ const mastergamescript = function()
     let isDead = false;
 
     const levelChoice = (Math.floor(Math.random()*1000*100)%100);
-    const isBoss = true;//levelChoice >= 80;
-    const isBossUp = true;//isBoss && (levelChoice%2 == 0);
+    let isBoss = levelChoice >= 80;
+    if(localStorage.getItem("bossgameonly") === "true") {
+        isBoss = true;
+    }
+    if(localStorage.getItem("normalgameonly") === "true") {
+        isBoss = false;
+    }
+    let isBossUp = isBoss && (levelChoice%2 == 0);
+    if(localStorage.getItem("risingbossonly") === "true") {
+        isBossUp = true;
+    }
+    if(localStorage.getItem("fallingbossonly") === "true") {
+        isBossUp = false;
+    }
     const scoreBossUp = 20;
     const scoreBossDown = 20;
 
@@ -521,7 +533,7 @@ const mastergamescript = function()
             boss = bossDownFunc();
             scoreboard2.textContent = score + scoreBossDown
         }
-    document.getElementById("wrapper").appendChild(boss);
+        document.getElementById("wrapper").appendChild(boss);
     } else {
         scoreboard2.textContent = score;
     }
