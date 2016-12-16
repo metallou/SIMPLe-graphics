@@ -459,7 +459,7 @@ const mastergamescript = function()
                 } else {
                     blackScreen(1000);
                     clearInterval(intervalID);
-                    updateLocalStorage(score, 1, 0);
+                    updateLocalStorage(score + scoreBossUp, 1, 0);
                     //delete all Blocks
                     master_container.parentNode.removeChild(master_container);
                     boss.parentNode.removeChild(boss);
@@ -477,7 +477,7 @@ const mastergamescript = function()
                 } else {
                     blackScreen(1000);
                     clearInterval(intervalID);
-                    updateLocalStorage(Math.floor(score), 0, 1);
+                    updateLocalStorage(Math.floor(score + scoreBossDown), 0, 1);
                     //delete all Blocks
                     master_container.parentNode.removeChild(master_container);
                     boss.parentNode.removeChild(boss);
