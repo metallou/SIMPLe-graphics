@@ -496,8 +496,8 @@ const mastergamescript = function()
     let isDead = false;
 
     const levelChoice = (Math.floor(Math.random()*1000*100)%100);
-    const isBoss = true;//levelChoice >= 80;
-    const isBossUp = true;//isBoss && (levelChoice%2 == 0);
+    const isBoss = levelChoice >= 80;
+    const isBossUp = isBoss && (levelChoice%2 == 0);
     const scoreBossUp = 20;
     const scoreBossDown = 20;
 
