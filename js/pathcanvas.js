@@ -18,7 +18,7 @@ const funcPath = function() {
     const offY = document.getElementById("spaceship").offsetHeight * 0.69;
 
     const updatePath = function(offsetX, offsetY) {
-        const maxpathstops = 200;
+        const maxpathstops = 100;
 
         path.push({
             X: mouseX + offsetX,
