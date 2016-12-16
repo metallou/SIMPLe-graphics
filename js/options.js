@@ -56,20 +56,22 @@ const optionsFunc = function()
         }
     }
 
-    document.getElementById("clearstorage").addEventListener("click", function()
+    document.getElementById("clearoptions").addEventListener("click", function()
             {
-                localStorage.clear();
                 for(let i=0; i<keysonoff.length; i++) {
                     localStorage.setItem(keysonoff[i], "false");
                     checkValue(keysonoff[i]);
                 }
+                localStorage.setItem("music", "true");
+                checkValue("music");
+                localStorage.setItem("sound", "true");
+                checkValue("sound");
+            });
+    document.getElementById("clearstats").addEventListener("click", function()
+            {
                 for(let i=0; i<keys.length; i++) {
                     localStorage.setItem(keys[i], 0);
                 }
-                localStorage.setItem("music", "true");
-                localStorage.setItem("sound", "true");
-                checkValue("music");
-                checkValue("sound");
             });
 
     let elem;
