@@ -17,8 +17,20 @@ const keys =
     "averagescore",
     "lastscore",
     "totalbosswaves",
+    "totalbosstotalscore",
+    "totalbosshighestscore",
+    "totalbossaveragescore",
+    "totalbosslastscore",
     "totalrisingbosswaves",
-    "totalfallingbosswaves"
+    "totalrisingbosstotalscore",
+    "totalrisingbosshighestscore",
+    "totalrisingbossaveragescore",
+    "totalrisingbosslastscore",
+    "totalrisingfallingbosswaves"
+    "totalrisingbosstotalscore",
+    "totalrisingbosshighestscore",
+    "totalrisingbossaveragescore",
+    "totalrisingbosslastscore",
 ];
 
 const initLocalStorage = function(koo, k)
