@@ -2,9 +2,8 @@
 const path = [];
 const offsetDown = Math.floor(0.5 * window.innerHeight / 100);
 const proutprout = new Image();
-proutprout.src = "img/prout.png";
-proutprout.height = '250%';
-proutprout.width = '250%';
+proutprout.src = "img/prout50.png";
+proutprout.style["left"] = "-50%";
 
 
 const funcPath = function() {
@@ -17,7 +16,7 @@ const funcPath = function() {
     const offY = document.getElementById("spaceship").offsetHeight * 0.69;
 
     const updatePath = function(offsetX, offsetY) {
-        const maxpathstops = 75;
+        const maxpathstops = 200;
 
         path.push({
             X: mouseX + offsetX,
@@ -35,8 +34,8 @@ const funcPath = function() {
     const drawPath = function() {
         ctx1.clearRect(0, 0, canvas1.width, canvas1.height);
         ctx1.moveTo(path[0].X, path[0].Y);
-        for (let i = 1; i < path.length; i = i+3) {
-          ctx1.drawImage(proutprout, path[i].X, path[i].Y);
+        for (let i = 1; i < path.length; i = i+5) {
+          ctx1.drawImage(proutprout, (path[i].X - 16), (path[i].Y-5), 30, 30);
             ctx1.lineTo(path[i].X, path[i].Y);
         }
 
