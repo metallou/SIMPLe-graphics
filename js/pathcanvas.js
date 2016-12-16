@@ -22,8 +22,15 @@ const funcPath = function() {
 
         path.push({
             X: mouseX + offsetX,
-            Y: mouseY + offsetY
+            Y: mouseY + offsetY,
+            prout: false
         });
+        if(path.length == 1) {
+            path[0].prout = true;
+        }
+        if(path.length >= 3) {
+            path[path.length-1].prout = path[path.length-3].prout;
+        }
         if (path.length > maxpathstops) {
             path.shift();
         }
@@ -35,10 +42,10 @@ const funcPath = function() {
     }
     const drawPath = function() {
         ctx1.clearRect(0, 0, canvas1.width, canvas1.height);
-        ctx1.moveTo(path[0].X, path[0].Y);
-        for (let i = 1; i < path.length; i = i+5) {
-          ctx1.drawImage(proutprout, (path[i].X - 16), (path[i].Y-5), 30, 30);
-            ctx1.lineTo(path[i].X, path[i].Y);
+        for (let i = 0; i < path.length; i++) {
+            if(path[i].prout) {
+                ctx1.drawImage(proutprout, (path[i].X - 16*i/path.length), (path[i].Y-5), 30*i/path.length, 30*i/path.length);
+            }
         }
 
     }
