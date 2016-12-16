@@ -89,9 +89,10 @@ main, aside
 
 button
 {
-  padding: 10px 20px;
-  margin: 20px;
+  padding: 0.75vw 2vw;
+  margin: 10px;
   font-family: 'PressStart', sans-serif;
+  font-size: 1.25vw;
   background-color: #00032d;
   border: 5px solid #FFF;
   color: #FFF;
