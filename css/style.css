@@ -19,14 +19,14 @@ html, body
     background-repeat: repeat;
 }
 
-div#wrapper
+#wrapper
 {
     height: 100vh;
     overflow: hidden;
     position: relative;
 }
 
-div.blackscreen
+.blackscreen
 {
     position: absolute;
     z-index: 1;
@@ -108,20 +108,20 @@ button:hover
   transition: color 0.1s, background-color 0.1s;
 }
 
-button.selected{
+.selected{
   color: #F00;
   background-color: #FFF;
   border-color: #F00;
 }
 
-button#optionsbutton, button#statsbutton
+#optionsbutton, #statsbutton
 {
     position: absolute;
     bottom: 5%;
     transform: translate(-50%, -50%);
 }
 
-button#playbutton
+#playbutton
 {
   position: absolute;
   transform: translate(-50%, -50%);
@@ -129,16 +129,16 @@ button#playbutton
   font-size: 2em;
 }
 
-button#optionsbutton
+#optionsbutton
 {
     left: 25%;
 }
-button#statsbutton
+#statsbutton
 {
     left: 75%;
 }
 
-button.menubutton, button#playbutton
+.menubutton, #playbutton
 {
     left: 50%;
 }
@@ -149,14 +149,6 @@ display: flex;
 justify-content: center;
 align-items: center;
 flex-direction: column;
-}
-
-#canvas1
-{
-    position: absolute;
-    top: 0;
-    left: 0;
-    z-index: 5;
 }
 
 #block-lines
