@@ -4,7 +4,7 @@
 const path = [];
 const offsetDown = Math.floor(0.5 * window.innerHeight / 100);
 const proutprout = new Image();
-proutprout.src = "img/prout50.png";
+proutprout.src = "img/prout.png";
 proutprout.style["left"] = "-50%";
 
 
