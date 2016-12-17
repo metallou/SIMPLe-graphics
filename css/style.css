@@ -94,7 +94,7 @@ button
   padding: 0.75vw 2vw;
   margin: 10px;
   font-family: 'PressStart', sans-serif;
-  font-size: 1.5vw;
+  font-size: 1.15vw;
   background-color: #00032d;
   border: 5px solid #FFF;
   color: #FFF;
@@ -126,7 +126,7 @@ button:hover
   position: absolute;
   transform: translate(-50%, -50%);
   bottom: 15%;
-  font-size: 2em;
+  font-size: 4vw;
 }
 
 #optionsbutton
@@ -146,9 +146,19 @@ button:hover
 #optionspage, #statspage
 {
 display: flex;
-justify-content: center;
 align-items: center;
 flex-direction: column;
+}
+
+#optionspage
+{
+  margin: 1vh;
+  justify-content: space-around;
+}
+
+#statspage
+{
+  justify-content: center;
 }
 
 #block-lines
@@ -447,6 +457,27 @@ flex-direction: column;
     border: 5px solid #FFF;
 }
 
+#credits
+{
+  position: absolute;
+  font-size: 0.75vw;
+  text-align: center;
+  bottom: 0;
+}
+
+#credits img
+{
+  width: 20%;
+}
+
+#credits a
+{
+  color: #FFF;
+  font-weight: bold;
+  cursor: crosshair;
+  font-size: 1vw;
+}
+
 #optionspage section
 {
     display: flex;
@@ -486,7 +517,9 @@ button:hover
 
 #titleimg
 {
-  height: 80%;
+  position: absolute;
+  top: 0;
+  width: 50%;
   z-index: 0;
 }
 
