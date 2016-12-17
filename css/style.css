@@ -460,14 +460,14 @@ flex-direction: column;
 #credits
 {
   position: absolute;
-  font-size: 0.75vw;
+  font-size: 0.80vw;
   text-align: center;
   bottom: 0;
 }
 
 #credits img
 {
-  width: 20%;
+  width: 50%;
 }
 
 #credits a
@@ -476,6 +476,11 @@ flex-direction: column;
   font-weight: bold;
   cursor: crosshair;
   font-size: 1vw;
+}
+#credits section
+{
+  display: inline-block;
+  margin: 1vh;
 }
 
 #optionspage section
