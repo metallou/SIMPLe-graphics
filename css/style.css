@@ -146,9 +146,19 @@ button:hover
 #optionspage, #statspage
 {
 display: flex;
-justify-content: space-around;
 align-items: center;
 flex-direction: column;
+}
+
+#optionspage
+{
+  margin: 1vh;
+  justify-content: space-around;
+}
+
+#statspage
+{
+  justify-content: center;
 }
 
 #block-lines
@@ -449,13 +459,23 @@ flex-direction: column;
 
 #credits
 {
-  font-size: 0.5vw;
+  position: absolute;
+  font-size: 0.75vw;
   text-align: center;
+  bottom: 0;
 }
 
 #credits img
 {
-  width: 15%;
+  width: 20%;
+}
+
+#credits a
+{
+  color: #FFF;
+  font-weight: bold;
+  cursor: crosshair;
+  font-size: 1vw;
 }
 
 #optionspage section
@@ -507,7 +527,7 @@ button:hover
 {
     position: absolute;
     left: 0;
-    z-index: 1;
+    z-index: 2;
     width: 100%;
     height: 100%;
     background-color: red;

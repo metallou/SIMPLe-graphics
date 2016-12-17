@@ -65,43 +65,93 @@ const mastergamescript = function()
 
     const updateLocalStorage = function(score, bossup, bossdown)
     {
+        let tgp;
+        let ts;
+        let hs;
+        let as;
+        console.log("a");
+
         //Total Games Played
-        let tgp = parseInt(localStorage.getItem("totalgamesplayed"));
+        tgp = parseInt(localStorage.getItem("totalgamesplayed"));
         tgp++;
         localStorage.setItem("totalgamesplayed", tgp);
-
         //Total Score
-        let ts = parseInt(localStorage.getItem("totalscore"));
+        ts = parseInt(localStorage.getItem("totalscore"));
         ts += score;
         localStorage.setItem("totalscore", ts);
-
         //Highest Score
-        let hs = parseInt(localStorage.getItem("highestscore"));
+        hs = parseInt(localStorage.getItem("highestscore"));
         if(hs < score) {
             localStorage.setItem("highestscore", score);
         }
-
         //Average Score
-        let as = Math.floor((ts/tgp)*1000)/1000;
+        as = Math.floor((ts/tgp)*1000)/1000;
         localStorage.setItem("averagescore", as);
-
         //Last Score
         localStorage.setItem("lastscore", score);
-
-        //Total Boss Waves
-        let tbw = parseInt(localStorage.getItem("totalbosswaves"));
-        tbw += bossup + bossdown;
-        localStorage.setItem("totalbosswaves", tbw);
-
-        //Total Rising Boss Waves
-        let trbw = parseInt(localStorage.getItem("totalrisingbosswaves"));
-        trbw += bossup;
-        localStorage.setItem("totalrisingbosswaves", trbw);
-
-        //Total Falling Boos Waves
-        let tfbw = parseInt(localStorage.getItem("totalfallingbosswaves"));
-        tfbw += bossdown;
-        localStorage.setItem("totalfallingbosswaves", tfbw);
+        if(bossup>0 || bossdown>0) {
+            console.log("b");
+            //Total Boss Waves
+            tgp = parseInt(localStorage.getItem("totalbosswaves"));
+            tgp += bossup + bossdown;
+            localStorage.setItem("totalbosswaves", tgp);
+            //Total Boss Total Score
+            ts = parseInt(localStorage.getItem("totalbosstotalscore"));
+            ts += score;
+            localStorage.setItem("totalbosstotalscore", ts);
+            //Total Boss Highest Score
+            hs = parseInt(localStorage.getItem("totalbosshighestscore"));
+            if(hs < score) {
+                localStorage.setItem("totalbosshighestscore", score);
+            }
+            //Total Boss Average Score
+            as = Math.floor((ts/tgp)*1000)/1000;
+            localStorage.setItem("totalbossaveragescore", as);
+            //Total Boss Last Score
+            localStorage.setItem("totalbosslastscore", score);
+        }
+        if(bossup>0) {
+            console.log("c");
+            //Total Rising Boss Waves
+            tgp = parseInt(localStorage.getItem("totalrisingbosswaves"));
+            tgp += bossup;
+            localStorage.setItem("totalrisingbosswaves", tgp);
+            //Rising Boss Total Score
+            ts = parseInt(localStorage.getItem("risingbosstotalscore"));
+            ts += score;
+            localStorage.setItem("risingbosstotalscore", ts);
+            //Rising Boss Highest Score
+            hs = parseInt(localStorage.getItem("risingbosshighestscore"));
+            if(hs < score) {
+                localStorage.setItem("risingbosshighestscore", score);
+            }
+            //Rising Boss Average Score
+            as = Math.floor((ts/tgp)*1000)/1000;
+            localStorage.setItem("risingbossaveragescore", as);
+            //Rising Boss Last Score
+            localStorage.setItem("risingbosslastscore", score);
+        }
+        if(bossdown>0) {
+            console.log("c");
+            //Total Falling Boos Waves
+            tgp = parseInt(localStorage.getItem("totalfallingbosswaves"));
+            tgp += bossdown;
+            localStorage.setItem("totalfallingbosswaves", tgp);
+            //Falling Boss Total Score
+            ts = parseInt(localStorage.getItem("fallingbosstotalscore"));
+            ts += score;
+            localStorage.setItem("fallingbosstotalscore", ts);
+            //Falling Boss Highest Score
+            hs = parseInt(localStorage.getItem("fallingbosshighestscore"));
+            if(hs < score) {
+                localStorage.setItem("fallingbosshighestscore", score);
+            }
+            //Falling Boss Average Score
+            as = Math.floor((ts/tgp)*1000)/1000;
+            localStorage.setItem("fallingbossaveragescore", as);
+            //Falling Boss Last Score
+            localStorage.setItem("fallingbosslastscore", score);
+        }
     }
 
     const scrollMasterContainer = function(wrapper, offset, previous)
@@ -268,7 +318,7 @@ const mastergamescript = function()
                         {
                             b.childNodes[rnd].firstChild.classList.remove("falling");
                         }, 5000);
-                scr = scr+0.1;
+                scr = scr+0.2;
             }
         }
         return scr;
@@ -360,11 +410,11 @@ const mastergamescript = function()
                     //Check for score update
                     score = checkScore(master_container, score);
                     //Display score
-                    scoreboard2.textContent = score + scoreBossUp;
+                    scoreboard2.textContent = 2*score + scoreBossUp;
                 } else {
                     blackScreen(1000);
                     clearInterval(intervalID);
-                    updateLocalStorage(score + scoreBossUp, 1, 0);
+                    updateLocalStorage(2*score + scoreBossUp, 1, 0);
                     //delete all Blocks
                     master_container.parentNode.removeChild(master_container);
                     boss.parentNode.removeChild(boss);
@@ -374,9 +424,9 @@ const mastergamescript = function()
             } else {
                 if(!isDead) {
                     //Update score, launches an attack at random
-                    score = animateBossDown(boss, score)
-                        //Check if current position crosses the boss
-                        isDead = checkBossDown(boss, isDead);
+                    score = animateBossDown(boss, score);
+                    //Check if current position crosses the boss
+                    isDead = checkBossDown(boss, isDead);
                     //Display score
                     scoreboard2.textContent = Math.floor(score + scoreBossDown);
                 } else {
