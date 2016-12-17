@@ -445,7 +445,10 @@ flex-direction: column;
   animation: rotating6 22s linear infinite;
 }
 
-
+#scoreboard :last-child
+{
+    padding-left: 5px;
+}
 
 #statspage table
 {
@@ -455,6 +458,10 @@ flex-direction: column;
     text-align: right;
     background-color: #00032d;
     border: 5px solid #FFF;
+}
+#statspage table thead th:first-child
+{
+    text-align: left;
 }
 
 #credits
