@@ -339,6 +339,8 @@ const mastergamescript = function()
         for(let i=0; i<20; i++) {
             elem = document.createElement("div");
             elem2 = document.createElement("div");
+            elem.id = "reactor";
+            elem2.id = "flames";
             elem2.classList.add("falling-block");
             elem.appendChild(elem2);
             b.appendChild(elem);
