@@ -585,6 +585,7 @@ button:hover
     background-image: url('../img/flyingsaucer/flyingsaucer.gif');
     background-position: bottom;
     background-size: cover;
+    z-index: 3;
 }
 
 
@@ -601,13 +602,16 @@ button:hover
   background-image: url('../img/flyingsaucer/reactor.gif');
   background-position: bottom;
   background-size: cover;
+  z-index: 2;
 }
 
 #flames
 {
   background-image: url('../img/flyingsaucer/flames.gif');
   background-position: bottom;
+  background-repeat: no-repeat;
   background-size: contain;
+  z-index: 1;
 }
 
 .falling
