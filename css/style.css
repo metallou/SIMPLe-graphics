@@ -73,20 +73,28 @@ main, aside
 #S
 {
     position: absolute;
-    bottom: 0;
+    bottom: 7.5%;
     left: 50%;
     transform: translateX(-50%);
     text-align: right;
     margin: 2vw;
 }
 
+
 #scoreboard
 {
     position: absolute;
-    top: 0;
+    top: 10px;
     left: 50%;
+    font-size: 1.2em;
     height: auto;
     transform: translateX(-50%);
+
+}
+
+#scoreboard span
+{
+  padding: 30px;
 }
 
 button
@@ -109,9 +117,9 @@ button:hover
 }
 
 .selected{
-  color: #F00;
+  color: #c00;
   background-color: #FFF;
-  border-color: #F00;
+  border-color: #c00;
 }
 
 #optionsbutton, #statsbutton
@@ -454,7 +462,7 @@ flex-direction: column;
 {
     margin-left: auto;
     margin-right: auto;
-    padding: 20px;
+    padding: 3vw;
     text-align: right;
     background-color: #00032d;
     border: 5px solid #FFF;
@@ -462,6 +470,7 @@ flex-direction: column;
 #statspage table thead th:first-child
 {
     text-align: left;
+    padding-bottom: 20px;
 }
 
 #credits
@@ -653,4 +662,47 @@ button:hover
     100% {
         top: 0;
     }
+}
+
+@media screen and (max-width: 768px) {
+  #titleimg
+  {
+    width: 90vw;
+  }
+
+  #playbutton
+  {
+    bottom: 25%;
+    font-size: 6vh;
+    padding: 3vh;
+  }
+
+  #optionsbutton, #statsbutton
+  {
+
+      bottom: 15%;
+      font-size: 3vh;
+      padding: 2vh
+  }
+
+  #S
+  {
+    bottom: 10%;
+    font-size: 2vh;
+  }
+
+  #optionspage button
+  {
+    font-size: 1.5vw;
+    padding: 1vh 0.75vh;
+  }
+
+  #statspage, #statspage button
+  {
+    font-size: 2vh;
+  }
+
+  #credits {
+    font-size: 1vh
+  }
 }
