@@ -479,6 +479,7 @@ flex-direction: column;
   font-size: 0.80vw;
   text-align: center;
   bottom: 0;
+  -moz-transform: translateX(-50%);
 }
 
 #credits img
@@ -542,6 +543,7 @@ button:hover
   top: 0;
   width: 50%;
   z-index: 0;
+  -moz-transform: translateX(-50%);
 }
 
 #bossup
@@ -699,7 +701,7 @@ button:hover
 
   #statspage, #statspage button
   {
-    font-size: 2vh;
+    font-size: 1.5vh;
   }
 
   #credits {
