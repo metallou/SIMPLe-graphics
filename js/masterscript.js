@@ -111,7 +111,6 @@ const mastergamescript = function()
             localStorage.setItem("totalbosslastscore", score);
         }
         if(bossup>0) {
-            console.log("c");
             //Total Rising Boss Waves
             tgp = parseInt(localStorage.getItem("totalrisingbosswaves"));
             tgp += bossup;
@@ -132,7 +131,6 @@ const mastergamescript = function()
             localStorage.setItem("risingbosslastscore", score);
         }
         if(bossdown>0) {
-            console.log("c");
             //Total Falling Boos Waves
             tgp = parseInt(localStorage.getItem("totalfallingbosswaves"));
             tgp += bossdown;
@@ -296,7 +294,7 @@ const mastergamescript = function()
             for(let i=0; i<b.childNodes.length; i++) {
                 style = window.getComputedStyle(b.childNodes[i].firstChild).getPropertyValue("top");
                 st = parseInt(style.substr(0,style.length-2));
-                if((i*w) <= mouseX && mouseX < (i*w)+w) {
+                if(i*w <= mouseX && mouseX < (i+1)*w) {
                     if(mouseY <= stm+st+h) {
                         return true;
                     }
@@ -308,15 +306,15 @@ const mastergamescript = function()
     }
 
     const animateBossDown = function(b, scr) {
-        const rnd = Math.floor(Math.random()*1000*20)%20;
         const rndevent = Math.random();
         if(rndevent >= 0.90) {
+            const elem = document.getElementById("flames");
             const rnd = Math.floor(Math.random()*1000*20)%20;
-            if(!b.childNodes[rnd].firstChild.classList.contains("falling")) {
-                b.childNodes[rnd].firstChild.classList.add("falling");
+            if(!elem.childNodes[rnd].classList.contains("falling")) {
+                elem.childNodes[rnd].classList.add("falling");
                 setTimeout(function()
                         {
-                            b.childNodes[rnd].firstChild.classList.remove("falling");
+                            elem.childNodes[rnd].classList.remove("falling");
                         }, 5000);
                 scr = scr+0.2;
             }
@@ -336,15 +334,32 @@ const mastergamescript = function()
         b.id = "bossdown";
         let elem;
         let elem2;
+        elem = document.createElement("div");
+        elem.id = "flames";
+        b.appendChild(elem);
         for(let i=0; i<20; i++) {
-            elem = document.createElement("div");
-            elem2 = document.createElement("div");
-            elem.id = "reactor";
-            elem2.id = "flames";
-            elem2.classList.add("falling-block");
+            elem2 = document.createElement("img");
+            elem2.src = "img/flyingsaucer/flames.gif";
+            elem2.style["width"] = (100/20) + "%";
+            elem2.style["left"] = i*(100/20) + "%";
+            elem2.classList.add("flame");
             elem.appendChild(elem2);
-            b.appendChild(elem);
         }
+        elem = document.createElement("div");
+        elem.id = "reactors";
+        b.appendChild(elem);
+        for(let i=0; i<20; i++) {
+            elem2 = document.createElement("img");
+            elem2.src = "img/flyingsaucer/reactor.gif";
+            elem2.style["max-width"] = (100/20) + "%";
+            elem2.classList.add("reactor");
+            elem.appendChild(elem2);
+        }
+        elem = document.createElement("img");
+        elem.src = "img/flyingsaucer/flyingsaucer.gif";
+        elem.style["max-width"] = "100%";
+        elem.id = "flyingsaucer";
+        b.appendChild(elem);
         return b;
     }
 
