@@ -84,6 +84,7 @@ main, aside
 #scoreboard
 {
     position: absolute;
+    z-index: 10;
     top: 10px;
     left: 50%;
     font-size: 1.2em;
