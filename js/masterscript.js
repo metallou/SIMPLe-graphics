@@ -364,13 +364,17 @@ const mastergamescript = function()
     //boucle de jeu -----------------------------------------------------------
     const gamefunc = function()
     {
-        if(!isBoss) {
-            styletop = extractStyleHTML(document.getElementById("block-line"), "top");
-            if(!isDead) {
+        if(!isDead) {
+            if(!isBoss || isBossUp) {
+                //Get top position of falling blocks
+                styletop = extractStyleHTML(master_container, "top");
                 //Add a new block-line to master_container (and reset top position) if possible
                 if(styletop>=-10) {
+                    //Create a new line of blocks
                     createNewLineBlock(master_container, score);
+                    //get height of a line of blocks
                     blockheight = extractStyleCSS(master_container.lastChild, "height");
+                    //Update future top position of falling blocks
                     styletop -= blockheight;
                 }
                 //remove oldest block-line when out of screen
@@ -379,72 +383,52 @@ const mastergamescript = function()
                 }
                 //Make master_container go down
                 styletop = scrollMasterContainer(master_container, offsetDown, styletop);
-                //Check if current position crosses a danger block
-                isDead = checkDead(master_container);
                 //Check for score update
                 score = checkScore(master_container, score);
-                //Display score
-                scoreboard2.textContent = score
-            } else {
-                blackScreen(1000);
-                clearInterval(intervalID);
-                updateLocalStorage(score, 0, 0);
-                //delete all Blocks
-                master_container.parentNode.removeChild(master_container);
-                scoreboard.parentNode.removeChild(scoreboard);
-                document.getElementById("pages").style["display"] = "";
             }
-        } else {
-            if(isBossUp) {
-                styletop = extractStyleHTML(document.getElementById("block-lines"), "top");
-                if(!isDead) {
-                    //Add a new block-line to master_container (and reset top position) if possible
-                    if(styletop>=-10) {
-                        createNewLineBlock(master_container, score);
-                        blockheight = extractStyleCSS(master_container.lastChild, "height");
-                        styletop -= blockheight;
-                    }
-                    //remove oldest block-line when out of screen
-                    if(master_container.offsetHeight > 2*blockheight + window.innerHeight) {
-                        master_container.removeChild(master_container.childNodes[master_container.childNodes.length-2]);
-                    }
-                    //Make master_container go down
-                    styletop = scrollMasterContainer(master_container, offsetDown, styletop);
+            if(!isBoss) {
+                //Check if current position crosses a danger block
+                isDead = checkDead(master_container);
+                //Display score
+                scoreboard2.textContent = score;
+            } else {
+                if(isBossUp) {
                     //Check if current position crosses a danger block or the boss
-                    isDead = checkDead(master_container) && checkBossUp(boss);
-                    //Check for score update
-                    score = checkScore(master_container, score);
+                    isDead = checkDead(master_container) || checkBossUp(boss);
                     //Display score
                     scoreboard2.textContent = 2*score + scoreBossUp;
                 } else {
-                    blackScreen(1000);
-                    clearInterval(intervalID);
-                    updateLocalStorage(2*score + scoreBossUp, 1, 0);
-                    //delete all Blocks
-                    master_container.parentNode.removeChild(master_container);
-                    boss.parentNode.removeChild(boss);
-                    scoreboard.parentNode.removeChild(scoreboard);
-                    document.getElementById("pages").style["display"] = "";
-                }
-            } else {
-                if(!isDead) {
                     //Update score, launches an attack at random
                     score = animateBossDown(boss, score);
                     //Check if current position crosses the boss
                     isDead = checkBossDown(boss);
                     //Display score
                     scoreboard2.textContent = Math.floor(score + scoreBossDown);
-                } else {
-                    blackScreen(1000);
-                    clearInterval(intervalID);
-                    updateLocalStorage(Math.floor(score + scoreBossDown), 0, 1);
-                    //delete all Blocks
-                    master_container.parentNode.removeChild(master_container);
-                    boss.parentNode.removeChild(boss);
-                    scoreboard.parentNode.removeChild(scoreboard);
-                    document.getElementById("pages").style["display"] = "";
                 }
             }
+        } else {
+            //Fade Out Screen
+            blackScreen(1000);
+            //Stops Game Call
+            clearInterval(intervalID);
+            //Update LocalStorage and Delete Boss (if boss)
+            if(!isBoss) {
+                updateLocalStorage(score, 0,0);
+            } else {
+                if(isBossUp) {
+                    updateLocalStorage(2*score + scoreBossUp, 1,0);
+                } else {
+                    updateLocalStorage(Math.floor(score) + scoreBossDown, 0,1);
+                }
+                //Delete Boss
+                boss.parentNode.removeChild(boss);
+            }
+            //delete Game Blocks
+            master_container.parentNode.removeChild(master_container);
+            //Delete Score Display
+            scoreboard.parentNode.removeChild(scoreboard);
+            //Display title screen
+            document.getElementById("pages").style["display"] = "";
         }
     }
 
@@ -456,14 +440,18 @@ const mastergamescript = function()
     let isDead = false;
 
     const levelChoice = (Math.floor(Math.random()*1000*100)%100);
+    //Game will spawn a boss 20% of the time
     let isBoss = levelChoice >= 80;
+    //Override gameplay choice with option chosen by user
     if(localStorage.getItem("bossgameonly") === "true") {
         isBoss = true;
     }
     if(localStorage.getItem("normalgameonly") === "true") {
         isBoss = false;
     }
+    //Game chooses which boss to spwn with equal chances
     let isBossUp = isBoss && (levelChoice%2 == 0);
+    //Override boss choice with option chosen by user
     if(localStorage.getItem("risingbossonly") === "true") {
         isBossUp = true;
     }
@@ -473,6 +461,7 @@ const mastergamescript = function()
     const scoreBossUp = 20;
     const scoreBossDown = 20;
 
+    //Display of score
     const scoreboard = document.createElement("div");
     scoreboard.id = "scoreboard";
     let scoreboard2 = document.createElement("span");
@@ -480,18 +469,19 @@ const mastergamescript = function()
     scoreboard.appendChild(scoreboard2);
     scoreboard2 = document.createElement("span");
     scoreboard.appendChild(scoreboard2);
+
+    //Create container of all game blocks (asteroids)
     const master_container = document.createElement("div");
     master_container.id = "block-lines";
     master_container.style["top"] = styletop + "px";
 
+    //Create boss container
     let boss;
     if(isBoss) {
         if(isBossUp) {
             boss = bossUpFunc();
-            scoreboard2.textContent = score + scoreBossUp;
         } else {
             boss = bossDownFunc();
-            scoreboard2.textContent = score + scoreBossDown
         }
         document.getElementById("wrapper").appendChild(boss);
     } else {
