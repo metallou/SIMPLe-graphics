@@ -2,20 +2,25 @@
 
 const mastergamescript = function()
 {
-    const extractStyle = function(elem, property) {
+    const extractStyleCSS = function(elem, property) {
         const style = window.getComputedStyle(elem);
-        let styletop = style.getPropertyValue(property);
-        styletop = styletop.substr(0, styletop.length-2);
-        const st = parseInt(styletop);
+        let styleproperty = style.getPropertyValue(property);
+        styleproperty = styleproperty.substr(0, styleproperty.length-2);
+        const st = parseInt(styleproperty);
         return st;
     }
+    const extractStyleHTML = function(elem, property) {
+        let styleproperty = elem.style[property];
+        styleproperty = styleproperty.substr(0, styleproperty.length-2);
+        const st = parseInt(styleproperty);
+        return st;
+    }
+
     const checkScore = function(wrapper, scr)
     {
         const updateScoreBlock = function(wrapper, score_blocks)
         {
-            let styletop = wrapper.style["top"];
-            styletop = styletop.substr(0,styletop.length-2);
-            const st = parseInt(styletop);
+            const st = extractStyleHTML(wrapper, "top");
             const hV = wrapper.firstChild.firstChild.offsetHeight;
 
             let elems = document.getElementsByClassName("score");
@@ -35,9 +40,7 @@ const mastergamescript = function()
         const updateDangerBlocks = function(wrapper)
         {
             const d_b = [];
-            let styletop = wrapper.style["top"];
-            styletop = styletop.substr(0,styletop.length-2);
-            const st = parseInt(styletop);
+            const st = extractStyleHTML(wrapper, "top");
             const hV = wrapper.firstChild.offsetHeight;
             const wH = wrapper.firstChild.firstChild.firstChild.offsetWidth;
             const hH = wrapper.firstChild.firstChild.firstChild.offsetHeight;
@@ -279,7 +282,7 @@ const mastergamescript = function()
 
     const checkBossUp = function(b, iD)
     {
-        const st = extractStyle(b, "top");
+        const st = extractStyleCSS(b, "top");
         if(mouseY >= st) {
             return true;
         }
@@ -287,14 +290,14 @@ const mastergamescript = function()
     }
     const checkBossDown = function(b, iD)
     {
-        const stm = extractStyle(b, "top");
+        const stm = extractStyleCSS(b, "top");
         const h = b.offsetHeight;
         const elem = document.getElementById("flames");
-        const stf = extractStyle(elem, "top");
+        const stf = extractStyleCSS(elem, "top");
         const w = elem.firstChild.offsetWidth;
         let st;
         for(let i=0; i<elem.childNodes.length; i++) {
-            st = extractStyle(elem.childNodes[i], "top");
+            st = extractStyleCSS(elem.childNodes[i], "top");
             if(i*w <= mouseX && mouseX < (i+1)*w) {
                 if(mouseY <= stm+stf+st+h) {
                     return true;
@@ -362,14 +365,12 @@ const mastergamescript = function()
     const gamefunc = function()
     {
         if(!isBoss) {
-            styletop = document.getElementById("block-lines").style["top"];
-            styletop = styletop.substr(0,styletop.length-2);
-            styletop = parseInt(styletop);
+            styletop = extractStyleHTML(document.getElementById("block-line"), "top");
             if(!isDead) {
                 //Add a new block-line to master_container (and reset top position) if possible
                 if(styletop>=-10) {
                     createNewLineBlock(master_container, score);
-                    blockheight = extractStyle(master_container.lastChild, "height");
+                    blockheight = extractStyleCSS(master_container.lastChild, "height");
                     styletop -= blockheight;
                 }
                 //remove oldest block-line when out of screen
@@ -395,14 +396,12 @@ const mastergamescript = function()
             }
         } else {
             if(isBossUp) {
-                styletop = document.getElementById("block-lines").style["top"];
-                styletop = styletop.substr(0,styletop.length-2);
-                styletop = parseInt(styletop);
+                styletop = extractStyleHTML(document.getElementById("block-lines"), "top");
                 if(!isDead) {
                     //Add a new block-line to master_container (and reset top position) if possible
                     if(styletop>=-10) {
                         createNewLineBlock(master_container, score);
-                        blockheight = extractStyle(master_container.lastChild, "height");
+                        blockheight = extractStyleCSS(master_container.lastChild, "height");
                         styletop -= blockheight;
                     }
                     //remove oldest block-line when out of screen
