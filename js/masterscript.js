@@ -2,12 +2,20 @@
 
 const mastergamescript = function()
 {
+    const extractStyle = function(elem, property) {
+        const style = window.getComputedStyle(elem);
+        let styletop = style.getPropertyValue(property);
+        styletop = styletop.substr(0, styletop.length-2);
+        const st = parseInt(styletop);
+        return st;
+    }
     const checkScore = function(wrapper, scr)
     {
         const updateScoreBlock = function(wrapper, score_blocks)
         {
-
-            const st = parseInt(wrapper.style["top"].substr(0,wrapper.style["top"].length-2));
+            let styletop = wrapper.style["top"];
+            styletop = styletop.substr(0,styletop.length-2);
+            const st = parseInt(styletop);
             const hV = wrapper.firstChild.firstChild.offsetHeight;
 
             let elems = document.getElementsByClassName("score");
@@ -27,7 +35,9 @@ const mastergamescript = function()
         const updateDangerBlocks = function(wrapper)
         {
             const d_b = [];
-            const st = parseInt(wrapper.style["top"].substr(0,wrapper.style["top"].length-2));
+            let styletop = wrapper.style["top"];
+            styletop = styletop.substr(0,styletop.length-2);
+            const st = parseInt(styletop);
             const hV = wrapper.firstChild.offsetHeight;
             const wH = wrapper.firstChild.firstChild.firstChild.offsetWidth;
             const hH = wrapper.firstChild.firstChild.firstChild.offsetHeight;
@@ -69,7 +79,6 @@ const mastergamescript = function()
         let ts;
         let hs;
         let as;
-        console.log("a");
 
         //Total Games Played
         tgp = parseInt(localStorage.getItem("totalgamesplayed"));
@@ -90,7 +99,6 @@ const mastergamescript = function()
         //Last Score
         localStorage.setItem("lastscore", score);
         if(bossup>0 || bossdown>0) {
-            console.log("b");
             //Total Boss Waves
             tgp = parseInt(localStorage.getItem("totalbosswaves"));
             tgp += bossup + bossdown;
@@ -271,38 +279,29 @@ const mastergamescript = function()
 
     const checkBossUp = function(b, iD)
     {
-        if(!iD) {
-            const style = window.getComputedStyle(b).getPropertyValue("top");
-            if(mouseY >= parseInt(style.substr(0,style.length-2))) {
-                return true;
-            }
-            return false;
+        const st = extractStyle(b, "top");
+        if(mouseY >= st) {
+            return true;
         }
-        return iD;
+        return false;
     }
     const checkBossDown = function(b, iD)
     {
-        if(!iD) {
-            const w = b.firstChild.offsetWidth;
-            const h = b.firstChild.offsetHeight;
-            let style = window.getComputedStyle(b).getPropertyValue("top");
-            const stm = parseInt(style.substr(0,style.length-2));
-            if(mouseY <=  stm+b.offsetHeight) {
-                return true;
-            }
-            let st;
-            for(let i=0; i<b.childNodes.length; i++) {
-                style = window.getComputedStyle(b.childNodes[i].firstChild).getPropertyValue("top");
-                st = parseInt(style.substr(0,style.length-2));
-                if(i*w <= mouseX && mouseX < (i+1)*w) {
-                    if(mouseY <= stm+st+h) {
-                        return true;
-                    }
+        const stm = extractStyle(b, "top");
+        const h = b.offsetHeight;
+        const elem = document.getElementById("flames");
+        const stf = extractStyle(elem, "top");
+        const w = elem.firstChild.offsetWidth;
+        let st;
+        for(let i=0; i<elem.childNodes.length; i++) {
+            st = extractStyle(elem.childNodes[i], "top");
+            if(i*w <= mouseX && mouseX < (i+1)*w) {
+                if(mouseY <= stm+stf+st+h) {
+                    return true;
                 }
             }
-            return false;
         }
-        return iD;
+        return false;
     }
 
     const animateBossDown = function(b, scr) {
@@ -332,34 +331,30 @@ const mastergamescript = function()
     {
         const b = document.createElement("div");
         b.id = "bossdown";
+        let container;
         let elem;
         let elem2;
-        elem = document.createElement("div");
-        elem.id = "flames";
-        b.appendChild(elem);
+        container = document.createElement("div");
+        container.id = "flames";
+        b.appendChild(container);
         for(let i=0; i<20; i++) {
-            elem2 = document.createElement("img");
-            elem2.src = "img/flyingsaucer/flames.gif";
-            elem2.style["width"] = (100/20) + "%";
-            elem2.style["left"] = i*(100/20) + "%";
-            elem2.classList.add("flame");
-            elem.appendChild(elem2);
+            elem = document.createElement("div");
+            elem.style["width"] = (100/20) + "%";
+            elem.style["left"] = i*(100/20) + "%";
+            elem.classList.add("flame");
+            container.appendChild(elem);
         }
-        elem = document.createElement("div");
-        elem.id = "reactors";
-        b.appendChild(elem);
+        container = document.createElement("div");
+        container.id = "reactors";
+        b.appendChild(container);
         for(let i=0; i<20; i++) {
-            elem2 = document.createElement("img");
-            elem2.src = "img/flyingsaucer/reactor.gif";
-            elem2.style["max-width"] = (100/20) + "%";
-            elem2.classList.add("reactor");
-            elem.appendChild(elem2);
+            elem = document.createElement("div");
+            elem.classList.add("reactor");
+            container.appendChild(elem);
         }
-        elem = document.createElement("img");
-        elem.src = "img/flyingsaucer/flyingsaucer.gif";
-        elem.style["max-width"] = "100%";
-        elem.id = "flyingsaucer";
-        b.appendChild(elem);
+        container = document.createElement("div");
+        container.id = "flyingsaucer";
+        b.appendChild(container);
         return b;
     }
 
@@ -374,9 +369,7 @@ const mastergamescript = function()
                 //Add a new block-line to master_container (and reset top position) if possible
                 if(styletop>=-10) {
                     createNewLineBlock(master_container, score);
-                    blockheight = window.getComputedStyle(master_container.lastChild).getPropertyValue("height");
-                    blockheight = blockheight.substr(0,blockheight.length-2);
-                    blockheight = parseInt(blockheight);
+                    blockheight = extractStyle(master_container.lastChild, "height");
                     styletop -= blockheight;
                 }
                 //remove oldest block-line when out of screen
@@ -409,9 +402,7 @@ const mastergamescript = function()
                     //Add a new block-line to master_container (and reset top position) if possible
                     if(styletop>=-10) {
                         createNewLineBlock(master_container, score);
-                        blockheight = window.getComputedStyle(master_container.lastChild).getPropertyValue("height");
-                        blockheight = blockheight.substr(0,blockheight.length-2);
-                        blockheight = parseInt(blockheight);
+                        blockheight = extractStyle(master_container.lastChild, "height");
                         styletop -= blockheight;
                     }
                     //remove oldest block-line when out of screen
@@ -420,10 +411,8 @@ const mastergamescript = function()
                     }
                     //Make master_container go down
                     styletop = scrollMasterContainer(master_container, offsetDown, styletop);
-                    //Check if current position crosses a danger block
-                    isDead = checkDead(master_container);
-                    //Check if current position crosses the boss
-                    isDead = checkBossUp(boss, isDead);
+                    //Check if current position crosses a danger block or the boss
+                    isDead = checkDead(master_container) && checkBossUp(boss);
                     //Check for score update
                     score = checkScore(master_container, score);
                     //Display score
@@ -443,7 +432,7 @@ const mastergamescript = function()
                     //Update score, launches an attack at random
                     score = animateBossDown(boss, score);
                     //Check if current position crosses the boss
-                    isDead = checkBossDown(boss, isDead);
+                    isDead = checkBossDown(boss);
                     //Display score
                     scoreboard2.textContent = Math.floor(score + scoreBossDown);
                 } else {

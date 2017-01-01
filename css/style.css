@@ -590,31 +590,53 @@ button:hover
 
 #reactors, #flames
 {
+    display: flex;
     position: absolute;
     left: 0;
     width: 100%;
+    height: 100%;
 }
+.reactor, .flame
+{
+    flex: 1;
+}
+
 #flyingsaucer
 {
     position: absolute;
     left: 0;
     bottom: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 1;
+
+    background-image: url("../img/flyingsaucer/flyingsaucer.gif");
+    background-size: 100% 100%;
 }
 
 #reactors
 {
     bottom: -5%;
 }
+.reactor
+{
+    background-image: url("../img/flyingsaucer/reactor.gif");
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: bottom;
+}
 
 #flames
 {
     top: 10%;
-    height: 100%;
 }
 .flame
 {
     position: absolute;
+    top: 0;
     height: 100%;
+    background-image: url("../img/flyingsaucer/flames.gif");
+    background-size: 100% 100%;
 }
 
 .falling
