@@ -621,7 +621,7 @@ button:hover
 }
 .reactor
 {
-    background-image: url("../img/flyingsaucer/reactor.gif");
+    background-image: url("../img/flyingsaucer/reactor.png");
     background-size: contain;
     background-repeat: no-repeat;
     background-position: bottom;
